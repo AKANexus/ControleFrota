@@ -60,5 +60,7 @@ namespace ControleFrota.Domain
                 return Math.Max(Math.Max(últimoAbastecimento, últimaManutenção), últimaViagem);
             }
         }
+
+        public bool Ativo { get; set; } = true;
     }
 }

@@ -17,7 +17,8 @@ namespace ControleFrota.Services
     public enum TipoDialogue
     {
         WIP,
-        CadastroDeVeículos
+        CadastroDeVeículos,
+        CadastroDeMotoristas
     }
     public interface IDialogGenerator
     {

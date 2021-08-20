@@ -16,15 +16,24 @@ namespace ControleFrota.ViewModels
     public class ListagemVeículosViewModel : ViewModelBase
     {
         private readonly VeículoDataService _veículoDataService;
+        private Veículo _veículoSelecionado;
         public ObservableCollection<Veículo> Veículos { get; set; } = new();
-        public Veículo VeículoSelecionado { get; set; }
-        public ICommand Cadastrar { get; set; }
+
+        public Veículo VeículoSelecionado
+        {
+            get => _veículoSelecionado;
+            set { _veículoSelecionado = value; OnPropertyChanged(nameof(VeículoSelecionado)); }
+        }
+
+        public ICommand Cadastrar { get;  }
+        public ICommand Editar { get;  }
 
         public ListagemVeículosViewModel(IServiceProvider serviceProvider)
         {
             _veículoDataService = serviceProvider.GetRequiredService<VeículoDataService>();
 
             Cadastrar = new CadastrarNovoVeículoCommand(this, serviceProvider);
+            Editar = new EditarVeículoCommand(this, serviceProvider);
             PreencheDataGrid();
         }
 
@@ -36,6 +45,46 @@ namespace ControleFrota.ViewModels
                 Veículos.Add(veículo);
             }
         }
+    }
+
+    public class EditarVeículoCommand : ICommand
+    {
+        private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
+        private readonly IMessaging<int> _intMessaging;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly IDialogViewModelFactory _dialogVMFactory;
+        private readonly IDialogsStore _dialogStore;
+
+        public EditarVeículoCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
+        {
+            _listagemVeículosViewModel = listagemVeículosViewModel;
+            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _listagemVeículosViewModel.PropertyChanged += _listagemVeículosViewModel_PropertyChanged;
+        }
+
+        private void _listagemVeículosViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            CanExecuteChanged?.Invoke(this, e);
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return _listagemVeículosViewModel.VeículoSelecionado is not null;
+        }
+
+        public void Execute(object parameter)
+        {
+            _intMessaging.Mensagem = _listagemVeículosViewModel.VeículoSelecionado.ID;
+            _dialogGenerator.ViewModelExibido =
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeVeículos);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            _listagemVeículosViewModel.PreencheDataGrid();
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 
     public class CadastrarNovoVeículoCommand : ICommand
