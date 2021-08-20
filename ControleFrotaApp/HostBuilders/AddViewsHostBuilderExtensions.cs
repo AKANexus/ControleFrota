@@ -1,6 +1,7 @@
 ﻿using System;
 using ControleFrota.Services;
 using ControleFrota.ViewModels;
+using ControleFrota.ViewModels.DialogWindows;
 using ControleFrota.Views;
 using ControleFrota.Views.DialogWindows;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,8 +14,10 @@ namespace ControleFrota.HostBuilders
         public static IHostBuilder AddViews(this IHostBuilder host)
         {
             host.ConfigureServices((_, serviços) => {
-                serviços.AddSingleton<MainView>(CriaMainView);
-                serviços.AddTransient<DialogMainView>();
+                serviços.AddSingleton(CriaMainView);
+                //serviços.AddTransient<DialogMainView>();
+                serviços.AddSingleton(CriaDialogMainView);
+
                 serviços.AddTransient<IDialogGenerator, DialogGenerator>();
             });
             return host;
@@ -23,5 +26,11 @@ namespace ControleFrota.HostBuilders
         {
             return new(serviços.GetRequiredService<MainViewModel>());
         }
+
+        private static DialogMainView CriaDialogMainView(IServiceProvider serviços)
+        {
+            return new(serviços.GetRequiredService<DialogMainViewModel>());
+        }
+
     }
 }
