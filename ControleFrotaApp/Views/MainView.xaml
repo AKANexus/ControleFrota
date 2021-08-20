@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ControleFrota.Views"
+        xmlns:navigators="clr-namespace:ControleFrota.State.Navigators"
         mc:Ignorable="d"
         Title="MainView" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
@@ -15,11 +16,11 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Horizontal" Background="LightGray">
-            <Button Content="Viagens" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato"/>
-            <Button Content="Abastecimentos" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato"/>
-            <Button Content="Manutenções" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato"/>
-            <Button Content="Veículos" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato"/>
-            <Button Content="Funcionários" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato"/>
+            <Button Content="Viagens" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListagemViagens}"/>
+            <Button Content="Abastecimentos" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListagemAbastecimentos}"/>
+            <Button Content="Manutenções" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListaManutenções}"/>
+            <Button Content="Veículos" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListagemVeículos}"/>
+            <Button Content="Funcionários" Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListagemFuncionários}"/>
         </StackPanel>
         <ContentControl Grid.Row="1" Content="{Binding ViewModelAtual}"/>
     </Grid>

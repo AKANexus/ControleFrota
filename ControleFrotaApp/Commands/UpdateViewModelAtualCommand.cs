@@ -9,26 +9,36 @@ namespace ControleFrota.Commands
     {
         private readonly INavigator _navigator;
         private readonly IViewModelFactory _viewModelFactory;
+        private TipoView _tipoView;
 
         public UpdateViewModelAtualCommand(INavigator navigator, IViewModelFactory viewModelFactory)
         {
             _navigator = navigator;
             _viewModelFactory = viewModelFactory;
+            _navigator.StateChanged += _navigator_StateChanged;
+        }
+
+        private void _navigator_StateChanged()
+        {
+            CanExecuteChanged?.Invoke(this, new());
         }
 
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
+            if (parameter is TipoView tipoView)
+            {
+                return tipoView != _tipoView;
+            }
             return true;
         }
 
         public void Execute(object parameter)
         {
-            if (parameter is TipoView)
+            if (parameter is TipoView tipoView)
             {
-                TipoView tipoView = (TipoView)parameter;
-
+                _tipoView = tipoView;
                 _navigator.ViewModelAtual = _viewModelFactory.CreateViewModel(tipoView);
             }
         }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using ControleFrota.Domain;
 using ControleFrota.Services;
@@ -25,8 +27,9 @@ namespace ControleFrota.ViewModels
             set { _veículoSelecionado = value; OnPropertyChanged(nameof(VeículoSelecionado)); }
         }
 
-        public ICommand Cadastrar { get;  }
-        public ICommand Editar { get;  }
+        public bool HitTestVisible { get; set; } = true;
+        public ICommand Cadastrar { get; }
+        public ICommand Editar { get; }
 
         public ListagemVeículosViewModel(IServiceProvider serviceProvider)
         {
@@ -35,15 +38,27 @@ namespace ControleFrota.ViewModels
             Cadastrar = new CadastrarNovoVeículoCommand(this, serviceProvider);
             Editar = new EditarVeículoCommand(this, serviceProvider);
             PreencheDataGrid();
+            Debug.WriteLine("");
         }
 
         public async Task PreencheDataGrid()
         {
             Veículos.Clear();
+
+            HitTestVisible = false;
+            OnPropertyChanged(nameof(HitTestVisible));
+            Mouse.OverrideCursor = Cursors.Wait;
+            Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = Cursors.Wait; });
+
             foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
             {
                 Veículos.Add(veículo);
             }
+
+            
+            HitTestVisible = true;
+            OnPropertyChanged(nameof(HitTestVisible));
+            Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
         }
     }
 

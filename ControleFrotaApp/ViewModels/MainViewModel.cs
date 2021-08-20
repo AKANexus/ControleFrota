@@ -21,7 +21,7 @@ namespace ControleFrota.ViewModels
             _navigator = navigator;
             _viewModelFactory = viewModelFactory;
 
-            //_navigator.StateChanged += _navigator_StateChanged;
+            _navigator.StateChanged += _navigator_StateChanged;
             _busyStateStore = serviceProvider.GetRequiredService<BusyStateStore>();
             _busyStateStore.PropertyChanged += _busyStateStore_PropertyChanged;
             //EditaFormasPagamento = new DialogoFormasDePagamentoCommand(serviceProvider);
@@ -29,7 +29,7 @@ namespace ControleFrota.ViewModels
             UpdateViewModelAtual = new UpdateViewModelAtualCommand(navigator, _viewModelFactory);
             //EditaEmitente = new EditaEmitenteCommand(serviceProvider);
             //AlteraSenhaFuncionario = new AlterarSenhaFuncionárioCommand(this, serviceProvider);
-            UpdateViewModelAtual.Execute(TipoView.ListagemFuncionários);
+            UpdateViewModelAtual.Execute(TipoView.ListagemVeículos);
         }
 
         private void _busyStateStore_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -51,21 +51,21 @@ namespace ControleFrota.ViewModels
 
         public ICommand AlteraSenhaFuncionario { get; set; }
 
-        //private void _navigator_StateChanged()
-        //{
-        //    if (ViewModelAtual is LoginViewModel)
-        //    {
-        //        MenuStripVisibility = Visibility.Collapsed;
-        //        OnPropertyChanged(nameof(MenuStripVisibility));
-        //    }
-        //    else
-        //    {
-        //        MenuStripVisibility = Visibility.Visible;
-        //        OnPropertyChanged(nameof(MenuStripVisibility));
-        //    }
+        private void _navigator_StateChanged()
+        {
+            //if (ViewModelAtual is LoginViewModel)
+            //{
+            //    MenuStripVisibility = Visibility.Collapsed;
+            //    OnPropertyChanged(nameof(MenuStripVisibility));
+            //}
+            //else
+            //{
+            //    MenuStripVisibility = Visibility.Visible;
+            //    OnPropertyChanged(nameof(MenuStripVisibility));
+            //}
 
-        //    OnPropertyChanged(nameof(ViewModelAtual));
-        //}
+            OnPropertyChanged(nameof(ViewModelAtual));
+        }
     }
 
     //public class AlterarSenhaFuncionárioCommand : ICommand
