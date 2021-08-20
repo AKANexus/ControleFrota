@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class Viagem
+    public class Viagem : EntityBase
     {
         public Motorista Motorista { get; set; }
         public string Motivo { get; set; }

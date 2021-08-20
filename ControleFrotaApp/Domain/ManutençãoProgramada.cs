@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class ManutençãoProgramada
+    public class ManutençãoProgramada : EntityBase
     {
         public Veículo Veículo { get; set; }
         public Manutenção? Manutenção { get; set; }

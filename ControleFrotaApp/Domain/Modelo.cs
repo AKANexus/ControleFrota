@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class Modelo
+    public class Modelo : EntityBase
     {
         public string Nome { get; set; }
     }

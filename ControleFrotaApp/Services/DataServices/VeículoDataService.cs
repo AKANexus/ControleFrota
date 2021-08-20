@@ -1,0 +1,58 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using ControleFrota.Domain;
+using ControleFrota.EFCore;
+using Microsoft.EntityFrameworkCore;
+
+namespace ControleFrota.Services.DataServices
+{
+    public class VeículoDataService
+    {
+
+        private readonly MainDbContext _context;
+
+
+        public VeículoDataService(MainDbContext ambiStoreDbContext)
+        {
+            _context = ambiStoreDbContext;
+        }
+
+        public async Task<List<Veículo>> GetAllAsNoTracking()
+        {
+            return await _context.Veículos.AsNoTracking()
+                .Include(x => x.Abastecimentos)
+                .Include(x => x.Manutenções)
+                .Include(x => x.Marca)
+                .Include(x => x.Modelo)
+                .Include(x => x.Viagens)
+                .ToListAsync();
+        }
+
+        public async Task<Veículo> GetVeículoByID(int id)
+        {
+            return await _context.Veículos
+                .Include(x => x.Abastecimentos)
+                .Include(x => x.Manutenções)
+                .Include(x => x.Marca)
+                .Include(x => x.Modelo)
+                .Include(x => x.Viagens)
+                .Include(x => x.ManutençõesProgramadas)
+                .FirstOrDefaultAsync(x => x.ID == id);
+        }
+
+        public async Task<Veículo> GetVeículoByPlaca(string placa)
+        {
+            return await _context.Veículos
+                .Include(x => x.Abastecimentos)
+                .Include(x => x.Manutenções)
+                .Include(x => x.Marca)
+                .Include(x => x.Modelo)
+                .Include(x => x.Viagens)
+                .Include(x => x.ManutençõesProgramadas)
+                .FirstOrDefaultAsync(x => x.Placa == placa);
+        }
+    }
+}

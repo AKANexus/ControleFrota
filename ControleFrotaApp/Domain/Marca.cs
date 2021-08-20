@@ -6,8 +6,18 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class Marca
+    public class Marca : EntityBase
     {
+        public Marca()
+        {
+            
+        }
+
+        public Marca(int id, string nome)
+        {
+            ID = id;
+            Nome = nome;
+        }
         public string Nome { get; set; }
     }
 }

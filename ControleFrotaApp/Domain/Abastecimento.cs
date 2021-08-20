@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class Abastecimento
+    public class Abastecimento : EntityBase
     {
         public decimal KM { get; set; }
         public Enums.Combustível Combustível { get; set; }

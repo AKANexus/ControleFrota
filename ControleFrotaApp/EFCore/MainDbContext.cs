@@ -19,7 +19,14 @@ namespace ControleFrota.EFCore
         {
         }
 
-        public DbSet<Envio> Envios { get; set; }
+        public DbSet<Veículo> Veículos { get; set; }
+        public DbSet<Abastecimento> Abastecimentos { get; set; }
+        public DbSet<Manutenção> Manutençãos { get; set; }
+        public DbSet<ManutençãoProgramada> ManutençãoProgramadas { get; set; }
+        public DbSet<Marca> Marcas { get; set; }
+        public DbSet<Modelo> Modelos { get; set; }
+        public DbSet<Motorista> Motoristas { get; set; }
+        public DbSet<Viagem> Viagems { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -27,6 +34,17 @@ namespace ControleFrota.EFCore
         }
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            List<Marca> marcasSeed = new()
+            {
+                new(1, "Fiat"),
+                new(2, "Ford"),
+                new(3, "Jeep"),
+                new(3, "Renault"),
+                new(4, "Volkswagen"),
+                new(5, "Yamaha"),
+            };
+
+            mb.Entity<Marca>().HasData(marcasSeed);
             base.OnModelCreating(mb);
         }
     }

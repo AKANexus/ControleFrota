@@ -1,4 +1,5 @@
-﻿using ControleFrota.Services;
+﻿using ControleFrota.Domain;
+using ControleFrota.Services;
 using ControleFrota.State;
 using ControleFrota.State.Navigators;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +17,8 @@ namespace ControleFrota.HostBuilders
                 serviços.AddSingleton<IDialogsStore, DialogsStore>();
                 serviços.AddSingleton<IMessaging<int>, Messaging<int>>();
                 serviços.AddSingleton<BusyStateStore>();
+                serviços.AddSingleton<CurrentScopeStore>();
+                serviços.AddScoped<EntityStore<Veículo>>();
             });
 
             return host;
