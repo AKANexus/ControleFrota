@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <local:MenuPadrãoView/>
         <Grid Grid.Row="1" Margin="5">
-            <DataGrid ItemsSource="{Binding Veículos}" SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
+            <DataGrid ItemsSource="{Binding Motoristas}" SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
                       CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
@@ -24,8 +24,8 @@
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Nome" Binding="{Binding Placa}" FontSize="17" />
-                    <DataGridTextColumn Header="CNH" Binding="{Binding Marca.Nome}" FontSize="17"/>
+                    <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" FontSize="17" />
+                    <DataGridTextColumn Header="CNH" Binding="{Binding CNH}" FontSize="17"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

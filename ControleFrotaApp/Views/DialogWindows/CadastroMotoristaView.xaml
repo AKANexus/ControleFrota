@@ -4,9 +4,36 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+             xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:CadastroMotoristaViewModel}"
+             >
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+
+        </Grid.RowDefinitions>
+        <TextBlock Text="Cadastro de Motorista" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+        <TextBlock  Grid.Row="1" Grid.Column="0" Text="Nome" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="1" Grid.ColumnSpan="3" FontWeight="Bold" Grid.Column="1" CharacterCasing="Upper" Text="{Binding NomeMotorista, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="350" d:Text="ARTUR FILIPE GONÇALVES DE SOUSA" Margin="5,10"/>
+        <TextBlock  Grid.Row="2" Grid.Column="0" Text="CNH" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="2" FontWeight="Bold" d:Text="321654778954"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Margin="5,10" Text="{Binding CNHMotorista, UpdateSourceTrigger=PropertyChanged}" />
+        <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Salvar" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Command="{Binding SalvaMotorista}"/>
+            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Command="{Binding CloseCurrentWindow}"/>
+        </Grid>
+
+
+</Grid>
 </UserControl>

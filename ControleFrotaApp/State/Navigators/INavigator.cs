@@ -5,7 +5,8 @@ namespace ControleFrota.State.Navigators
 {
     public enum TipoView
     {
-        ListagemVeículos
+        ListagemVeículos,
+        ListagemFuncionários
     }
 
     public interface INavigator

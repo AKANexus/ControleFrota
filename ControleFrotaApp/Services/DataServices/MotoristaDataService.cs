@@ -25,7 +25,7 @@ namespace ControleFrota.Services.DataServices
                 .ToListAsync();
         }
 
-        public async Task<Motorista> GetVeículoByID(int id)
+        public async Task<Motorista> GetMotoristaByID(int id)
         {
             return await _context.Motoristas
                 .FirstOrDefaultAsync(x => x.ID == id);

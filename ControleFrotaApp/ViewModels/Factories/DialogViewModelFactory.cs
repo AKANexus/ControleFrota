@@ -8,11 +8,13 @@ namespace ControleFrota.ViewModels.Factories
     {
         private readonly CriaDialogViewModel<WorkInProgressViewModel> _createWorkInProgressViewModel;
         private readonly CriaDialogViewModel<CadastroVeículoViewModel> _createCadastroVeículoViewModel;
+        private readonly CriaDialogViewModel<CadastroMotoristaViewModel> _createCadastroMotoristaViewModel;
 
-        public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel, CriaDialogViewModel<CadastroVeículoViewModel> createCadastroVeículoViewModel)
+        public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel, CriaDialogViewModel<CadastroVeículoViewModel> createCadastroVeículoViewModel, CriaDialogViewModel<CadastroMotoristaViewModel> createCadastroMotoristaViewModel)
         {
             _createWorkInProgressViewModel = createWorkInProgressViewModel;
             _createCadastroVeículoViewModel = createCadastroVeículoViewModel;
+            _createCadastroMotoristaViewModel = createCadastroMotoristaViewModel;
         }
 
         public DialogContentViewModelBase CreateDialogContentViewModel(TipoDialogue tipoView)
@@ -21,6 +23,8 @@ namespace ControleFrota.ViewModels.Factories
             {
                 TipoDialogue.WIP => _createWorkInProgressViewModel(),
                 TipoDialogue.CadastroDeVeículos => _createCadastroVeículoViewModel(),
+                TipoDialogue.CadastroDeMotoristas => _createCadastroMotoristaViewModel(),
+
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

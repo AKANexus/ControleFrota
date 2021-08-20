@@ -11,12 +11,18 @@
         <DataTemplate DataType="{x:Type viewmodels:ListagemVeículosViewModel}">
             <views:ListagemVeículosView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ListagemFuncionáriosViewModel}">
+            <views:ListagemFuncionáriosView/>
+        </DataTemplate>
 
         <DataTemplate DataType="{x:Type dialogviewmodels:WorkInProgressViewModel}">
             <dialogWindows:WorkInProgressView/>
         </DataTemplate>
         <DataTemplate DataType="{x:Type dialogviewmodels:CadastroVeículoViewModel}">
             <dialogWindows:CadastroVeículoView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:CadastroMotoristaViewModel}">
+            <dialogWindows:CadastroMotoristaView/>
         </DataTemplate>
     </Application.Resources>
 </Application>
