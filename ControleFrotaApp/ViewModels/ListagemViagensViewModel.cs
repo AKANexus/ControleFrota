@@ -15,104 +15,104 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace ControleFrota.ViewModels
 {
-    public class ListagemVeículosViewModel : ViewModelBase
+    public class ListagemViagensViewModel : ViewModelBase
     {
-        private readonly VeículoDataService _veículoDataService;
-        private Veículo _veículoSelecionada;
-        public ObservableCollection<Veículo> Veículos { get; set; } = new();
+        private readonly ViagemDataService _viagemDataService;
+        private Viagem _viagemSelecionada;
+        public ObservableCollection<Viagem> Viagens { get; set; } = new();
 
-        public Veículo VeículoSelecionado
+        public Viagem ViagemSelecionada
         {
-            get => _veículoSelecionada;
-            set { _veículoSelecionada = value; OnPropertyChanged(nameof(VeículoSelecionado)); }
+            get => _viagemSelecionada;
+            set { _viagemSelecionada = value; OnPropertyChanged(nameof(ViagemSelecionada)); }
         }
 
         public bool HitTestVisible { get; set; } = true;
         public ICommand Cadastrar { get; }
         public ICommand Editar { get; }
 
-        public ListagemVeículosViewModel(IServiceProvider serviceProvider)
+        public ListagemViagensViewModel(IServiceProvider serviceProvider)
         {
-            _veículoDataService = serviceProvider.GetRequiredService<VeículoDataService>();
+            _viagemDataService = serviceProvider.GetRequiredService<ViagemDataService>();
 
-            Cadastrar = new CadastrarNovaveículoCommand(this, serviceProvider);
-            Editar = new EditarveículoCommand(this, serviceProvider);
+            Cadastrar = new CadastrarNovoVeículoCommand(this, serviceProvider);
+            Editar = new EditarVeículoCommand(this, serviceProvider);
             PreencheDataGrid();
             Debug.WriteLine("");
         }
 
         public async Task PreencheDataGrid()
         {
-            Veículos.Clear();
+            Viagens.Clear();
 
             HitTestVisible = false;
             OnPropertyChanged(nameof(HitTestVisible));
             Mouse.OverrideCursor = Cursors.Wait;
             Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = Cursors.Wait; });
 
-            foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
+            foreach (Viagem viagem in await _viagemDataService.GetAllAsNoTracking())
             {
-                Veículos.Add(veículo);
+                Viagens.Add(viagem);
             }
 
-            
+
             HitTestVisible = true;
             OnPropertyChanged(nameof(HitTestVisible));
             Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
         }
     }
 
-    public class EditarveículoCommand : ICommand
+    public class EditarVeículoCommand : ICommand
     {
-        private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
+        private readonly ListagemViagensViewModel _ListagemViagensViewModel;
         private readonly IMessaging<int> _intMessaging;
         private readonly IDialogGenerator _dialogGenerator;
         private readonly IDialogViewModelFactory _dialogVMFactory;
         private readonly IDialogsStore _dialogStore;
 
-        public EditarveículoCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
+        public EditarVeículoCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
         {
-            _listagemVeículosViewModel = listagemVeículosViewModel;
+            _ListagemViagensViewModel = ListagemViagensViewModel;
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
             _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
             _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
             _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
-            _listagemVeículosViewModel.PropertyChanged += _listagemVeículosViewModel_PropertyChanged;
+            _ListagemViagensViewModel.PropertyChanged += _ListagemViagensViewModel_PropertyChanged;
         }
 
-        private void _listagemVeículosViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void _ListagemViagensViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             CanExecuteChanged?.Invoke(this, e);
         }
 
         public bool CanExecute(object parameter)
         {
-            return _listagemVeículosViewModel.VeículoSelecionado is not null;
+            return _ListagemViagensViewModel.ViagemSelecionada is not null;
         }
 
         public void Execute(object parameter)
         {
-            _intMessaging.Mensagem = _listagemVeículosViewModel.VeículoSelecionado.ID;
+            _intMessaging.Mensagem = _ListagemViagensViewModel.ViagemSelecionada.ID;
             _dialogGenerator.ViewModelExibido =
-                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeVeículos);
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeViagens);
             _dialogStore.RegisterDialog(_dialogGenerator);
-            _listagemVeículosViewModel.PreencheDataGrid();
+            _ListagemViagensViewModel.PreencheDataGrid();
         }
 
         public event EventHandler CanExecuteChanged;
     }
 
-    public class CadastrarNovaveículoCommand : ICommand
+    public class CadastrarNovoVeículoCommand : ICommand
     {
-        private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
+        private readonly ListagemViagensViewModel _ListagemViagensViewModel;
         private readonly IMessaging<int> _intMessaging;
         private readonly IDialogGenerator _dialogGenerator;
         private readonly IDialogViewModelFactory _dialogVMFactory;
         private readonly IDialogsStore _dialogStore;
 
-        public CadastrarNovaveículoCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
+        public CadastrarNovoVeículoCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
         {
-            _listagemVeículosViewModel = listagemVeículosViewModel;
+            _ListagemViagensViewModel = ListagemViagensViewModel;
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
             _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
             _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
@@ -128,9 +128,9 @@ namespace ControleFrota.ViewModels
         {
             _intMessaging.Mensagem = default;
             _dialogGenerator.ViewModelExibido =
-                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeVeículos);
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeViagens);
             _dialogStore.RegisterDialog(_dialogGenerator);
-            _listagemVeículosViewModel.PreencheDataGrid();
+            _ListagemViagensViewModel.PreencheDataGrid();
         }
 
         public event EventHandler CanExecuteChanged;

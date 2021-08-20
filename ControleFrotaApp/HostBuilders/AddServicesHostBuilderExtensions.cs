@@ -19,9 +19,7 @@ namespace ControleFrota.HostBuilders
                 serviços.AddScoped<MarcaDataService>();
                 serviços.AddScoped<ModeloDataService>();
                 serviços.AddScoped<MotoristaDataService>();
-
-
-
+                serviços.AddScoped<ViagemDataService>();
             });
             return host;
         }

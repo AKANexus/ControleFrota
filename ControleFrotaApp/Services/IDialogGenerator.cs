@@ -18,7 +18,8 @@ namespace ControleFrota.Services
     {
         WIP,
         CadastroDeVeículos,
-        CadastroDeMotoristas
+        CadastroDeMotoristas,
+        CadastroDeViagens
     }
     public interface IDialogGenerator
     {

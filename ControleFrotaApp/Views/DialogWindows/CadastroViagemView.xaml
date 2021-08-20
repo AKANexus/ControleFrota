@@ -1,0 +1,77 @@
+﻿<UserControl x:Class="ControleFrota.Views.DialogWindows.CadastroViagemView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
+             xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:CadastroViagemViewModel}"
+             >
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Cadastro de Viagem" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+        <TextBlock  Grid.Row="1" Grid.Column="0" Text="Motorista" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                  HorizontalAlignment="Left" MinWidth="250" Margin="5,10" ItemsSource="{Binding Motoristas}"
+                  DisplayMemberPath="Nome" SelectedValuePath="ID"
+                  SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding MotoristaSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock  Grid.Row="1" Grid.Column="3" Text="Marca" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="4" VerticalAlignment="Center"
+                  HorizontalAlignment="Left" MinWidth="125" Margin="5,10" ItemsSource="{Binding Veículos}"
+                  DisplayMemberPath="Placa" SelectedValuePath="ID"
+                  SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding VeículoSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock  Grid.Row="2" Grid.Column="0" Text="KM Inicial" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Text="{Binding KMInicial}"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
+
+        <TextBlock  Grid.Row="3" Grid.Column="0" Text="Saída" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <xctk:DateTimePicker FontSize="16" Grid.Row="3" FontWeight="Normal" Value="{Binding Saída}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="125" Margin="5,10"/>
+
+
+        <TextBlock  Grid.Row="2" Grid.Column="3" Text="KM Final" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Text="{Binding KMFinal}"  Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
+
+        <TextBlock  Grid.Row="3" Grid.Column="3" Text="Retorno" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <xctk:DateTimePicker FontSize="16" Grid.Row="3" FontWeight="Normal" Value="{Binding Saída}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="125" Margin="5,10"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Motivo" FontSize="16" HorizontalAlignment="Right"
+                   VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
+        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding KMFinal}" Grid.Column="1" Grid.ColumnSpan="4"
+                 VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" />
+
+        <DataGrid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Height="100" ItemsSource="{Binding ViagemSelecionada.Gastos}"
+                  HeadersVisibility="Column" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Header="TIPO DE GASTO" Width="*" ItemsSource="{Binding TipoGastos}" SelectedItemBinding="{Binding TipoGasto}"/>
+                <DataGridTextColumn Header="VALOR" Width="*" Binding="{Binding Valor, StringFormat=C2}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Salvar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding SalvaVeículo}"/>
+            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding CloseCurrentWindow}"/>
+        </Grid>
+    </Grid>
+</UserControl>
