@@ -5,18 +5,18 @@ namespace ControleFrota.ViewModels.Factories
 {
     public class ViewModelFactory : IViewModelFactory
     {
-        private readonly CriaViewModel<TelaInicialViewModel> _createVendasViewModelFactory;
+        private readonly CriaViewModel<ListagemVeículosViewModel> _createListagemVeículosViewModel;
 
-        public ViewModelFactory(CriaViewModel<TelaInicialViewModel> createVendasViewModelFactory)
+        public ViewModelFactory(CriaViewModel<ListagemVeículosViewModel> createListagemVeículosViewModel)
         {
-            _createVendasViewModelFactory = createVendasViewModelFactory;
+            _createListagemVeículosViewModel = createListagemVeículosViewModel;
         }
 
         public ViewModelBase CreateViewModel(TipoView tipoView)
         {
             return tipoView switch
             {
-                TipoView.TelaInicial => _createVendasViewModelFactory(),
+                TipoView.ListagemVeículos => _createListagemVeículosViewModel(),
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

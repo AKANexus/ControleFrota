@@ -39,9 +39,9 @@ namespace ControleFrota.EFCore
                 new(1, "Fiat"),
                 new(2, "Ford"),
                 new(3, "Jeep"),
-                new(3, "Renault"),
-                new(4, "Volkswagen"),
-                new(5, "Yamaha"),
+                new(4, "Renault"),
+                new(5, "Volkswagen"),
+                new(6, "Yamaha"),
             };
 
             mb.Entity<Marca>().HasData(marcasSeed);

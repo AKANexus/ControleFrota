@@ -4,7 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+using ControleFrota.Commands;
 using ControleFrota.Domain;
+using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
 using ControleFrota.State;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,7 +21,10 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly VeículoDataService _veículoDataService;
         private readonly MarcaDataService _marcaDataService;
         private readonly ModeloDataService _modeloDataService;
-        private readonly EntityStore<Veículo> _veículoEntityStore;
+
+        private readonly IMessaging<int> _intMessaging;
+        //private readonly EntityStore<Veículo> _veículoEntityStore;
+
         public Veículo VeículoSelecionado { get; set; }
 
         public string PlacaVeículo
@@ -39,16 +46,26 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public ObservableCollection<Modelo> Modelos { get; set; } = new();
 
+        public ICommand CloseCurrentWindow { get; set; }
+
+        public ICommand SalvaVeículo { get; set; }
+
         public CadastroVeículoViewModel(IServiceProvider serviceProvider)
         {
             _currentScopeStore = serviceProvider.GetRequiredService<CurrentScopeStore>();
             _currentScopeStore.CriaNovoEscopo();
 
+            CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
+            SalvaVeículo = new SalvaVeículoCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
             _marcaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MarcaDataService>();
             _modeloDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ModeloDataService>();
 
-            _veículoEntityStore = _currentScopeStore.PegaEscopoAtual().GetRequiredService<EntityStore<Veículo>>();
+            //_veículoEntityStore = _currentScopeStore.PegaEscopoAtual().GetRequiredService<EntityStore<Veículo>>();
+            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+
+
             PreencheCampos();
         }
 
@@ -64,13 +81,52 @@ namespace ControleFrota.ViewModels.DialogWindows
                 Modelos.Add(modelo);
             }
 
-            if (_veículoEntityStore.Entity is null)
+            if (_intMessaging.Mensagem == default)
             {
                 VeículoSelecionado = new Veículo();
                 return;
             }
 
-            VeículoSelecionado = await _veículoDataService.GetVeículoByID(_veículoEntityStore.Entity.ID);
+            VeículoSelecionado = await _veículoDataService.GetVeículoByID(_intMessaging.Mensagem);
         }
+    }
+
+    public class SalvaVeículoCommand : AsyncCommandBase
+    {
+        private readonly CadastroVeículoViewModel _cadastroVeículoViewModel;
+        private readonly CurrentScopeStore _currentScope;
+        private readonly VeículoDataService _veículoDataService;
+        private readonly IDialogsStore _dialogStore;
+
+        public SalvaVeículoCommand(CadastroVeículoViewModel cadastroVeículoViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
+        {
+            _cadastroVeículoViewModel = cadastroVeículoViewModel;
+            _cadastroVeículoViewModel.PropertyChanged += _cadastroVeículoViewModel_PropertyChanged;
+            _currentScope = serviceProvider.GetRequiredService<CurrentScopeStore>();
+            _veículoDataService = _currentScope.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+        }
+
+        private void _cadastroVeículoViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            CanExecuteChanged?.Invoke(this, e);
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            if (String.IsNullOrWhiteSpace(_cadastroVeículoViewModel.VeículoSelecionado.Placa)) return false;
+            if (String.IsNullOrWhiteSpace(_cadastroVeículoViewModel.VeículoSelecionado.RENAVAM)) return false;
+            if (_cadastroVeículoViewModel.VeículoSelecionado.Modelo is null) return false;
+            if (_cadastroVeículoViewModel.VeículoSelecionado.Marca is null) return false;
+            return true;
+        }
+
+        protected override async Task ExecuteAsync(object parameter)
+        {
+            await _veículoDataService.AddOrUpdate(_cadastroVeículoViewModel.VeículoSelecionado);
+            _dialogStore.CloseDialog(DialogResult.OK);
+        }
+
+        public override event EventHandler CanExecuteChanged;
     }
 }

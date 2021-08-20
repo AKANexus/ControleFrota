@@ -15,18 +15,21 @@ namespace ControleFrota.HostBuilders
             {
                 serviços.AddSingleton<IViewModelFactory, ViewModelFactory>();
                 serviços.AddTransient<MainViewModel>();
-                serviços.AddTransient<TelaInicialViewModel>();
+                serviços.AddTransient<ListagemVeículosViewModel>();
                 
 
                 serviços.AddSingleton<IDialogViewModelFactory, DialogViewModelFactory>();
                 serviços.AddTransient<DialogMainViewModel>();
                 serviços.AddTransient<WorkInProgressViewModel>();
+                serviços.AddTransient<CadastroVeículoViewModel>();
 
-                serviços.AddSingleton<CriaViewModel<TelaInicialViewModel>>(serviceProvider =>
-                    serviceProvider.GetRequiredService<TelaInicialViewModel>);
+                serviços.AddSingleton<CriaViewModel<ListagemVeículosViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<ListagemVeículosViewModel>);
 
                 serviços.AddSingleton<CriaDialogViewModel<WorkInProgressViewModel>>(serviceProvider =>
-                    serviceProvider.GetRequiredService<WorkInProgressViewModel>);
+                    serviceProvider.GetRequiredService<WorkInProgressViewModel>); 
+                serviços.AddSingleton<CriaDialogViewModel<CadastroVeículoViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<CadastroVeículoViewModel>);
 
 
             });

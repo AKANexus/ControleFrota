@@ -36,8 +36,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Salvar" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5"/>
-            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5"/>
+            <Button Content="Salvar" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Command="{Binding SalvaVeículo}"/>
+            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Center" HorizontalAlignment="Center" Padding="5" Command="{Binding CloseCurrentWindow}"/>
         </Grid>
     </Grid>
 </UserControl>

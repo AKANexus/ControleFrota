@@ -29,7 +29,7 @@ namespace ControleFrota.ViewModels
             UpdateViewModelAtual = new UpdateViewModelAtualCommand(navigator, _viewModelFactory);
             //EditaEmitente = new EditaEmitenteCommand(serviceProvider);
             //AlteraSenhaFuncionario = new AlterarSenhaFuncionárioCommand(this, serviceProvider);
-            UpdateViewModelAtual.Execute(TipoView.TelaInicial);
+            UpdateViewModelAtual.Execute(TipoView.ListagemVeículos);
         }
 
         private void _busyStateStore_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

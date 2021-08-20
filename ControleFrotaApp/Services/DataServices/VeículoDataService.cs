@@ -54,5 +54,12 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.ManutençõesProgramadas)
                 .FirstOrDefaultAsync(x => x.Placa == placa);
         }
+
+        public async Task<Veículo> AddOrUpdate(Veículo veículo)
+        {
+            _context.Update(veículo);
+            await _context.SaveChangesAsync();
+            return veículo;
+        }
     }
 }

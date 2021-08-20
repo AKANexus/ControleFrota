@@ -45,10 +45,10 @@ namespace ControleFrota
             return Host.CreateDefaultBuilder(args)
                 .AddConfiguration()
                 .AddDbContext()
-                .AddServices()
-                .AddStores()
-                .AddViewModels()
-                .AddViews()
+                //.AddServices()
+                //.AddStores()
+                //.AddViewModels()
+                //.AddViews()
                 ;
         }
 

@@ -12,7 +12,7 @@ namespace ControleFrota.HostBuilders
         {
             host.ConfigureServices((_, serviços) =>
             {
-                string connString = $"server=192.168.10.250;userid=ControleFrota;password=masterkey;database=AmbiStore;ConvertZeroDateTime=True";
+                string connString = $"server=192.168.10.250;userid=AmbiSuite;password=masterkey;database=AmbiStore;ConvertZeroDateTime=True";
                 ServerVersion version = new MySqlServerVersion(new Version(8, 0, 26));
                 void ConfigureDbContext(DbContextOptionsBuilder c)
                 {
