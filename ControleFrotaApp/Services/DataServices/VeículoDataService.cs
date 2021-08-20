@@ -31,7 +31,7 @@ namespace ControleFrota.Services.DataServices
                 .ToListAsync();
         }
 
-        public async Task<Veículo> GetVeículoByID(int id)
+        public async Task<Veículo> GetViagemByID(int id)
         {
             return await _context.Veículos
                 .Include(x => x.Abastecimentos)
