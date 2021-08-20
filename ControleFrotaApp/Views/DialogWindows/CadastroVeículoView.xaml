@@ -20,17 +20,17 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Cadastro de Veículo" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10"></TextBlock>
+        <TextBlock Text="Cadastro de Veículo" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
         <TextBlock  Grid.Row="1" Grid.Column="0" Text="Placa" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <TextBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="100" d:Text="BRQ-6728" Margin="5,10"/>
+        <TextBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" CharacterCasing="Upper" Text="{Binding PlacaVeículo, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="100" d:Text="BRQ-6728" Margin="5,10"/>
         <TextBlock  Grid.Row="1" Grid.Column="2" Text="Marca" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Marcas}" DisplayMemberPath="Nome"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Marcas}" DisplayMemberPath="Nome" SelectedValuePath="ID" SelectedItem="{Binding MarcaSelecionada, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding MarcaSelecionada.ID, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock  Grid.Row="2" Grid.Column="2" Text="Modelo" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <ComboBox FontSize="16" Grid.Row="2" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Modelos}" DisplayMemberPath="Nome"/>
+        <ComboBox FontSize="16" Grid.Row="2" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Modelos}" DisplayMemberPath="Nome" SelectedValuePath="ID" SelectedItem="{Binding ModeloSelecionado, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding ModeloSelecionado.ID, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock  Grid.Row="2" Grid.Column="0" Text="RENAVAM" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="110" d:Text="01175498960" Margin="5,10"/>
+        <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Text="{Binding RENAVAM}"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
         <TextBlock  Grid.Row="3" Grid.Column="0" Text="Último licenciamento" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,01" FontWeight="DemiBold"/>
-        <DatePicker FontSize="16" Grid.Row="3" FontWeight="Normal" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="110" d:Text="01175498960" Margin="5,10"/>
+        <DatePicker FontSize="16" Grid.Row="3" FontWeight="Normal" SelectedDate="{Binding ÚltimoLicenciamento, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="110" d:Text="01175498960" Margin="5,10"/>
         <Grid Grid.Row="3" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>

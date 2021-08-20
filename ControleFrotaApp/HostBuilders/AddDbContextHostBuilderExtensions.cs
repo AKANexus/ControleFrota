@@ -12,9 +12,9 @@ namespace ControleFrota.HostBuilders
         {
             host.ConfigureServices((_, serviços) =>
             {
-                string connString = $"server=192.168.10.250;userid=AmbiSuite;password=masterkey;database=AmbiStore;ConvertZeroDateTime=True";
-                ServerVersion version = new MySqlServerVersion(new Version(8, 0, 26));
-                void ConfigureDbContext(DbContextOptionsBuilder c)
+                string connString = $"server=192.168.10.250;userid=AmbiSuite;password=;database=ControleFrota;ConvertZeroDateTime=True";
+                ServerVersion version = new MySqlServerVersion(new Version(8, 0, 23));
+                Action<DbContextOptionsBuilder> configureDbContext = c =>
                 {
                     c.UseMySql(connString, version, x =>
                     {
@@ -22,10 +22,9 @@ namespace ControleFrota.HostBuilders
                         x.EnableRetryOnFailure(3);
                     });
                     c.EnableSensitiveDataLogging();
-                }
-
-                serviços.AddSingleton(new MainDbContextFactory(ConfigureDbContext));
-                serviços.AddDbContext<MainDbContext>(ConfigureDbContext);
+                };
+                serviços.AddSingleton<MainDbContextFactory>(new MainDbContextFactory(configureDbContext));
+                serviços.AddDbContext<MainDbContext>(configureDbContext);
             });
             return host;
         }

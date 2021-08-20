@@ -3,14 +3,16 @@ using System;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210820161042_InitialD")]
+    partial class InitialD
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -163,15 +165,10 @@ namespace ControleFrota.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("MarcaID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
                     b.HasKey("ID");
-
-                    b.HasIndex("MarcaID");
 
                     b.ToTable("Modelos");
                 });
@@ -292,15 +289,6 @@ namespace ControleFrota.Migrations
                     b.Navigation("Manutenção");
 
                     b.Navigation("Veículo");
-                });
-
-            modelBuilder.Entity("ControleFrota.Domain.Modelo", b =>
-                {
-                    b.HasOne("ControleFrota.Domain.Marca", "Marca")
-                        .WithMany()
-                        .HasForeignKey("MarcaID");
-
-                    b.Navigation("Marca");
                 });
 
             modelBuilder.Entity("ControleFrota.Domain.Veículo", b =>

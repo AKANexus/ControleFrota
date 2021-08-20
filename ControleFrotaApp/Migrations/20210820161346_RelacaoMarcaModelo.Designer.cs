@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20210820155320_InitialD")]
-    partial class InitialD
+    [Migration("20210820161346_RelacaoMarcaModelo")]
+    partial class RelacaoMarcaModelo
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -165,10 +165,15 @@ namespace ControleFrota.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
+                    b.Property<int?>("MarcaID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("MarcaID");
 
                     b.ToTable("Modelos");
                 });
@@ -289,6 +294,15 @@ namespace ControleFrota.Migrations
                     b.Navigation("Manutenção");
 
                     b.Navigation("Veículo");
+                });
+
+            modelBuilder.Entity("ControleFrota.Domain.Modelo", b =>
+                {
+                    b.HasOne("ControleFrota.Domain.Marca", "Marca")
+                        .WithMany()
+                        .HasForeignKey("MarcaID");
+
+                    b.Navigation("Marca");
                 });
 
             modelBuilder.Entity("ControleFrota.Domain.Veículo", b =>

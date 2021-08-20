@@ -15,7 +15,7 @@ namespace ControleFrota.Services.DataServices
 
         public ModeloDataService(MainDbContext ambiStoreDbContext)
         {
-
+            _context = ambiStoreDbContext;
         }
 
         public async Task<List<Modelo>> GetAllAsNoTracking()
@@ -26,6 +26,11 @@ namespace ControleFrota.Services.DataServices
         public async Task<List<Modelo>> GetAll()
         {
             return await _context.Modelos.ToListAsync();
+        }
+
+        public async Task<List<Modelo>> GetAllByMarca(Marca marca)
+        {
+            return await _context.Modelos.Where(x=>x.Marca.ID == marca.ID).ToListAsync();
         }
     }
 }

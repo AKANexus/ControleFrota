@@ -1,4 +1,5 @@
 ﻿using ControleFrota.Services;
+using ControleFrota.Services.DataServices;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -14,6 +15,11 @@ namespace ControleFrota.HostBuilders
 
                 serviços.AddSingleton<IMessaging<(string, string)>, Messaging<(string, string)>>();
                 serviços.AddSingleton<IMessaging<bool>, Messaging<bool>>();
+                serviços.AddScoped<VeículoDataService>();
+                serviços.AddScoped<MarcaDataService>();
+                serviços.AddScoped<ModeloDataService>();
+
+
 
             });
             return host;

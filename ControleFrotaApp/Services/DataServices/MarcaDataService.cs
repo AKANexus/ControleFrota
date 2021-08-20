@@ -15,7 +15,7 @@ namespace ControleFrota.Services.DataServices
 
         public MarcaDataService(MainDbContext ambiStoreDbContext)
         {
-
+            _context = ambiStoreDbContext;
         }
 
         public async Task<List<Marca>> GetAllAsNoTracking()

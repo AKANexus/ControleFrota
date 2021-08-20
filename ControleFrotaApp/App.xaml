@@ -8,12 +8,15 @@
              xmlns:views="clr-namespace:ControleFrota.Views">
     <Application.Resources>
 
-        <DataTemplate DataType="{x:Type viewmodels:TelaInicialViewModel}">
-            <views:TelaInicial/>
+        <DataTemplate DataType="{x:Type viewmodels:ListagemVeículosViewModel}">
+            <views:ListagemVeículosView/>
         </DataTemplate>
 
         <DataTemplate DataType="{x:Type dialogviewmodels:WorkInProgressViewModel}">
             <dialogWindows:WorkInProgressView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:CadastroVeículoViewModel}">
+            <dialogWindows:CadastroVeículoView/>
         </DataTemplate>
     </Application.Resources>
 </Application>

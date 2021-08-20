@@ -8,6 +8,7 @@ namespace ControleFrota.Domain
 {
     public class Modelo : EntityBase
     {
+        public Marca Marca { get; set; }
         public string Nome { get; set; }
     }
 }

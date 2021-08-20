@@ -16,7 +16,7 @@ namespace ControleFrota.ViewModels
     public class ListagemVeículosViewModel : ViewModelBase
     {
         private readonly VeículoDataService _veículoDataService;
-        public ObservableCollection<Veículo> Veículos { get; set; }
+        public ObservableCollection<Veículo> Veículos { get; set; } = new();
         public Veículo VeículoSelecionado { get; set; }
         public ICommand Cadastrar { get; set; }
 
@@ -30,6 +30,7 @@ namespace ControleFrota.ViewModels
 
         public async Task PreencheDataGrid()
         {
+            Veículos.Clear();
             foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
             {
                 Veículos.Add(veículo);
@@ -56,7 +57,8 @@ namespace ControleFrota.ViewModels
 
         public bool CanExecute(object parameter)
         {
-            return _listagemVeículosViewModel.VeículoSelecionado is not null;
+            //return _listagemVeículosViewModel.VeículoSelecionado is not null;
+            return true;
         }
 
         public void Execute(object parameter)

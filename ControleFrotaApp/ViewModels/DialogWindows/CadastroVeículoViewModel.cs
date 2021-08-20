@@ -27,6 +27,40 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public Veículo VeículoSelecionado { get; set; }
 
+
+        public ObservableCollection<Marca> Marcas { get; set; } = new();
+
+        public ObservableCollection<Modelo> Modelos { get; set; } = new();
+
+        public ICommand CloseCurrentWindow { get; set; }
+
+        public ICommand SalvaVeículo { get; set; }
+
+        public Marca MarcaSelecionada
+        {
+            get
+            {
+                return VeículoSelecionado?.Marca;
+            }
+            set
+            {
+                VeículoSelecionado.Marca = value;
+                OnPropertyChanged(nameof(MarcaSelecionada));
+                PreencheModelos();
+            }
+        }
+        public Modelo ModeloSelecionado
+        {
+            get
+            {
+                return VeículoSelecionado?.Modelo;
+            }
+            set
+            {
+                VeículoSelecionado.Modelo = value;
+                OnPropertyChanged(nameof(ModeloSelecionado));
+            }
+        }
         public string PlacaVeículo
         {
             get
@@ -39,16 +73,29 @@ namespace ControleFrota.ViewModels.DialogWindows
                 placaDigitada = placaDigitada.Replace("-", "");
                 if (placaDigitada.Length != 7 || VeículoSelecionado is null) return;
                 VeículoSelecionado.Placa = $"{placaDigitada.Substring(0, 3)}-{placaDigitada.Substring(3, 4)}";
+                OnPropertyChanged(nameof(PlacaVeículo));
+            }
+        }
+        public string RENAVAM
+        {
+            get => VeículoSelecionado?.RENAVAM;
+            set
+            {
+                VeículoSelecionado.RENAVAM = value;
+                OnPropertyChanged(nameof(RENAVAM));
             }
         }
 
-        public ObservableCollection<Marca> Marcas { get; set; } = new();
+        public DateTime ÚltimoLicenciamento
+        {
+            get => VeículoSelecionado?.ÚltimoLicenciamento ?? DateTime.Now;
+            set
+            {
+                VeículoSelecionado.ÚltimoLicenciamento = value;
+                OnPropertyChanged(nameof(ÚltimoLicenciamento));
+            }
+        }
 
-        public ObservableCollection<Modelo> Modelos { get; set; } = new();
-
-        public ICommand CloseCurrentWindow { get; set; }
-
-        public ICommand SalvaVeículo { get; set; }
 
         public CadastroVeículoViewModel(IServiceProvider serviceProvider)
         {
@@ -76,11 +123,6 @@ namespace ControleFrota.ViewModels.DialogWindows
                 Marcas.Add(marca);
             }
 
-            foreach (Modelo modelo in await _modeloDataService.GetAll())
-            {
-                Modelos.Add(modelo);
-            }
-
             if (_intMessaging.Mensagem == default)
             {
                 VeículoSelecionado = new Veículo();
@@ -88,6 +130,14 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
 
             VeículoSelecionado = await _veículoDataService.GetVeículoByID(_intMessaging.Mensagem);
+        }
+
+        private async Task PreencheModelos()
+        {
+            foreach (Modelo modelo in await _modeloDataService.GetAllByMarca(VeículoSelecionado.Marca))
+            {
+                Modelos.Add(modelo);
+            }
         }
     }
 
@@ -114,10 +164,10 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public override bool CanExecute(object parameter)
         {
-            if (String.IsNullOrWhiteSpace(_cadastroVeículoViewModel.VeículoSelecionado.Placa)) return false;
-            if (String.IsNullOrWhiteSpace(_cadastroVeículoViewModel.VeículoSelecionado.RENAVAM)) return false;
-            if (_cadastroVeículoViewModel.VeículoSelecionado.Modelo is null) return false;
-            if (_cadastroVeículoViewModel.VeículoSelecionado.Marca is null) return false;
+            if (String.IsNullOrWhiteSpace(_cadastroVeículoViewModel.VeículoSelecionado?.Placa)) return false;
+            if (String.IsNullOrWhiteSpace(_cadastroVeículoViewModel.VeículoSelecionado?.RENAVAM)) return false;
+            if (_cadastroVeículoViewModel.VeículoSelecionado?.Modelo is null) return false;
+            if (_cadastroVeículoViewModel.VeículoSelecionado?.Marca is null) return false;
             return true;
         }
 
