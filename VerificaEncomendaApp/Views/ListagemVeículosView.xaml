@@ -1,0 +1,40 @@
+﻿<UserControl x:Class="ControleFrota.Views.ListagemVeículosView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControleFrota.Views"
+             xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemVeículosViewModel}"
+             d:DesignHeight="1080" d:DesignWidth="1920">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <local:MenuPadrãoView/>
+        <Grid Grid.Row="1" Margin="5">
+            <DataGrid ItemsSource="{Binding Veículos}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="FontWeight" Value="DemiBold"/>
+                        <Setter Property="Padding" Value="15,5"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Placa" Binding="{Binding Placa}"/>
+                    <DataGridTextColumn Header="Marca" Binding="{Binding Marca.Nome}"/>
+                    <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo.Nome}"/>
+                    <DataGridTextColumn Header="Quilometragem" Binding="{Binding ÚltimaQuilometragemInformada, StringFormat='{}{0:#,## Km'}"/>
+                    <DataGridTextColumn Header="RENAVAM" Binding="{Binding RENAVAM}"/>
+                    <DataGridTextColumn Header="Último Licenciamento" Binding="{Binding ÚltimoLicenciamento}"/>
+                    <DataGridTextColumn Header="Último Abastecimento" Binding="{Binding ÚltimoAbastecimento}"/>
+                    <DataGridTextColumn Header="Última Manutenção" Binding="{Binding ÚltimaManutenção}"/>
+                    <DataGridTextColumn Header="Último Motorista" Binding="{Binding ÚltimoMotorista}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</UserControl>

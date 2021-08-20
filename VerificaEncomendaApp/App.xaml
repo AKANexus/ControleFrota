@@ -1,0 +1,19 @@
+﻿<Application x:Class="ControleFrota.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:ControleFrota"
+             xmlns:dialogWindows="clr-namespace:ControleFrota.Views.DialogWindows"
+             xmlns:dialogviewmodels="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             xmlns:viewmodels="clr-namespace:ControleFrota.ViewModels"
+             xmlns:views="clr-namespace:ControleFrota.Views">
+    <Application.Resources>
+
+        <DataTemplate DataType="{x:Type viewmodels:TelaInicialViewModel}">
+            <views:TelaInicial/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type dialogviewmodels:WorkInProgressViewModel}">
+            <dialogWindows:WorkInProgressView/>
+        </DataTemplate>
+    </Application.Resources>
+</Application>
