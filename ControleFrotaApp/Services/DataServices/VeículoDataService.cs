@@ -28,6 +28,7 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Marca)
                 .Include(x => x.Modelo)
                 .Include(x => x.Viagens)
+                .ThenInclude(x=>x.Motorista)
                 .ToListAsync();
         }
 
@@ -42,7 +43,7 @@ namespace ControleFrota.Services.DataServices
                 .ToListAsync();
         }
 
-        public async Task<Veículo> GetViagemByID(int id)
+        public async Task<Veículo> GetVeículoByID(int id)
         {
             return await _context.Veículos
                 .Include(x => x.Abastecimentos)

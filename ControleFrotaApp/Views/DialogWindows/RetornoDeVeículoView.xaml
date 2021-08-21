@@ -1,10 +1,11 @@
-﻿<UserControl x:Class="ControleFrota.Views.DialogWindows.RetornoDeVeículo"
+﻿<UserControl x:Class="ControleFrota.Views.DialogWindows.RetornoDeVeículoView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
-             mc:Ignorable="d" 
+             xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:RetornoDeVeículoViewModel}"
              Width="400">
     <UserControl.Resources>
         <CollectionViewSource x:Key="Saporra" Source="{Binding TipoGastos}"/>

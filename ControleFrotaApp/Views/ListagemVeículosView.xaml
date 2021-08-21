@@ -27,7 +27,7 @@
                     <DataGridTextColumn Header="Placa" Binding="{Binding Placa}" FontSize="17" />
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca.Nome}" FontSize="17"/>
                     <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo.Nome}" FontSize="17"/>
-                    <DataGridTextColumn Header="Quilometragem" Binding="{Binding ÚltimaQuilometragemInformada, StringFormat={}{0} km}" FontSize="17"/>
+                    <DataGridTextColumn Header="Quilometragem" Binding="{Binding ÚltimaQuilometragemInformada, StringFormat={}{0:N0} km}" FontSize="17"/>
                     <DataGridTextColumn Header="RENAVAM" Binding="{Binding RENAVAM}" FontSize="17"/>
                     <DataGridTextColumn Header="Último Licenciamento" Binding="{Binding ÚltimoLicenciamento, StringFormat=dd MMM yyyy}" FontSize="17"/>
                     <DataGridTextColumn Header="Último Abastecimento" Binding="{Binding ÚltimoAbastecimento}" FontSize="17"/>

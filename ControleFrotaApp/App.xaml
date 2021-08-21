@@ -30,5 +30,11 @@
         <DataTemplate DataType="{x:Type dialogviewmodels:CadastroViagemViewModel}">
             <dialogWindows:CadastroViagemView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:SaídaDeVeículoViewModel}">
+            <dialogWindows:SaídaDeVeículoView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:RetornoDeVeículoViewModel}">
+            <dialogWindows:RetornoDeVeículoView/>
+        </DataTemplate>
     </Application.Resources>
 </Application>

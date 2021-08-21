@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ControleFrota.Views.DialogWindows
 {
     /// <summary>
-    /// Interaction logic for SaídaDeVeículo.xaml
+    /// Interaction logic for RetornoDeVeículo.xaml
     /// </summary>
-    public partial class SaídaDeVeículo : UserControl
+    public partial class RetornoDeVeículoView : UserControl
     {
-        public SaídaDeVeículo()
+        public RetornoDeVeículoView()
         {
             InitializeComponent();
         }

@@ -40,10 +40,17 @@ namespace ControleFrota.Domain
         {
             get
             {
-                return Viagens.OrderBy(x => x.Saída).LastOrDefault()?.Motorista.Nome;
+                return Viagens.OrderBy(x => x.Saída).LastOrDefault()?.Motorista?.Nome;
             }
         }
 
+        public bool EmUso
+        {
+            get
+            {
+                return Viagens.Any(x => x.Retorno == default);
+            }
+        }
         public ObservableCollection<Viagem> Viagens { get; set; }
         public ObservableCollection<Manutenção> Manutenções { get; set; }
         public ObservableCollection<Abastecimento> Abastecimentos { get; set; }

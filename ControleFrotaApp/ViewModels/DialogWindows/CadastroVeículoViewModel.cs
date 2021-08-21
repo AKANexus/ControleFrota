@@ -129,7 +129,7 @@ namespace ControleFrota.ViewModels.DialogWindows
                 return;
             }
 
-            VeículoSelecionado = await _veículoDataService.GetViagemByID(_intMessaging.Mensagem);
+            VeículoSelecionado = await _veículoDataService.GetVeículoByID(_intMessaging.Mensagem);
         }
 
         private async Task PreencheModelos()

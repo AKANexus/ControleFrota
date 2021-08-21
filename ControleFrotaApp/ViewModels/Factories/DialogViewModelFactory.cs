@@ -10,13 +10,17 @@ namespace ControleFrota.ViewModels.Factories
         private readonly CriaDialogViewModel<CadastroVeículoViewModel> _createCadastroVeículoViewModel;
         private readonly CriaDialogViewModel<CadastroMotoristaViewModel> _createCadastroMotoristaViewModel;
         private readonly CriaDialogViewModel<CadastroViagemViewModel> _createCadastroViagemViewModel;
+        private readonly CriaDialogViewModel<SaídaDeVeículoViewModel> _createSaídaDeVeículoViewModel;
+        private readonly CriaDialogViewModel<RetornoDeVeículoViewModel> _createRetornoDeVeículoViewModel;
 
-        public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel, CriaDialogViewModel<CadastroVeículoViewModel> createCadastroVeículoViewModel, CriaDialogViewModel<CadastroMotoristaViewModel> createCadastroMotoristaViewModel, CriaDialogViewModel<CadastroViagemViewModel> createCadastroViagemViewModel)
+        public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel, CriaDialogViewModel<CadastroVeículoViewModel> createCadastroVeículoViewModel, CriaDialogViewModel<CadastroMotoristaViewModel> createCadastroMotoristaViewModel, CriaDialogViewModel<CadastroViagemViewModel> createCadastroViagemViewModel, CriaDialogViewModel<SaídaDeVeículoViewModel> createSaídaDeVeículoViewModel, CriaDialogViewModel<RetornoDeVeículoViewModel> createRetornoDeVeículoViewModel)
         {
             _createWorkInProgressViewModel = createWorkInProgressViewModel;
             _createCadastroVeículoViewModel = createCadastroVeículoViewModel;
             _createCadastroMotoristaViewModel = createCadastroMotoristaViewModel;
             _createCadastroViagemViewModel = createCadastroViagemViewModel;
+            _createSaídaDeVeículoViewModel = createSaídaDeVeículoViewModel;
+            _createRetornoDeVeículoViewModel = createRetornoDeVeículoViewModel;
         }
 
         public DialogContentViewModelBase CreateDialogContentViewModel(TipoDialogue tipoView)
@@ -27,6 +31,8 @@ namespace ControleFrota.ViewModels.Factories
                 TipoDialogue.CadastroDeVeículos => _createCadastroVeículoViewModel(),
                 TipoDialogue.CadastroDeMotoristas => _createCadastroMotoristaViewModel(),
                 TipoDialogue.CadastroDeViagens => _createCadastroViagemViewModel(),
+                TipoDialogue.NovaViagem => _createSaídaDeVeículoViewModel(),
+                TipoDialogue.RetornoDeViatura => _createRetornoDeVeículoViewModel(),
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

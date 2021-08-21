@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.Eventing.Reader;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,13 @@ namespace ControleFrota.Domain
         public decimal TotalDeGastos => Gastos.Sum(x => x.Valor);
 
         [NotMapped] 
-        public decimal TotalViagem => KMFinal - KMInicial;
+        public decimal TotalViagem
+        {
+            get
+            {
+                var distância = KMFinal - KMInicial;
+                return distância < 0 ? 0 : distância;
+            }
+        }
     }
 }

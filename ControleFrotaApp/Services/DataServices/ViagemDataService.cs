@@ -22,12 +22,15 @@ namespace ControleFrota.Services.DataServices
         public async Task<List<Viagem>> GetAllAsNoTracking()
         {
             return await _context.Viagems.AsNoTracking()
+                .Include(x=>x.Motorista)
+                .Include(x=>x.Veículo)
                 .ToListAsync();
         }
 
-        public async Task<Viagem> GetMotoristaByID(int id)
+        public async Task<Viagem> GetViagemByID(int id)
         {
             return await _context.Viagems
+                .Include(x => x.Veículo)
                 .FirstOrDefaultAsync(x => x.ID == id);
         }
 

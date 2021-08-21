@@ -19,7 +19,9 @@ namespace ControleFrota.Services
         WIP,
         CadastroDeVeículos,
         CadastroDeMotoristas,
-        CadastroDeViagens
+        CadastroDeViagens,
+        NovaViagem,
+        RetornoDeViatura
     }
     public interface IDialogGenerator
     {

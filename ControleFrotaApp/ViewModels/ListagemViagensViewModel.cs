@@ -28,15 +28,17 @@ namespace ControleFrota.ViewModels
         }
 
         public bool HitTestVisible { get; set; } = true;
-        public ICommand Cadastrar { get; }
+        public ICommand NovaViagem { get; }
+        public ICommand RetornoViagem { get; }
         public ICommand Editar { get; }
 
         public ListagemViagensViewModel(IServiceProvider serviceProvider)
         {
             _viagemDataService = serviceProvider.GetRequiredService<ViagemDataService>();
 
-            Cadastrar = new CadastrarNovoVeículoCommand(this, serviceProvider);
-            Editar = new EditarVeículoCommand(this, serviceProvider);
+            NovaViagem = new NovaViagemCommand(this, serviceProvider);
+            RetornoViagem = new RetornoViagemCommand(this, serviceProvider);
+            Editar = new EditarViagemCommand(this, serviceProvider);
             PreencheDataGrid();
             Debug.WriteLine("");
         }
@@ -62,22 +64,12 @@ namespace ControleFrota.ViewModels
         }
     }
 
-    public class EditarVeículoCommand : ICommand
+    public class EditarViagemCommand : ICommand
     {
-        private readonly ListagemViagensViewModel _ListagemViagensViewModel;
-        private readonly IMessaging<int> _intMessaging;
-        private readonly IDialogGenerator _dialogGenerator;
-        private readonly IDialogViewModelFactory _dialogVMFactory;
-        private readonly IDialogsStore _dialogStore;
-
-        public EditarVeículoCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
+       
+        public EditarViagemCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
         {
-            _ListagemViagensViewModel = ListagemViagensViewModel;
-            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
-            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
-            _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
-            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
-            _ListagemViagensViewModel.PropertyChanged += _ListagemViagensViewModel_PropertyChanged;
+            
         }
 
         private void _ListagemViagensViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -87,22 +79,18 @@ namespace ControleFrota.ViewModels
 
         public bool CanExecute(object parameter)
         {
-            return _ListagemViagensViewModel.ViagemSelecionada is not null;
+            return false;
         }
 
         public void Execute(object parameter)
         {
-            _intMessaging.Mensagem = _ListagemViagensViewModel.ViagemSelecionada.ID;
-            _dialogGenerator.ViewModelExibido =
-                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeViagens);
-            _dialogStore.RegisterDialog(_dialogGenerator);
-            _ListagemViagensViewModel.PreencheDataGrid();
+           
         }
 
         public event EventHandler CanExecuteChanged;
     }
 
-    public class CadastrarNovoVeículoCommand : ICommand
+    public class NovaViagemCommand : ICommand
     {
         private readonly ListagemViagensViewModel _ListagemViagensViewModel;
         private readonly IMessaging<int> _intMessaging;
@@ -110,7 +98,7 @@ namespace ControleFrota.ViewModels
         private readonly IDialogViewModelFactory _dialogVMFactory;
         private readonly IDialogsStore _dialogStore;
 
-        public CadastrarNovoVeículoCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
+        public NovaViagemCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
         {
             _ListagemViagensViewModel = ListagemViagensViewModel;
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
@@ -128,9 +116,51 @@ namespace ControleFrota.ViewModels
         {
             _intMessaging.Mensagem = default;
             _dialogGenerator.ViewModelExibido =
-                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeViagens);
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.NovaViagem);
             _dialogStore.RegisterDialog(_dialogGenerator);
             _ListagemViagensViewModel.PreencheDataGrid();
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
+    public class RetornoViagemCommand : ICommand
+    {
+        private readonly ListagemViagensViewModel _listagemViagensViewModel;
+        private readonly IMessaging<int> _intMessaging;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly IDialogViewModelFactory _dialogVMFactory;
+        private readonly IDialogsStore _dialogStore;
+
+        public RetornoViagemCommand(ListagemViagensViewModel listagemViagensViewModel, IServiceProvider serviceProvider)
+        {
+            _listagemViagensViewModel = listagemViagensViewModel;
+            _listagemViagensViewModel.PropertyChanged += _listagemViagensViewModel_PropertyChanged;
+            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+        }
+
+        private void _listagemViagensViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            CanExecuteChanged?.Invoke(this, e);
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            if (_listagemViagensViewModel.ViagemSelecionada is null) return false;
+            if (_listagemViagensViewModel.ViagemSelecionada.Retorno == default) return true;
+            return false;
+        }
+
+        public void Execute(object parameter)
+        {
+            _intMessaging.Mensagem = _listagemViagensViewModel.ViagemSelecionada.ID;
+            _dialogGenerator.ViewModelExibido =
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.RetornoDeViatura);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            _listagemViagensViewModel.PreencheDataGrid();
         }
 
         public event EventHandler CanExecuteChanged;
