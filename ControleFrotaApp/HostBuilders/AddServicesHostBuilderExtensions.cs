@@ -20,6 +20,7 @@ namespace ControleFrota.HostBuilders
                 serviços.AddScoped<ModeloDataService>();
                 serviços.AddScoped<MotoristaDataService>();
                 serviços.AddScoped<ViagemDataService>();
+                serviços.AddScoped<TipoGastoDataService>();
             });
             return host;
         }

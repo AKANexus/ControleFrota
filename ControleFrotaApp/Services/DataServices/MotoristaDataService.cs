@@ -25,6 +25,12 @@ namespace ControleFrota.Services.DataServices
                 .ToListAsync();
         }
 
+        public async Task<List<Motorista>> GetAll()
+        {
+            return await _context.Motoristas
+                .ToListAsync();
+        }
+
         public async Task<Motorista> GetMotoristaByID(int id)
         {
             return await _context.Motoristas

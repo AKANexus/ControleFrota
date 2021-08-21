@@ -5,9 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
              xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
-             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" Language="pt-BR"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:CadastroViagemViewModel}"
              >
+    <UserControl.Resources>
+        <CollectionViewSource x:Key="Saporra" Source="{Binding TipoGastos}"/>
+    </UserControl.Resources>
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -24,15 +27,15 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Cadastro de Viagem" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+        <TextBlock Text="Cadastro de Viagem" Grid.ColumnSpan="5" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
         <TextBlock  Grid.Row="1" Grid.Column="0" Text="Motorista" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="2"
-                  HorizontalAlignment="Left" MinWidth="250" Margin="5,10" ItemsSource="{Binding Motoristas}"
+                  HorizontalAlignment="Left" Width="250" Margin="5,10" ItemsSource="{Binding Motoristas}"
                   DisplayMemberPath="Nome" SelectedValuePath="ID"
                   SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged}"
                   SelectedValue="{Binding MotoristaSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
 
-        <TextBlock  Grid.Row="1" Grid.Column="3" Text="Marca" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBlock  Grid.Row="1" Grid.Column="3" Text="Veículo" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="4" VerticalAlignment="Center"
                   HorizontalAlignment="Left" MinWidth="125" Margin="5,10" ItemsSource="{Binding Veículos}"
                   DisplayMemberPath="Placa" SelectedValuePath="ID"
@@ -43,24 +46,29 @@
         <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Text="{Binding KMInicial}"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
 
         <TextBlock  Grid.Row="3" Grid.Column="0" Text="Saída" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <xctk:DateTimePicker FontSize="16" Grid.Row="3" FontWeight="Normal" Value="{Binding Saída}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="125" Margin="5,10"/>
+        <xctk:DateTimePicker FontSize="16" Format="ShortDate" Grid.Row="3" FontWeight="Normal" Value="{Binding Saída}" Grid.Column="1" VerticalAlignment="Center" Margin="5,10"/>
 
 
         <TextBlock  Grid.Row="2" Grid.Column="3" Text="KM Final" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Text="{Binding KMFinal}"  Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
 
         <TextBlock  Grid.Row="3" Grid.Column="3" Text="Retorno" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <xctk:DateTimePicker FontSize="16" Grid.Row="3" FontWeight="Normal" Value="{Binding Saída}" Grid.Column="4" VerticalAlignment="Center" HorizontalAlignment="Left" Width="125" Margin="5,10"/>
+        <xctk:DateTimePicker Format="ShortDate" FontSize="16" Grid.Row="3" FontWeight="Normal" Value="{Binding Retorno}" Grid.Column="4" Grid.ColumnSpan="2" VerticalAlignment="Center" Margin="5,10"/>
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Motivo" FontSize="16" HorizontalAlignment="Right"
                    VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
-        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding KMFinal}" Grid.Column="1" Grid.ColumnSpan="4"
+        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding Motivo}" Grid.Column="1" Grid.ColumnSpan="4"
                  VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" />
 
-        <DataGrid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Height="100" ItemsSource="{Binding ViagemSelecionada.Gastos}"
+        <DataGrid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Height="100" ItemsSource="{Binding Gastos}"
                   HeadersVisibility="Column" AutoGenerateColumns="False" Width="321" CanUserAddRows="True">
             <DataGrid.Columns>
-                <DataGridComboBoxColumn Header="TIPO DE GASTO" Width="*" ItemsSource="{Binding TipoGastos}" SelectedItemBinding="{Binding TipoGasto}"/>
+                <DataGridComboBoxColumn Header="TIPO DE GASTO" Width="*" 
+                                        ItemsSource="{Binding Source={StaticResource Saporra}}"
+                                        SelectedValuePath="ID"
+                                        DisplayMemberPath="Descrição"
+                                        SelectedValueBinding="{Binding ID}"
+                                        />
                 <DataGridTextColumn Header="VALOR" Width="*" Binding="{Binding Valor, StringFormat=C2}"/>
             </DataGrid.Columns>
         </DataGrid>
@@ -70,7 +78,7 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Salvar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding SalvaVeículo}"/>
+            <Button Content="Salvar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding SalvaViagem}"/>
             <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding CloseCurrentWindow}"/>
         </Grid>
     </Grid>

@@ -21,7 +21,7 @@ namespace ControleFrota.Domain
         {
             get
             {
-                return Abastecimentos.OrderBy(x => x.KM).Last().DataHora;
+                return Abastecimentos.OrderBy(x => x.KM).LastOrDefault()?.DataHora ?? default;
             }
         }
 
@@ -30,7 +30,7 @@ namespace ControleFrota.Domain
         {
             get
             {
-                return Manutenções.OrderBy(x => x.KM).Last().DataHora;
+                return Manutenções.OrderBy(x => x.KM).LastOrDefault()?.DataHora ?? default;
 
             }
         }
@@ -40,7 +40,7 @@ namespace ControleFrota.Domain
         {
             get
             {
-                return Viagens.OrderBy(x => x.Saída).Last().Motorista.Nome;
+                return Viagens.OrderBy(x => x.Saída).LastOrDefault()?.Motorista.Nome;
             }
         }
 
@@ -54,9 +54,9 @@ namespace ControleFrota.Domain
         {
             get
             {
-                var últimaManutenção = Manutenções.OrderBy(x => x.KM).Last().KM;
-                var últimoAbastecimento = Abastecimentos.OrderBy(x => x.KM).Last().KM;
-                var últimaViagem = Viagens.OrderBy(x => x.KMFinal).Last().KMFinal;
+                var últimaManutenção = Manutenções.Count > 0 ? Manutenções.Max(x => x.KM) : 0;
+                var últimoAbastecimento = Abastecimentos.Count > 0 ?  Abastecimentos.DefaultIfEmpty().Max(x=>x.KM) : 0;
+                var últimaViagem = Viagens.Count > 0 ? Viagens.DefaultIfEmpty().Max(x => x.KMFinal) : 0;
                 return Math.Max(Math.Max(últimoAbastecimento, últimaManutenção), últimaViagem);
             }
         }

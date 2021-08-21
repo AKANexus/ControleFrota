@@ -27,7 +27,8 @@ namespace ControleFrota.EFCore
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<Motorista> Motoristas { get; set; }
         public DbSet<Viagem> Viagems { get; set; }
-
+        public DbSet<TipoGasto> TipoGastos { get; set; }
+        public DbSet<Gasto> Gastos { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);

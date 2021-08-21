@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="ControleFrota.Views.DialogWindows.SaídaDeVeículo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
+             mc:Ignorable="d" 
+             Width="500">
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Saída de Viatura" Grid.ColumnSpan="2" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+        <TextBlock  Grid.Row="1" Grid.Column="0" Text="Motorista" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                  Margin="5,10" ItemsSource="{Binding Motoristas}"
+                  DisplayMemberPath="Nome" SelectedValuePath="ID"
+                  SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding MotoristaSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock  Grid.Row="2" Grid.Column="0" Text="Veículo" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="2" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center"
+                  HorizontalAlignment="Left" MinWidth="125" Margin="5,10" ItemsSource="{Binding Veículos}"
+                  DisplayMemberPath="Placa" SelectedValuePath="ID"
+                  SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding VeículoSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock  Grid.Row="3" Grid.Column="0" Text="KM Inicial" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="3" FontWeight="Normal" Text="{Binding KMInicial}"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Motivo" FontSize="16" HorizontalAlignment="Right"
+                   VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
+        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding Motivo}" Grid.Column="1" Height="139.68"
+                 VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" AcceptsReturn="True" TextWrapping="Wrap" />
+
+        <Grid Grid.Row="5" Grid.Column="1" Margin="5,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Salvar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding SalvaViagem}"/>
+            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding CloseCurrentWindow}"/>
+        </Grid>
+    </Grid>
+
+</UserControl>
