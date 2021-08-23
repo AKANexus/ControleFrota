@@ -32,6 +32,9 @@ namespace ControleFrota.ViewModels
 
         public ICommand Cadastrar { get; }
         public ICommand Editar { get; }
+        public ICommand Filtrar { get; set; }
+        public ICommand Inativar { get; set; }
+        public ICommand Imprimir { get; set; }
         public ListagemFuncionáriosViewModel(IServiceProvider serviceProvider)
         {
             _motoristaDataService = serviceProvider.GetRequiredService<MotoristaDataService>();

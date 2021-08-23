@@ -15,7 +15,7 @@
         <local:MenuPadrãoView/>
         <Grid Grid.Row="1" Margin="5">
             <DataGrid ItemsSource="{Binding Motoristas}" SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
-                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False">
+                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="18"/>
@@ -26,6 +26,9 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" FontSize="17" />
                     <DataGridTextColumn Header="CNH" Binding="{Binding CNH}" FontSize="17"/>
+                    <DataGridTextColumn Header="Validade CNH" Binding="{Binding ValidadeCNH, StringFormat=dd/MMM/yyyy}" FontSize="17"/>
+                    <DataGridTextColumn Header="Setor" Binding="{Binding Setor.Descrição}" FontSize="17"/>
+
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

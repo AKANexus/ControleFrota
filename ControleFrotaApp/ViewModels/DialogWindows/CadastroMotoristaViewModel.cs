@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,9 +20,11 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly CurrentScopeStore _currentScopeStore;
         private readonly MotoristaDataService _motoristaDataService;
         private readonly IMessaging<int> _intMessaging;
+        private readonly SetorDataService _setorDataService;
         public Motorista MotoristaSelecionado { get; set; }
         public ICommand CloseCurrentWindow { get; set; }
         public ICommand SalvaMotorista { get; set; }
+
         public string NomeMotorista
         {
             get => MotoristaSelecionado?.Nome;
@@ -42,6 +45,27 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
+        public DateTime CNHValidade
+        {
+            get => MotoristaSelecionado?.ValidadeCNH ?? DateTime.Now;
+            set
+            {
+                MotoristaSelecionado.ValidadeCNH = value;
+                OnPropertyChanged(nameof(CNHValidade));
+            }
+        }
+
+        public ObservableCollection<Setor> Setors { get; set; } = new();
+        public Setor SetorSelecionado
+        {
+            get => MotoristaSelecionado?.Setor;
+            set
+            {
+                MotoristaSelecionado.Setor = value;
+                OnPropertyChanged(nameof(SetorSelecionado));
+            }
+        }
+
         public CadastroMotoristaViewModel(IServiceProvider serviceProvider)
         {
             _currentScopeStore = serviceProvider.GetRequiredService<CurrentScopeStore>();
@@ -51,6 +75,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             SalvaMotorista = new SalvaMotoristaCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
 
             _motoristaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MotoristaDataService>();
+            _setorDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<SetorDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
 
 
@@ -60,13 +85,26 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         private async Task PreencheCampos()
         {
+            Setors.Clear();
+
+            foreach (Setor setor in await _setorDataService.GetAll())
+            {
+                Setors.Add(setor);
+            }
+
             if (_intMessaging.Mensagem == default)
             {
-                MotoristaSelecionado = new Motorista();
+                MotoristaSelecionado = new Motorista()
+                {
+                    ValidadeCNH = DateTime.Now
+                };
+                OnPropertyChanged(nameof(MotoristaSelecionado));
                 return;
             }
 
+
             MotoristaSelecionado = await _motoristaDataService.GetMotoristaByID(_intMessaging.Mensagem);
+            OnPropertyChanged(null);
         }
 
         public class SalvaMotoristaCommand : AsyncCommandBase

@@ -3,14 +3,16 @@ using System;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210823184340_ValidadeCNHColumn")]
+    partial class ValidadeCNHColumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -256,53 +258,12 @@ namespace ControleFrota.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("longtext");
 
-                    b.Property<int?>("SetorID")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("ValidadeCNH")
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("ID");
 
-                    b.HasIndex("SetorID");
-
                     b.ToTable("Motoristas");
-                });
-
-            modelBuilder.Entity("ControleFrota.Domain.Setor", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Descrição")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Setors");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Descrição = "Infraestrutura"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Descrição = "Suporte Técnico"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Descrição = "Vendas"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Descrição = "Administração"
-                        });
                 });
 
             modelBuilder.Entity("ControleFrota.Domain.TipoGasto", b =>
@@ -327,9 +288,6 @@ namespace ControleFrota.Migrations
 
                     b.Property<bool>("Ativo")
                         .HasColumnType("tinyint(1)");
-
-                    b.Property<string>("Chassis")
-                        .HasColumnType("longtext");
 
                     b.Property<int?>("MarcaID")
                         .HasColumnType("int");
@@ -454,15 +412,6 @@ namespace ControleFrota.Migrations
                         .HasForeignKey("MarcaID");
 
                     b.Navigation("Marca");
-                });
-
-            modelBuilder.Entity("ControleFrota.Domain.Motorista", b =>
-                {
-                    b.HasOne("ControleFrota.Domain.Setor", "Setor")
-                        .WithMany()
-                        .HasForeignKey("SetorID");
-
-                    b.Navigation("Setor");
                 });
 
             modelBuilder.Entity("ControleFrota.Domain.Veículo", b =>

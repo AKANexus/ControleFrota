@@ -30,6 +30,7 @@ namespace ControleFrota.EFCore
         public DbSet<TipoGasto> TipoGastos { get; set; }
         public DbSet<Gasto> Gastos { get; set; }
         public DbSet<Combustível> Combustívels { get; set; }
+        public DbSet<Setor> Setors { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -57,6 +58,16 @@ namespace ControleFrota.EFCore
             };
 
             mb.Entity<Combustível>().HasData(combustíveeisSeed);
+
+            List<Setor> setorsSeed = new()
+            {
+                new(1, "Infraestrutura"),
+                new(2, "Suporte Técnico"),
+                new(3, "Vendas"),
+                new(4, "Administração")
+            };
+
+            mb.Entity<Setor>().HasData(setorsSeed);
 
             base.OnModelCreating(mb);
         }

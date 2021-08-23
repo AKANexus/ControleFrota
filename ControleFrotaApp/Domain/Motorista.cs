@@ -11,8 +11,9 @@ namespace ControleFrota.Domain
     {
         public string Nome { get; set; }
         public string CNH { get; set; }
-
+        public DateTime ValidadeCNH { get; set; } = DateTime.Now;
         public bool Ativo { get; set; } = true;
+        public Setor Setor { get; set; }
 
     }
 }

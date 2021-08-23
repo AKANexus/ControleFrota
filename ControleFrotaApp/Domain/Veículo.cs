@@ -14,6 +14,7 @@ namespace ControleFrota.Domain
         public Marca Marca { get; set; }
         public Modelo Modelo { get; set; }
         public string RENAVAM { get; set; }
+        public string Chassis { get; set; }
         public DateTime ÚltimoLicenciamento { get; set; }
 
         [NotMapped]

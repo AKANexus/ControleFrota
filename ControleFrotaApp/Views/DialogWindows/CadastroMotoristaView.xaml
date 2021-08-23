@@ -18,6 +18,8 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
 
         </Grid.RowDefinitions>
         <TextBlock Text="Cadastro de Motorista" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
@@ -25,7 +27,15 @@
         <TextBox FontSize="16" Grid.Row="1" Grid.ColumnSpan="3" FontWeight="Bold" Grid.Column="1" CharacterCasing="Upper" Text="{Binding NomeMotorista, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Width="350" d:Text="ARTUR FILIPE GONÇALVES DE SOUSA" Margin="5,10"/>
         <TextBlock  Grid.Row="2" Grid.Column="0" Text="CNH" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <TextBox FontSize="16" Grid.Row="2" FontWeight="Bold" d:Text="321654778954"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Margin="5,10" Text="{Binding CNHMotorista, UpdateSourceTrigger=PropertyChanged}" />
-        <Grid Grid.Row="2" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,10">
+        <TextBlock  Grid.Row="3" Grid.Column="0" Text="Valid." FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <DatePicker FontSize="16" Grid.Row="3" FontWeight="Bold" d:Text="321654778954"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Margin="5,10" Text="{Binding CNHValidade, UpdateSourceTrigger=PropertyChanged}" />
+        <TextBlock  Grid.Row="4" Grid.Column="0" Text="Setor" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="4" FontWeight="Bold"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="150" Margin="5,10"
+                  ItemsSource="{Binding Setors}" SelectedItem="{Binding SetorSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  DisplayMemberPath="Descrição" SelectedValuePath="ID"
+                  SelectedValue="{Binding SetorSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <Grid Grid.Row="5" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
