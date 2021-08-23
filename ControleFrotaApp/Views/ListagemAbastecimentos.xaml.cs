@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MessageBox = System.Windows.MessageBox;
 
 namespace ControleFrota.Views
 {
     /// <summary>
-    /// Interaction logic for ListagemVeículos.xaml
+    /// Interaction logic for ListaAbastecimentos.xaml
     /// </summary>
-    public partial class ListagemVeículosView : UserControl
+    public partial class ListagemAbastecimentos : UserControl
     {
-        public ListagemVeículosView()
+        public ListagemAbastecimentos()
         {
             InitializeComponent();
         }

@@ -7,6 +7,16 @@
              xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemVeículosViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920" Language="pt-BR" IsHitTestVisible="{Binding HitTestVisible}">
+    <UserControl.Resources>
+        <ContextMenu x:Key="ContextVeículos">
+            <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}"/>
+            <MenuItem Header="Retorno" Command="{Binding RetornoDeViatura}"/>
+            <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}"/>
+        </ContextMenu>
+        <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
+            <Setter Property="ContextMenu" Value="{StaticResource ContextVeículos}"/>
+        </Style>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,7 +25,14 @@
         <local:MenuPadrãoView/>
         <Grid Grid.Row="1" Margin="5">
             <DataGrid ItemsSource="{Binding Veículos}" SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
-                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False">
+                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
+                <DataGrid.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}"/>
+                        <MenuItem Header="Retorno" Command="{Binding RetornoDeViatura}"/>
+                        <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}"/>
+                    </ContextMenu>
+                </DataGrid.ContextMenu>
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="18"/>
@@ -34,6 +51,14 @@
                     <DataGridTextColumn Header="Última Manutenção" Binding="{Binding ÚltimaManutenção}" FontSize="17"/>
                     <DataGridTextColumn Header="Último Motorista" Binding="{Binding ÚltimoMotorista}" FontSize="17"/>
                 </DataGrid.Columns>
+                <!--<DataGrid.InputBindings>
+                    <MouseBinding MouseAction="RightClick" Command=""></MouseBinding>
+                </DataGrid.InputBindings>-->
+                <!--<DataGrid.CellStyle>
+                    <Style TargetType="{x:Type DataGridCell}">
+                        <Setter Property="Template"></Setter>
+                    </Style>
+                </DataGrid.CellStyle>-->
             </DataGrid>
         </Grid>
     </Grid>

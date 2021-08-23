@@ -26,6 +26,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly TipoGastoDataService _tipoGastoDataService;
         private readonly VeículoDataService _veículoDataService;
         private readonly MotoristaDataService _motoristaDataService;
+        private readonly IMessaging<string> _stringMessaging;
 
         public ICommand CloseCurrentWindow { get; set; }
         public ICommand SalvaViagem { get; set; }
@@ -82,6 +83,7 @@ namespace ControleFrota.ViewModels.DialogWindows
 
             _viagemDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ViagemDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+            _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
             _tipoGastoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<TipoGastoDataService>();
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
             _motoristaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MotoristaDataService>();
@@ -101,8 +103,12 @@ namespace ControleFrota.ViewModels.DialogWindows
             {
                 Veículos.Add(veículo);
             }
-
             ViagemSelecionada = new Viagem();
+
+            if (!string.IsNullOrWhiteSpace(_stringMessaging.Mensagem))
+            {
+                VeículoSelecionado = await _veículoDataService.GetVeículoByPlaca(_stringMessaging.Mensagem);
+            }
             return;
         }
     }

@@ -8,12 +8,15 @@ namespace ControleFrota.ViewModels.Factories
         private readonly CriaViewModel<ListagemVeículosViewModel> _createListagemVeículosViewModel;
         private readonly CriaViewModel<ListagemFuncionáriosViewModel> _createListagemMotoristasViewModel;
         private readonly CriaViewModel<ListagemViagensViewModel> _createListagemViagensViewModel;
+        private readonly CriaViewModel<ListagemAbastecimentosViewModel> _createListagemAbastecimentosViewModel;
 
-        public ViewModelFactory(CriaViewModel<ListagemVeículosViewModel> createListagemVeículosViewModel, CriaViewModel<ListagemFuncionáriosViewModel> createListagemMotoristasViewModel, CriaViewModel<ListagemViagensViewModel> createListagemViagensViewModel)
+
+        public ViewModelFactory(CriaViewModel<ListagemVeículosViewModel> createListagemVeículosViewModel, CriaViewModel<ListagemFuncionáriosViewModel> createListagemMotoristasViewModel, CriaViewModel<ListagemViagensViewModel> createListagemViagensViewModel, CriaViewModel<ListagemAbastecimentosViewModel> createListagemAbastecimentosViewModel)
         {
             _createListagemVeículosViewModel = createListagemVeículosViewModel;
             _createListagemMotoristasViewModel = createListagemMotoristasViewModel;
             _createListagemViagensViewModel = createListagemViagensViewModel;
+            _createListagemAbastecimentosViewModel = createListagemAbastecimentosViewModel;
         }
 
         public ViewModelBase CreateViewModel(TipoView tipoView)
@@ -23,6 +26,7 @@ namespace ControleFrota.ViewModels.Factories
                 TipoView.ListagemVeículos => _createListagemVeículosViewModel(),
                 TipoView.ListagemFuncionários => _createListagemMotoristasViewModel(),
                 TipoView.ListagemViagens => _createListagemViagensViewModel(),
+                TipoView.ListagemAbastecimentos => _createListagemAbastecimentosViewModel(),
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

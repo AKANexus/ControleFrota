@@ -18,6 +18,8 @@ namespace ControleFrota.HostBuilders
                 serviços.AddTransient<ListagemVeículosViewModel>();
                 serviços.AddTransient<ListagemFuncionáriosViewModel>();
                 serviços.AddTransient<ListagemViagensViewModel>();
+                serviços.AddTransient<ListagemAbastecimentosViewModel>();
+
 
 
                 serviços.AddSingleton<IDialogViewModelFactory, DialogViewModelFactory>();
@@ -28,6 +30,8 @@ namespace ControleFrota.HostBuilders
                 serviços.AddTransient<CadastroViagemViewModel>();
                 serviços.AddTransient<SaídaDeVeículoViewModel>();
                 serviços.AddTransient<RetornoDeVeículoViewModel>();
+                serviços.AddTransient<CadastroAbastecimentoViewModel>();
+
 
 
                 serviços.AddSingleton<CriaViewModel<ListagemVeículosViewModel>>(serviceProvider =>
@@ -36,6 +40,8 @@ namespace ControleFrota.HostBuilders
                     serviceProvider.GetRequiredService<ListagemFuncionáriosViewModel>);
                 serviços.AddSingleton<CriaViewModel<ListagemViagensViewModel>>(serviceProvider =>
                     serviceProvider.GetRequiredService<ListagemViagensViewModel>);
+                serviços.AddSingleton<CriaViewModel<ListagemAbastecimentosViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<ListagemAbastecimentosViewModel>);
 
                 serviços.AddSingleton<CriaDialogViewModel<WorkInProgressViewModel>>(serviceProvider =>
                     serviceProvider.GetRequiredService<WorkInProgressViewModel>);
@@ -49,7 +55,8 @@ namespace ControleFrota.HostBuilders
                     serviceProvider.GetRequiredService<SaídaDeVeículoViewModel>);
                 serviços.AddSingleton<CriaDialogViewModel<RetornoDeVeículoViewModel>>(serviceProvider =>
                     serviceProvider.GetRequiredService<RetornoDeVeículoViewModel>);
-
+                serviços.AddSingleton<CriaDialogViewModel<CadastroAbastecimentoViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<CadastroAbastecimentoViewModel>);
 
             });
             return host;

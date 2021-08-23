@@ -69,5 +69,7 @@ namespace ControleFrota.Domain
         }
 
         public bool Ativo { get; set; } = true;
+
+        [NotMapped] public int IdViagemEmAberto => Viagens.FirstOrDefault(x => x.Retorno == default)?.ID ?? default;
     }
 }

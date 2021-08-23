@@ -16,6 +16,10 @@ namespace ControleFrota.HostBuilders
                 serviços.AddSingleton<INavigator, Navigator>();
                 serviços.AddSingleton<IDialogsStore, DialogsStore>();
                 serviços.AddSingleton<IMessaging<int>, Messaging<int>>();
+                serviços.AddSingleton<IMessaging<(string, string)>, Messaging<(string, string)>>();
+                serviços.AddSingleton<IMessaging<bool>, Messaging<bool>>();
+                serviços.AddSingleton<IMessaging<string>, Messaging<string>>();
+
                 serviços.AddSingleton<BusyStateStore>();
                 serviços.AddSingleton<CurrentScopeStore>();
                 serviços.AddScoped<EntityStore<Veículo>>();

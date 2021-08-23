@@ -13,14 +13,16 @@ namespace ControleFrota.HostBuilders
             {
                 serviços.AddScoped<EnvioDataService>();
 
-                serviços.AddSingleton<IMessaging<(string, string)>, Messaging<(string, string)>>();
-                serviços.AddSingleton<IMessaging<bool>, Messaging<bool>>();
                 serviços.AddScoped<VeículoDataService>();
                 serviços.AddScoped<MarcaDataService>();
                 serviços.AddScoped<ModeloDataService>();
                 serviços.AddScoped<MotoristaDataService>();
                 serviços.AddScoped<ViagemDataService>();
                 serviços.AddScoped<TipoGastoDataService>();
+                serviços.AddScoped<AbastecimentoDataService>();
+                serviços.AddScoped<CombustívelDataService>();
+
+
             });
             return host;
         }

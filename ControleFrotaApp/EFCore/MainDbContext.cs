@@ -29,6 +29,7 @@ namespace ControleFrota.EFCore
         public DbSet<Viagem> Viagems { get; set; }
         public DbSet<TipoGasto> TipoGastos { get; set; }
         public DbSet<Gasto> Gastos { get; set; }
+        public DbSet<Combustível> Combustívels { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
@@ -46,6 +47,17 @@ namespace ControleFrota.EFCore
             };
 
             mb.Entity<Marca>().HasData(marcasSeed);
+
+            List<Combustível> combustíveeisSeed = new()
+            {
+                new(1, "Gasolina Comum"),
+                new(2, "Gasolina Aditivada"),
+                new(3, "Etanol Comum"),
+                new(4, "Etanol Adivitado")
+            };
+
+            mb.Entity<Combustível>().HasData(combustíveeisSeed);
+
             base.OnModelCreating(mb);
         }
     }

@@ -3,14 +3,16 @@ using System;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210823134849_ColunaPosto")]
+    partial class ColunaPosto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +25,7 @@ namespace ControleFrota.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CombustívelID")
+                    b.Property<int>("Combustível")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DataHora")
@@ -41,7 +43,7 @@ namespace ControleFrota.Migrations
                     b.Property<string>("Posto")
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("ValorTotal")
+                    b.Property<decimal>("ValorPorLitro")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<int?>("VeículoID")
@@ -49,49 +51,11 @@ namespace ControleFrota.Migrations
 
                     b.HasKey("ID");
 
-                    b.HasIndex("CombustívelID");
-
                     b.HasIndex("MotoristaID");
 
                     b.HasIndex("VeículoID");
 
                     b.ToTable("Abastecimentos");
-                });
-
-            modelBuilder.Entity("ControleFrota.Domain.Combustível", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<string>("Nome")
-                        .HasColumnType("longtext");
-
-                    b.HasKey("ID");
-
-                    b.ToTable("Combustívels");
-
-                    b.HasData(
-                        new
-                        {
-                            ID = 1,
-                            Nome = "Gasolina Comum"
-                        },
-                        new
-                        {
-                            ID = 2,
-                            Nome = "Gasolina Aditivada"
-                        },
-                        new
-                        {
-                            ID = 3,
-                            Nome = "Etanol Comum"
-                        },
-                        new
-                        {
-                            ID = 4,
-                            Nome = "Etanol Adivitado"
-                        });
                 });
 
             modelBuilder.Entity("ControleFrota.Domain.Gasto", b =>
@@ -346,10 +310,6 @@ namespace ControleFrota.Migrations
 
             modelBuilder.Entity("ControleFrota.Domain.Abastecimento", b =>
                 {
-                    b.HasOne("ControleFrota.Domain.Combustível", "Combustível")
-                        .WithMany()
-                        .HasForeignKey("CombustívelID");
-
                     b.HasOne("ControleFrota.Domain.Motorista", "Motorista")
                         .WithMany()
                         .HasForeignKey("MotoristaID");
@@ -357,8 +317,6 @@ namespace ControleFrota.Migrations
                     b.HasOne("ControleFrota.Domain.Veículo", "Veículo")
                         .WithMany("Abastecimentos")
                         .HasForeignKey("VeículoID");
-
-                    b.Navigation("Combustível");
 
                     b.Navigation("Motorista");
 

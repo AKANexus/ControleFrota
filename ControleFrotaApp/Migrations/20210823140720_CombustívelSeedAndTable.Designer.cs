@@ -3,14 +3,16 @@ using System;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210823140720_CombustívelSeedAndTable")]
+    partial class CombustívelSeedAndTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -41,7 +43,7 @@ namespace ControleFrota.Migrations
                     b.Property<string>("Posto")
                         .HasColumnType("longtext");
 
-                    b.Property<decimal>("ValorTotal")
+                    b.Property<decimal>("ValorPorLitro")
                         .HasColumnType("decimal(65,30)");
 
                     b.Property<int?>("VeículoID")

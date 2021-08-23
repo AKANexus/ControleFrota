@@ -17,6 +17,9 @@
         <DataTemplate DataType="{x:Type viewmodels:ListagemViagensViewModel}">
             <views:ListagemViagensView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ListagemAbastecimentosViewModel}">
+            <views:ListagemAbastecimentos/>
+        </DataTemplate>
 
         <DataTemplate DataType="{x:Type dialogviewmodels:WorkInProgressViewModel}">
             <dialogWindows:WorkInProgressView/>
@@ -36,5 +39,9 @@
         <DataTemplate DataType="{x:Type dialogviewmodels:RetornoDeVeículoViewModel}">
             <dialogWindows:RetornoDeVeículoView/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:CadastroAbastecimentoViewModel}">
+            <dialogWindows:CadastroAbastecimento/>
+        </DataTemplate>
+
     </Application.Resources>
 </Application>

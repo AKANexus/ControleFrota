@@ -19,6 +19,7 @@ namespace ControleFrota.ViewModels
     {
         private readonly ViagemDataService _viagemDataService;
         private Viagem _viagemSelecionada;
+        private readonly IMessaging<string> _stringMessaging;
         public ObservableCollection<Viagem> Viagens { get; set; } = new();
 
         public Viagem ViagemSelecionada
@@ -35,18 +36,17 @@ namespace ControleFrota.ViewModels
         public ListagemViagensViewModel(IServiceProvider serviceProvider)
         {
             _viagemDataService = serviceProvider.GetRequiredService<ViagemDataService>();
-
+            _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
             NovaViagem = new NovaViagemCommand(this, serviceProvider);
             RetornoViagem = new RetornoViagemCommand(this, serviceProvider);
             Editar = new EditarViagemCommand(this, serviceProvider);
             PreencheDataGrid();
-            Debug.WriteLine("");
         }
 
         public async Task PreencheDataGrid()
         {
             Viagens.Clear();
-
+            _stringMessaging.Mensagem = null;
             HitTestVisible = false;
             OnPropertyChanged(nameof(HitTestVisible));
             Mouse.OverrideCursor = Cursors.Wait;
