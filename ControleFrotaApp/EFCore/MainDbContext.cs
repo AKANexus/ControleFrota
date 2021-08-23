@@ -45,6 +45,8 @@ namespace ControleFrota.EFCore
                 new(4, "Renault"),
                 new(5, "Volkswagen"),
                 new(6, "Yamaha"),
+                new(7, "Honda"),
+                new(8, "Suzuki")
             };
 
             mb.Entity<Marca>().HasData(marcasSeed);
@@ -54,7 +56,7 @@ namespace ControleFrota.EFCore
                 new(1, "Gasolina Comum"),
                 new(2, "Gasolina Aditivada"),
                 new(3, "Etanol Comum"),
-                new(4, "Etanol Adivitado")
+                new(4, "Etanol Aditivado")
             };
 
             mb.Entity<Combustível>().HasData(combustíveeisSeed);
@@ -68,6 +70,16 @@ namespace ControleFrota.EFCore
             };
 
             mb.Entity<Setor>().HasData(setorsSeed);
+
+            List<TipoGasto> gastosSeed = new()
+            {
+                new(1, "Pedágio"),
+                new(2, "Hospedagem"),
+                new(3, "Alimentação"),
+                new(4, "Abastecimento*")
+            };
+
+            mb.Entity<TipoGasto>().HasData(gastosSeed);
 
             base.OnModelCreating(mb);
         }

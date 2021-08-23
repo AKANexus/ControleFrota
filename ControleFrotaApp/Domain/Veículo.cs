@@ -70,6 +70,7 @@ namespace ControleFrota.Domain
         }
 
         public bool Ativo { get; set; } = true;
+        [NotMapped] public bool PróximoDoLicenciamento => ÚltimoLicenciamento <= DateTime.Now.AddDays(60);
 
         [NotMapped] public int IdViagemEmAberto => Viagens.FirstOrDefault(x => x.Retorno == default)?.ID ?? default;
     }

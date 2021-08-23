@@ -23,6 +23,9 @@
                         <Setter Property="Padding" Value="15,5"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Editar}"/>
+                </DataGrid.InputBindings>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" FontSize="17" />
                     <DataGridTextColumn Header="CNH" Binding="{Binding CNH}" FontSize="17"/>

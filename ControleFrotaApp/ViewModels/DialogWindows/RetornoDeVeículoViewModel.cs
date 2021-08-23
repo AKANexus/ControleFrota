@@ -27,10 +27,11 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public ICommand CloseCurrentWindow { get; set; }
         public ICommand SalvaViagem { get; set; }
+        //public ICommand AcrescentaAbastecimento { get; set; }
         public Viagem ViagemSelecionada { get; set; }
-        public ObservableCollection<TipoGasto> TipoGastos { get; set; } = new();
+        public List<TipoGasto> TipoGastos { get; set; } = new();
         public List<Gasto> Gastos { get; set; } = new();
-        
+
         public string KMFinal
         {
             get => ViagemSelecionada?.KMFinal.ToString(_ptBr);
@@ -49,6 +50,7 @@ namespace ControleFrota.ViewModels.DialogWindows
 
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
             SalvaViagem = new SalvaRetornoDeViatura(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            //AcrescentaAbastecimento = new AcrescentaAbastecimentoCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
 
             _viagemDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ViagemDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
@@ -60,6 +62,7 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         private async Task PreencheCampos()
         {
+            TipoGastos.Clear();
             foreach (TipoGasto tipoGasto in await _tipoGastoDataService.GetAll())
             {
                 TipoGastos.Add(tipoGasto);
@@ -68,6 +71,25 @@ namespace ControleFrota.ViewModels.DialogWindows
             ViagemSelecionada = await _viagemDataService.GetViagemByID(_intMessaging.Mensagem);
         }
     }
+
+    //public class AcrescentaAbastecimentoCommand : AsyncCommandBase
+    //{
+    //    private readonly RetornoDeVeículoViewModel _retornoDeVeículoViewModel;
+    //    private CurrentScopeStore _currentScopeStore;
+
+    //    public AcrescentaAbastecimentoCommand(RetornoDeVeículoViewModel retornoDeVeículoViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
+    //    {
+    //        _retornoDeVeículoViewModel = retornoDeVeículoViewModel;
+    //        _currentScopeStore = serviceProvider.GetRequiredService<CurrentScopeStore>();
+    //        _currentScopeStore.CriaNovoEscopo();
+
+    //    }
+
+    //    protected override async Task ExecuteAsync(object parameter)
+    //    {
+
+    //    }
+    //}
 
     public class SalvaRetornoDeViatura : AsyncCommandBase
     {

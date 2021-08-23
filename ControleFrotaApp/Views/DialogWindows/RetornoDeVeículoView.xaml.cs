@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using ControleFrota.Domain;
+using ControleFrota.ViewModels.DialogWindows;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ControleFrota.Views.DialogWindows
 {
@@ -23,6 +26,14 @@ namespace ControleFrota.Views.DialogWindows
         public RetornoDeVeículoView()
         {
             InitializeComponent();
+        }
+
+        private void EventSetter_OnHandler(object sender, SelectionChangedEventArgs e)
+        {
+            //if (e.AddedItems[0] is TipoGasto tipoGasto && tipoGasto.ID == 4 && DataContext is RetornoDeVeículoViewModel retornoDeVeículoViewModel)
+            //{
+            //    retornoDeVeículoViewModel.AcrescentaAbastecimento.Execute(null);
+            //}
         }
     }
 }

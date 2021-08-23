@@ -29,7 +29,7 @@
         <TextBlock  Grid.Row="1" Grid.Column="0" Text="KM Final" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <TextBox FontSize="16" Grid.Row="1" FontWeight="Normal" Text="{Binding KMFinal}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
 
-        <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3" Margin="10" Height="150" ItemsSource="{Binding Gastos}"
+        <DataGrid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="10" Height="150" ItemsSource="{Binding Gastos}"
                   HeadersVisibility="Column" AutoGenerateColumns="False" Width="321" CanUserAddRows="True">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="TIPO DE GASTO" Width="*" 
@@ -37,7 +37,13 @@
                                         SelectedValuePath="ID"
                                         DisplayMemberPath="Descrição"
                                         SelectedValueBinding="{Binding ID}"
-                                        />
+                                        >
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <EventSetter Event="SelectionChanged" Handler="EventSetter_OnHandler"></EventSetter>
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                </DataGridComboBoxColumn>
                 <DataGridTextColumn Header="VALOR" Width="*" Binding="{Binding Valor, StringFormat=C2}"/>
             </DataGrid.Columns>
         </DataGrid>

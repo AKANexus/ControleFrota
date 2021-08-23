@@ -11,5 +11,7 @@ namespace ControleFrota.Domain
     {
         public TipoGasto TipoGasto { get; set; }
         public decimal Valor { get; set; }
+
+        public Abastecimento Abastecimento { get; set; }
     }
 }

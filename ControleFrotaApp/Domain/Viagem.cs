@@ -19,6 +19,8 @@ namespace ControleFrota.Domain
         public DateTime Saída { get; set; }
         public DateTime Retorno { get; set; }
         public ObservableCollection<Gasto> Gastos { get; set; } = new();
+        [NotMapped]
+        public bool ViagemAberta => KMFinal == default;
 
         [NotMapped]
         public decimal TotalDeGastos => Gastos.Sum(x => x.Valor);

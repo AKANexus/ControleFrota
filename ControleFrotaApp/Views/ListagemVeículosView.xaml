@@ -7,16 +7,6 @@
              xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemVeículosViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920" Language="pt-BR" IsHitTestVisible="{Binding HitTestVisible}">
-    <UserControl.Resources>
-        <ContextMenu x:Key="ContextVeículos">
-            <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}"/>
-            <MenuItem Header="Retorno" Command="{Binding RetornoDeViatura}"/>
-            <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}"/>
-        </ContextMenu>
-        <Style x:Key="RowStyle" TargetType="{x:Type DataGridRow}">
-            <Setter Property="ContextMenu" Value="{StaticResource ContextVeículos}"/>
-        </Style>
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,6 +16,21 @@
         <Grid Grid.Row="1" Margin="5">
             <DataGrid ItemsSource="{Binding Veículos}" SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
                       CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding EmUso}" Value="True">
+                                <Setter Property="Foreground" Value="DarkOrange"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding EmUso}" Value="False">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding PróximoDoLicenciamento}" Value="True">
+                                <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.ContextMenu>
                     <ContextMenu>
                         <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}"/>
@@ -40,6 +45,9 @@
                         <Setter Property="Padding" Value="15,5"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Editar}"></MouseBinding>
+                </DataGrid.InputBindings>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Placa" Binding="{Binding Placa}" FontSize="17" />
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca.Nome}" FontSize="17"/>

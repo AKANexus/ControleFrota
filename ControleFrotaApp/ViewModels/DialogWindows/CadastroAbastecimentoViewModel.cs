@@ -30,8 +30,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly IMessaging<string> _stringMessaging;
         private Abastecimento _abastecimentoSelecionado;
         private CultureInfo ptBR = new("pt-BR");
-        Regex rgx = new Regex("[^0-9 , .]");
-
+        Regex rgx = new("[^0-9 , .]");
 
         public Combustível CombustívelSelecionado
         {
@@ -176,7 +175,6 @@ namespace ControleFrota.ViewModels.DialogWindows
 
                 return;
             }
-
             AbastecimentoSelecionado = await _abastecimentoDataService.GetByID(_intMessaging.Mensagem);
         }
     }

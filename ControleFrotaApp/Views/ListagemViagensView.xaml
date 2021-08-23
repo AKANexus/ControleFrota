@@ -16,7 +16,7 @@
             <StackPanel Orientation="Horizontal" Background="LightGray">
                 <Button Content="Nova Viagem" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding NovaViagem}"/>
                 <Button Content="Retorno" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding RetornoViagem}"/>
-                <Button Content="Editar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Editar}"/>
+                <!--<Button Content="Editar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Editar}"/>-->
                 <Button Content="Imprimir" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Imprimir}" IsEnabled="False"/>
             </StackPanel>
         </Grid>
@@ -30,6 +30,18 @@
                         <Setter Property="Padding" Value="15,5"/>
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding ViagemAberta}" Value="True">
+                                <Setter Property="Foreground" Value="DarkOrange"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding ViagemAberta}" Value="False">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Veículo" Binding="{Binding Veículo.Placa}" FontSize="17" />
                     <DataGridTextColumn Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>

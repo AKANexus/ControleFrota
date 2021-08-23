@@ -31,7 +31,7 @@ namespace ControleFrota.ViewModels
         public bool HitTestVisible { get; set; } = true;
         public ICommand NovaViagem { get; }
         public ICommand RetornoViagem { get; }
-        public ICommand Editar { get; }
+        public ICommand Imprimir { get; set; }
 
         public ListagemViagensViewModel(IServiceProvider serviceProvider)
         {
@@ -39,7 +39,7 @@ namespace ControleFrota.ViewModels
             _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
             NovaViagem = new NovaViagemCommand(this, serviceProvider);
             RetornoViagem = new RetornoViagemCommand(this, serviceProvider);
-            Editar = new EditarViagemCommand(this, serviceProvider);
+            //Editar = new EditarViagemCommand(this, serviceProvider);
             PreencheDataGrid();
         }
 

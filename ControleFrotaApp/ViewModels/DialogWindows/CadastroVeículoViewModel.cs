@@ -85,6 +85,15 @@ namespace ControleFrota.ViewModels.DialogWindows
                 OnPropertyChanged(nameof(RENAVAM));
             }
         }
+        public string Chassis
+        {
+            get => VeículoSelecionado?.Chassis;
+            set
+            {
+                VeículoSelecionado.Chassis = value;
+                OnPropertyChanged(nameof(Chassis));
+            }
+        }
 
         public DateTime ÚltimoLicenciamento
         {
@@ -126,10 +135,14 @@ namespace ControleFrota.ViewModels.DialogWindows
             if (_intMessaging.Mensagem == default)
             {
                 VeículoSelecionado = new Veículo();
+                OnPropertyChanged(null);
                 return;
             }
 
             VeículoSelecionado = await _veículoDataService.GetVeículoByID(_intMessaging.Mensagem);
+            await PreencheModelos();
+            OnPropertyChanged(null);
+
         }
 
         private async Task PreencheModelos()
