@@ -94,7 +94,6 @@ namespace ControleFrota.ViewModels
 
         public bool CanExecute(object? parameter)
         {
-            return false;
             return _listagemAbastecimentosViewModel.AbastecimentoSelecionado is not null;
         }
 

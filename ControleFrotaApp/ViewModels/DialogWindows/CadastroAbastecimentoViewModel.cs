@@ -176,6 +176,7 @@ namespace ControleFrota.ViewModels.DialogWindows
                 return;
             }
             AbastecimentoSelecionado = await _abastecimentoDataService.GetByID(_intMessaging.Mensagem);
+            OnPropertyChanged(null);
         }
     }
 
