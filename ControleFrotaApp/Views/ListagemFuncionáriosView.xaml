@@ -5,8 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControleFrota.Views"
              xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
+             xmlns:auxiliares="clr-namespace:ControleFrota.Auxiliares"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemFuncionáriosViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920" Language="pt-BR">
+    <UserControl.Resources>
+        <auxiliares:DefaultDateToBlank x:Key="DefaultDateToBlank"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,6 +20,18 @@
         <Grid Grid.Row="1" Margin="5">
             <DataGrid ItemsSource="{Binding Motoristas}" SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
                       CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
+                <DataGrid.RowStyle>
+                    <Style TargetType="{x:Type DataGridRow}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding PróximoDoVencimento}" Value="True">
+                                <Setter Property="Foreground" Value="DarkOrange"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding PróximoDoVencimento}" Value="False">
+                                <Setter Property="Foreground" Value="Black"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="18"/>
@@ -29,7 +45,7 @@
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Nome" Binding="{Binding Nome}" FontSize="17" />
                     <DataGridTextColumn Header="CNH" Binding="{Binding CNH}" FontSize="17"/>
-                    <DataGridTextColumn Header="Validade CNH" Binding="{Binding ValidadeCNH, StringFormat=dd/MMM/yyyy}" FontSize="17"/>
+                    <DataGridTextColumn Header="Validade CNH" Binding="{Binding ValidadeCNH, StringFormat=dd/MMM/yyyy, Converter={StaticResource DefaultDateToBlank}}" FontSize="17"/>
                     <DataGridTextColumn Header="Setor" Binding="{Binding Setor.Descrição}" FontSize="17"/>
 
                 </DataGrid.Columns>

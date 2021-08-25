@@ -32,6 +32,8 @@ namespace ControleFrota.ViewModels
         public ICommand NovaViagem { get; }
         public ICommand RetornoViagem { get; }
         public ICommand Imprimir { get; set; }
+        public ICommand Editar { get; set; }
+
 
         public ListagemViagensViewModel(IServiceProvider serviceProvider)
         {
@@ -39,7 +41,7 @@ namespace ControleFrota.ViewModels
             _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
             NovaViagem = new NovaViagemCommand(this, serviceProvider);
             RetornoViagem = new RetornoViagemCommand(this, serviceProvider);
-            //Editar = new EditarViagemCommand(this, serviceProvider);
+            Editar = new EditarViagemCommand(this, serviceProvider);
             PreencheDataGrid();
         }
 
@@ -66,10 +68,25 @@ namespace ControleFrota.ViewModels
 
     public class EditarViagemCommand : ICommand
     {
-       
-        public EditarViagemCommand(ListagemViagensViewModel ListagemViagensViewModel, IServiceProvider serviceProvider)
+        private readonly ListagemViagensViewModel _listagemViagensViewModel;
+        private readonly IMessaging<int> _intMessaging;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly IDialogViewModelFactory _dialogVMFactory;
+        private readonly IDialogsStore _dialogStore;
+
+        public EditarViagemCommand(ListagemViagensViewModel listagemViagensViewModel, IServiceProvider serviceProvider)
         {
-            
+            _listagemViagensViewModel = listagemViagensViewModel;
+            _listagemViagensViewModel.PropertyChanged += _listagemViagensViewModel_PropertyChanged; ;
+            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+        }
+
+        private void _listagemViagensViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            CanExecuteChanged?.Invoke(this, e);
         }
 
         private void _ListagemViagensViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -79,12 +96,16 @@ namespace ControleFrota.ViewModels
 
         public bool CanExecute(object parameter)
         {
-            return false;
+            return _listagemViagensViewModel.ViagemSelecionada is not null;
         }
 
         public void Execute(object parameter)
         {
-           
+            _intMessaging.Mensagem = _listagemViagensViewModel.ViagemSelecionada.ID;
+            _dialogGenerator.ViewModelExibido =
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeViagens);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            _listagemViagensViewModel.PreencheDataGrid();
         }
 
         public event EventHandler CanExecuteChanged;

@@ -29,8 +29,8 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly MotoristaDataService _motoristaDataService;
         private readonly IMessaging<string> _stringMessaging;
         private Abastecimento _abastecimentoSelecionado;
-        private CultureInfo ptBR = new("pt-BR");
-        Regex rgx = new("[^0-9 , .]");
+        private readonly CultureInfo _ptBr = new("pt-BR");
+        private readonly Regex _rgx = new("[^0-9 , .]");
 
         public Combustível CombustívelSelecionado
         {
@@ -86,8 +86,8 @@ namespace ControleFrota.ViewModels.DialogWindows
             get => (AbastecimentoSelecionado?.KM ?? default).ToString("F2")+" km";
             set
             {
-                string regexReplace = rgx.Replace(value, "");
-                AbastecimentoSelecionado.KM = regexReplace.Replace(".", ",").Safedecimal(ptBR);
+                string regexReplace = _rgx.Replace(value, "");
+                AbastecimentoSelecionado.KM = regexReplace.Replace(".", ",").Safedecimal(_ptBr);
                 OnPropertyChanged(nameof(KM));
             }
         }
@@ -107,8 +107,8 @@ namespace ControleFrota.ViewModels.DialogWindows
             get => (AbastecimentoSelecionado?.ValorTotal ?? default).ToString("C2");
             set
             {
-                string regexReplace = rgx.Replace(value, "");
-                AbastecimentoSelecionado.ValorTotal = regexReplace.Replace(".", ",").Safedecimal(ptBR);
+                string regexReplace = _rgx.Replace(value, "");
+                AbastecimentoSelecionado.ValorTotal = regexReplace.Replace(".", ",").Safedecimal(_ptBr);
                 OnPropertyChanged(nameof(ValorTotal));
             }
         }
@@ -118,8 +118,8 @@ namespace ControleFrota.ViewModels.DialogWindows
             get => (AbastecimentoSelecionado?.Litragem ?? default).ToString("F2") + " l";
             set
             {
-                string regexReplace = rgx.Replace(value, "");
-                AbastecimentoSelecionado.Litragem = regexReplace.Replace(".", ",").Safedecimal(ptBR);
+                string regexReplace = _rgx.Replace(value, "");
+                AbastecimentoSelecionado.Litragem = regexReplace.Replace(".", ",").Safedecimal(_ptBr);
                 OnPropertyChanged(nameof(Litragem));
             }
         }

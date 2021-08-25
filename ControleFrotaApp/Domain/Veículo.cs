@@ -70,7 +70,31 @@ namespace ControleFrota.Domain
         }
 
         public bool Ativo { get; set; } = true;
-        [NotMapped] public bool PróximoDoLicenciamento => ÚltimoLicenciamento <= DateTime.Now.AddDays(60);
+        [NotMapped] public DateTime PróximoLicenciamento
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Placa)) return default;
+                int year = ÚltimoLicenciamento.AddDays(1 - ÚltimoLicenciamento.Day).AddYears(1).Year;
+                int month = Placa.Substring(7) switch
+                {
+                    "1" => 4,
+                    "2" => 5,
+                    "3" => 6,
+                    "4" => 7,
+                    "5" => 8,
+                    "6" => 8,
+                    "7" => 9,
+                    "8" => 10,
+                    "9" => 11,
+                    "0" => 12,
+                    _ => 1
+                };
+                return new DateTime(year, month, 1);
+            }
+        }
+        [NotMapped]
+        public bool PróximoDoLicenciamento => PróximoLicenciamento <= DateTime.Now.AddDays(60);
 
         [NotMapped] public int IdViagemEmAberto => Viagens.FirstOrDefault(x => x.Retorno == default)?.ID ?? default;
     }

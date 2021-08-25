@@ -24,6 +24,7 @@ namespace ControleFrota.Services.DataServices
             return await _context.Viagems.AsNoTracking()
                 .Include(x=>x.Motorista)
                 .Include(x=>x.Veículo)
+                .Include(x=>x.Gastos)
                 .ToListAsync();
         }
 
@@ -31,6 +32,7 @@ namespace ControleFrota.Services.DataServices
         {
             return await _context.Viagems
                 .Include(x => x.Veículo)
+                .Include(x=>x.Gastos)
                 .FirstOrDefaultAsync(x => x.ID == id);
         }
 

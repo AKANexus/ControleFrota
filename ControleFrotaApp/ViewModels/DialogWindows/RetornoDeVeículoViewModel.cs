@@ -30,7 +30,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         //public ICommand AcrescentaAbastecimento { get; set; }
         public Viagem ViagemSelecionada { get; set; }
         public List<TipoGasto> TipoGastos { get; set; } = new();
-        public List<Gasto> Gastos { get; set; } = new();
+        public ObservableCollection<Gasto> Gastos => ViagemSelecionada?.Gastos;
 
         public string KMFinal
         {
@@ -63,12 +63,14 @@ namespace ControleFrota.ViewModels.DialogWindows
         private async Task PreencheCampos()
         {
             TipoGastos.Clear();
+            //Gastos.Clear();
             foreach (TipoGasto tipoGasto in await _tipoGastoDataService.GetAll())
             {
                 TipoGastos.Add(tipoGasto);
             }
 
             ViagemSelecionada = await _viagemDataService.GetViagemByID(_intMessaging.Mensagem);
+            OnPropertyChanged(nameof(ViagemSelecionada));
         }
     }
 

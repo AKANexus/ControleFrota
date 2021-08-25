@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
              xmlns:aux="clr-namespace:ControleFrota.Auxiliares"
              mc:Ignorable="d"  d:DataContext="{d:DesignInstance viewModels:ListagemAbastecimentosViewModel}"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" Language="pt-BR">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,7 +16,7 @@
         <local:MenuPadrãoView/>
         <Grid Grid.Row="1" Margin="5">
             <DataGrid ItemsSource="{Binding Abastecimentos}" SelectedItem="{Binding AbastecimentoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
-                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False">
+                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
                         <Setter Property="FontSize" Value="18"/>
@@ -30,8 +30,8 @@
                     <DataGridTextColumn Header="Posto" Binding="{Binding Posto}" FontSize="17"/>
                     <DataGridTextColumn Header="Quilometragem" Binding="{Binding KM, StringFormat={}{0:N0} km}" FontSize="17"/>
                     <DataGridTextColumn Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>
-                    <DataGridTextColumn Header="Data e Hora" Binding="{Binding DataHora, StringFormat='{}{O:dd MMM yyyy, HH:mm}'}" FontSize="17"/>
-                    <DataGridTextColumn Header="Valor por Litro" Binding="{Binding ValorPorLitro, StringFormat='{}{0:N3} R$/l}'}" FontSize="17"/>
+                    <DataGridTextColumn Header="Data e Hora" Binding="{Binding DataHora}" FontSize="17"/>
+                    <DataGridTextColumn Header="Valor por Litro" Binding="{Binding ValorPorLitro, StringFormat={}{0:N3} R$/l}" FontSize="17"/>
                     <DataGridTextColumn Header="Litragem" Binding="{Binding Litragem, StringFormat={}{0:N2} l}" FontSize="17"/>
                     <DataGridTextColumn Header="Valor Total" Binding="{Binding ValorTotal, StringFormat={}{0:C2}}" FontSize="17"/>
                 </DataGrid.Columns>

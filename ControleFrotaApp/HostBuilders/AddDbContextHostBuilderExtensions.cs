@@ -21,7 +21,7 @@ namespace ControleFrota.HostBuilders
                         x.CommandTimeout(600);
                         x.EnableRetryOnFailure(3);
                     });
-                    //c.EnableSensitiveDataLogging();
+                    c.EnableSensitiveDataLogging();
                 };
                 serviços.AddSingleton<MainDbContextFactory>(new MainDbContextFactory(configureDbContext));
                 serviços.AddDbContext<MainDbContext>(configureDbContext);

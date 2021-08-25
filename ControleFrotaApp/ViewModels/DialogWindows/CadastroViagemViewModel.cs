@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -20,40 +21,40 @@ namespace ControleFrota.ViewModels.DialogWindows
     public class CadastroViagemViewModel : DialogContentViewModelBase
     {
         private readonly CurrentScopeStore _currentScopeStore;
-        private readonly VeículoDataService _viagemDataService;
+        private readonly ViagemDataService _viagemDataService;
         private readonly IMessaging<int> _intMessaging;
         private readonly CultureInfo _ptBr = new("pt-BR");
         private readonly TipoGastoDataService _tipoGastoDataService;
         private readonly VeículoDataService _veículoDataService;
         private readonly MotoristaDataService _motoristaDataService;
+        private readonly Regex _rgx = new("[^0-9 , .]");
+
 
         public ICommand CloseCurrentWindow { get; set; }
         public ICommand SalvaViagem { get; set; }
         public Viagem ViagemSelecionada { get; set; }
         public ObservableCollection<Motorista> Motoristas { get; set; } = new();
         public ObservableCollection<Veículo> Veículos { get; set; } = new();
-        public ObservableCollection<TipoGasto> TipoGastos { get; set; } = new();
-        public Motorista MotoristaSelecionado { get; set; }
-        public Veículo VeículoSelecionado { get; set; }
-        public List<Gasto> Gastos { get; set; } = new();
-        public DateTime Saída
+        public Motorista MotoristaSelecionado
         {
-            get => ViagemSelecionada?.Saída ?? DateTime.Now;
+            get => ViagemSelecionada?.Motorista;
             set
             {
-                ViagemSelecionada.Saída = value;
-                OnPropertyChanged(nameof(Saída));
+                ViagemSelecionada.Motorista = value;
+                OnPropertyChanged(nameof(MotoristaSelecionado));
             }
         }
-        public DateTime Retorno
+
+        public Veículo VeículoSelecionado
         {
-            get => ViagemSelecionada?.Retorno ?? DateTime.Now;
+            get => ViagemSelecionada?.Veículo;
             set
             {
-                ViagemSelecionada.Retorno = value;
-                OnPropertyChanged(nameof(Retorno));
+                ViagemSelecionada.Veículo = value;
+                OnPropertyChanged(nameof(VeículoSelecionado));
             }
         }
+
         public string Motivo
         {
             get => ViagemSelecionada?.Motivo;
@@ -66,20 +67,44 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public string KMInicial
         {
-            get => ViagemSelecionada?.KMInicial.ToString(_ptBr);
+            get => (ViagemSelecionada?.KMInicial ?? default).ToString("F2") + " km";
             set
             {
-                ViagemSelecionada.KMInicial = value.Replace(".", ",").Safedecimal(_ptBr);
+                string regexReplace = _rgx.Replace(value, "");
+                ViagemSelecionada.KMInicial = regexReplace.Replace(".", ",").Safedecimal(_ptBr);
                 OnPropertyChanged(nameof(KMInicial));
             }
         }
 
-        public string KMFinal
+        public DateTime Saída
         {
-            get => ViagemSelecionada?.KMFinal.ToString(_ptBr);
+            get => ViagemSelecionada?.Saída ?? default;
             set
             {
-                ViagemSelecionada.KMFinal = value.Replace(".", ",").Safedecimal(_ptBr);
+                ViagemSelecionada.Saída = value;
+                OnPropertyChanged(nameof(Saída));
+            }
+        }
+        public DateTime Retorno
+        {
+            get => ViagemSelecionada?.Retorno ?? default;
+            set
+            {
+                ViagemSelecionada.Retorno = value;
+                OnPropertyChanged(nameof(Retorno));
+            }
+        }
+
+        public List<TipoGasto> TipoGastos { get; set; } = new();
+        public List<Gasto> Gastos { get; set; } = new();
+
+        public string KMFinal
+        {
+            get => (ViagemSelecionada?.KMFinal ?? default).ToString("F2") + " km";
+            set
+            {
+                string regexReplace = _rgx.Replace(value, "");
+                ViagemSelecionada.KMFinal = regexReplace.Replace(".", ",").Safedecimal(_ptBr);
                 OnPropertyChanged(nameof(KMFinal));
             }
         }
@@ -93,7 +118,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
             SalvaViagem = new SalvaViagemCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
 
-            _viagemDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
+            _viagemDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ViagemDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
             _tipoGastoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<TipoGastoDataService>();
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
@@ -126,12 +151,11 @@ namespace ControleFrota.ViewModels.DialogWindows
                     Saída = DateTime.Now,
                     Retorno = DateTime.Now
                 };
-                //OnPropertyChanged(nameof(Saída));
-                //OnPropertyChanged(nameof(Retorno));
                 return;
             }
+            ViagemSelecionada = await _viagemDataService.GetViagemByID(_intMessaging.Mensagem);
 
-            VeículoSelecionado = await _viagemDataService.GetVeículoByID(_intMessaging.Mensagem);
+            OnPropertyChanged(null);
         }
     }
 

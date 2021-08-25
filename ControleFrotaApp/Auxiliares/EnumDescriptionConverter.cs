@@ -44,4 +44,17 @@ namespace ControleFrota.Auxiliares
             return string.Empty;
         }
     }
+
+    public class DefaultDateToBlank : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value is DateTime time && time == new DateTime(1, 1, 1) ? "" : value;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return null;
+        }
+    }
 }

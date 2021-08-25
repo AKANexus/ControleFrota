@@ -61,13 +61,13 @@
                  VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" />
 
         <DataGrid Grid.Column="0" Grid.Row="5" Grid.ColumnSpan="3" Margin="10" Height="100" ItemsSource="{Binding Gastos}"
-                  HeadersVisibility="Column" AutoGenerateColumns="False" Width="321" CanUserAddRows="True">
+                  HeadersVisibility="Column" AutoGenerateColumns="False" Width="321" CanUserAddRows="True" Language="pt-BR">
             <DataGrid.Columns>
                 <DataGridComboBoxColumn Header="TIPO DE GASTO" Width="*" 
                                         ItemsSource="{Binding Source={StaticResource Saporra}}"
                                         SelectedValuePath="ID"
                                         DisplayMemberPath="Descrição"
-                                        SelectedValueBinding="{Binding ID}"
+                                        SelectedItemBinding="{Binding TipoGasto}"
                                         />
                 <DataGridTextColumn Header="VALOR" Width="*" Binding="{Binding Valor, StringFormat=C2}"/>
             </DataGrid.Columns>

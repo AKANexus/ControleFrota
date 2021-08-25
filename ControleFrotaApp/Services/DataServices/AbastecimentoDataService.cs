@@ -24,6 +24,7 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Motorista)
                 .Include(x=>x.Veículo)
                 .Include(x=>x.Combustível)
+                .OrderByDescending(x=>x.DataHora)
                 .ToListAsync();
         }
 

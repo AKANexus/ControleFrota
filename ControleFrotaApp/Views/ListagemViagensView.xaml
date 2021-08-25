@@ -5,8 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControleFrota.Views"
              xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
+             xmlns:auxiliares="clr-namespace:ControleFrota.Auxiliares"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemViagensViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920" Language="pt-BR" IsHitTestVisible="{Binding HitTestVisible}">
+    <UserControl.Resources>
+        <auxiliares:DefaultDateToBlank x:Key="DefaultDateToBlank"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -16,7 +20,7 @@
             <StackPanel Orientation="Horizontal" Background="LightGray">
                 <Button Content="Nova Viagem" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding NovaViagem}"/>
                 <Button Content="Retorno" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding RetornoViagem}"/>
-                <!--<Button Content="Editar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Editar}"/>-->
+                <Button Content="Editar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Editar}"/>
                 <Button Content="Imprimir" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Imprimir}" IsEnabled="False"/>
             </StackPanel>
         </Grid>
@@ -43,13 +47,13 @@
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Veículo" Binding="{Binding Veículo.Placa}" FontSize="17" />
-                    <DataGridTextColumn Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>
-                    <DataGridTextColumn Header="Motivo" Binding="{Binding Motivo}" FontSize="17"/>
-                    <DataGridTextColumn Header="Data de Partida" Binding="{Binding Saída}" FontSize="17"/>
-                    <DataGridTextColumn Header="Data de Retorno" Binding="{Binding Retorno}" FontSize="17"/>
-                    <DataGridTextColumn Header="Dist. Perc." Binding="{Binding TotalViagem, StringFormat={}{0:N0} km}" FontSize="17"/>
-                    <DataGridTextColumn Header="Total de Gastos" Binding="{Binding TotalDeGastos, StringFormat=C2}" FontSize="17"/>
+                    <DataGridTextColumn Width="Auto" Header="Veículo" Binding="{Binding Veículo.Placa}" FontSize="17" />
+                    <DataGridTextColumn Width="1*" Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>
+                    <DataGridTextColumn Width="2*" Header="Motivo" Binding="{Binding Motivo}" FontSize="17"/>
+                    <DataGridTextColumn Width="Auto" Header="Data de Partida" Binding="{Binding Saída, Converter={StaticResource DefaultDateToBlank}}" FontSize="17"/>
+                    <DataGridTextColumn Width="Auto" Header="Data de Retorno" Binding="{Binding Retorno, Converter={StaticResource DefaultDateToBlank}}" FontSize="17"/>
+                    <DataGridTextColumn Width="Auto" Header="Dist. Perc." Binding="{Binding TotalViagem, StringFormat={}{0:N0} km}" FontSize="17"/>
+                    <DataGridTextColumn Width="SizeToHeader" Header="Gastos  " Binding="{Binding TotalDeGastos, StringFormat=C2}" FontSize="17"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
