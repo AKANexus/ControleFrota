@@ -53,6 +53,7 @@ namespace ControleFrota.ViewModels
 
         public async Task PreencheDataGrid()
         {
+
             Veículos.Clear();
             _stringMessaging.Mensagem = null;
             HitTestVisible = false;
@@ -60,16 +61,24 @@ namespace ControleFrota.ViewModels
             Mouse.OverrideCursor = Cursors.Wait;
             Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = Cursors.Wait; });
 
-            foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
+            try
             {
-                Veículos.Add(veículo);
+                foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
+                {
+                    Veículos.Add(veículo);
+                }
             }
-
-            
-            HitTestVisible = true;
-            OnPropertyChanged(nameof(HitTestVisible));
-            Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
-
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                HitTestVisible = true;
+                OnPropertyChanged(nameof(HitTestVisible));
+                Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
+            }
         }
     }
 

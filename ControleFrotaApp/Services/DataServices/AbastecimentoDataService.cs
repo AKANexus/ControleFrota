@@ -23,7 +23,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Abastecimentos.AsNoTracking()
                 .Include(x => x.Motorista)
                 .Include(x=>x.Veículo)
-                .Include(x=>x.Combustível)
                 .OrderByDescending(x=>x.DataHora)
                 .ToListAsync();
         }
@@ -33,7 +32,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Abastecimentos
                 .Include(x => x.Motorista)
                 .Include(x => x.Veículo)
-                .Include(x => x.Combustível)
                 .FirstOrDefaultAsync(x=>x.ID == id);
         }
 
@@ -42,7 +40,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Abastecimentos.AsNoTracking()
                 .Include(x => x.Motorista)
                 .Include(x => x.Veículo)
-                .Include(x=>x.Combustível)
                 .Where(x => x.Motorista.ID == motorista.ID)
                 .ToListAsync();
         }
@@ -52,7 +49,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Abastecimentos.AsNoTracking()
                 .Include(x => x.Motorista)
                 .Include(x => x.Veículo)
-                .Include(x=>x.Combustível)
                 .Where(x => x.Veículo.ID == veículo.ID)
                 .ToListAsync();
         }

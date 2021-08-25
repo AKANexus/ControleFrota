@@ -8,6 +8,9 @@
              xmlns:aux="clr-namespace:ControleFrota.Auxiliares"
              mc:Ignorable="d"  d:DataContext="{d:DesignInstance viewModels:ListagemAbastecimentosViewModel}"
              d:DesignHeight="450" d:DesignWidth="800" Language="pt-BR">
+    <UserControl.Resources>
+        <aux:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -26,7 +29,7 @@
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Placa" Binding="{Binding Veículo.Placa}" FontSize="17" />
-                    <DataGridTextColumn Header="Combustível" Binding="{Binding Combustível.Nome}" FontSize="17"/>
+                    <DataGridTextColumn Header="Combustível" Binding="{Binding Combustível, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
                     <DataGridTextColumn Header="Posto" Binding="{Binding Posto}" FontSize="17"/>
                     <DataGridTextColumn Header="Quilometragem" Binding="{Binding KM, StringFormat={}{0:N0} km}" FontSize="17"/>
                     <DataGridTextColumn Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>

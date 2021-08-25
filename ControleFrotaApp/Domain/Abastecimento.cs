@@ -10,7 +10,7 @@ namespace ControleFrota.Domain
     public class Abastecimento : EntityBase
     {
         public decimal KM { get; set; }
-        public Combustível Combustível { get; set; }
+        public Combustíveis Combustível { get; set; } = Combustíveis.GasolinaAditivada;
         public Motorista Motorista { get; set; }
 
         [NotMapped] public decimal ValorPorLitro => ValorTotal / Litragem;
@@ -19,5 +19,6 @@ namespace ControleFrota.Domain
         public Veículo Veículo { get; set; }
         public string Posto { get; set; }
         public decimal ValorTotal { get; set; }
+        public FormasPagamento FormasPagamento { get; set; } = FormasPagamento.Dinheiro;
     }
 }

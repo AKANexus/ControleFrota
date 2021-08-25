@@ -58,14 +58,24 @@ namespace ControleFrota.ViewModels
             Mouse.OverrideCursor = Cursors.Wait;
             Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = Cursors.Wait; });
 
-            foreach (Abastecimento abastecimento in await _abastecimentoDataService.GetAllAsNoTracking())
+            try
             {
-                Abastecimentos.Add(abastecimento);
+                foreach (Abastecimento abastecimento in await _abastecimentoDataService.GetAllAsNoTracking())
+                {
+                    Abastecimentos.Add(abastecimento);
+                }
             }
-
-            HitTestVisible = true;
-            OnPropertyChanged(nameof(HitTestVisible));
-            Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            finally
+            {
+                HitTestVisible = true;
+                OnPropertyChanged(nameof(HitTestVisible));
+                Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
+            }
         }
     }
 

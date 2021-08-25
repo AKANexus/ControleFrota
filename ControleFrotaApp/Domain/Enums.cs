@@ -7,7 +7,25 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class Enums
+
+    public enum FormasPagamento
     {
+        Dinheiro,
+        Débito,
+        Crédito,
+        PIX
     }
+
+    public enum Combustíveis
+    {
+        [Description("Gasolina Comum")]
+        GasolinaComum = 1,
+        [Description("Gasolina Aditivada")]
+        GasolinaAditivada = 2,
+        [Description("Etanol Comum")]
+        EtanolComum = 3,
+        [Description("Etanol Aditivado")]
+        EtanolAditivado = 4
+    }
+
 }

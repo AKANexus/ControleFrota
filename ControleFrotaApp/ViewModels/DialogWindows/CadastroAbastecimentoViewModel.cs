@@ -24,7 +24,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly CurrentScopeStore _currentScopeStore;
         private readonly AbastecimentoDataService _abastecimentoDataService;
         private readonly IMessaging<int> _intMessaging;
-        private readonly CombustívelDataService _combustivelDataService;
+        //private readonly CombustívelDataService _combustivelDataService;
         private readonly VeículoDataService _veículoDataService;
         private readonly MotoristaDataService _motoristaDataService;
         private readonly IMessaging<string> _stringMessaging;
@@ -32,9 +32,9 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly CultureInfo _ptBr = new("pt-BR");
         private readonly Regex _rgx = new("[^0-9 , .]");
 
-        public Combustível CombustívelSelecionado
+        public Combustíveis CombustívelSelecionado
         {
-            get => AbastecimentoSelecionado?.Combustível;
+            get => AbastecimentoSelecionado?.Combustível ?? Combustíveis.GasolinaComum;
             set
             {
                 AbastecimentoSelecionado.Combustível = value;
@@ -42,7 +42,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
-        public ObservableCollection<Combustível> Combustívels { get; set; } = new();
+        //public ObservableCollection<Combustível> Combustívels { get; set; } = new();
 
         public Abastecimento AbastecimentoSelecionado
         {
@@ -127,6 +127,8 @@ namespace ControleFrota.ViewModels.DialogWindows
         public ICommand SalvaAbastecimento { get; set; }
         public ICommand CloseCurrentWindow { get; set; }
 
+        public FormasPagamento FormaPagamento { get; set; }
+
         public CadastroAbastecimentoViewModel(IServiceProvider serviceProvider)
         {
             _currentScopeStore = serviceProvider.GetRequiredService<CurrentScopeStore>();
@@ -138,7 +140,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _abastecimentoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<AbastecimentoDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
             _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
-            _combustivelDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<CombustívelDataService>();
+            //_combustivelDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<CombustívelDataService>();
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
             _motoristaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MotoristaDataService>();
 
@@ -147,10 +149,10 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         private async Task PreencheCampos()
         {
-            foreach (Combustível combustível in await _combustivelDataService.GetAll())
-            {
-                Combustívels.Add(combustível);
-            }
+            //foreach (Combustível combustível in await _combustivelDataService.GetAll())
+            //{
+            //    Combustívels.Add(combustível);
+            //}
             foreach (Motorista motorista in await _motoristaDataService.GetAll())
             {
                 Motoristas.Add(motorista);
@@ -214,7 +216,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             if (_cadastroAbastecimentoViewModel.MotoristaSelecionado is null) return false;
             if (_cadastroAbastecimentoViewModel.VeículoSelecionado is null) return false;
             if (_cadastroAbastecimentoViewModel.AbastecimentoSelecionado.KM == default) return false;
-            if (_cadastroAbastecimentoViewModel.CombustívelSelecionado is null) return false;
+            //if (_cadastroAbastecimentoViewModel.CombustívelSelecionado is null) return false;
             if (string.IsNullOrWhiteSpace(_cadastroAbastecimentoViewModel.Posto)) return false;
             if (_cadastroAbastecimentoViewModel.AbastecimentoSelecionado.ValorPorLitro == default) return false;
             if (_cadastroAbastecimentoViewModel.Litragem == default) return false;
