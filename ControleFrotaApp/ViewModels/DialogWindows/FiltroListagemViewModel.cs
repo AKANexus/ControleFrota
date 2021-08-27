@@ -211,7 +211,7 @@ namespace ControleFrota.ViewModels.DialogWindows
                     _filtroListagemViewModel.SelectedPropDescPair.FilterInfo = $"datebetween:{_filtroListagemViewModel.DataInicial.ToShortDateString()};{_filtroListagemViewModel.DataFinal.ToShortDateString()}";
                     break;
                 case TipoFiltro.Numérico:
-                    _filtroListagemViewModel.SelectedPropDescPair.FilterInfo = $"valuebetween:{_filtroListagemViewModel.DataInicial.ToShortDateString()};{_filtroListagemViewModel.DataFinal.ToShortDateString()}";
+                    _filtroListagemViewModel.SelectedPropDescPair.FilterInfo = $"valuebetween:{_filtroListagemViewModel.ValorInicial};{_filtroListagemViewModel.ValorFinal}";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();

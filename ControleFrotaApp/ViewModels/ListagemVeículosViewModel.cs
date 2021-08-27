@@ -94,30 +94,30 @@ namespace ControleFrota.ViewModels
 
         }
 
-        public bool Contains(object de)
-        {
-            return de is Veículo veículo && veículo.Placa.Contains("TES");
-        }
-
         public void AplicaFiltro(FilteringInfo filteringInfo)
         {
-            string textoFiltro = filteringInfo.FilterInfo.Split(':')[1];
             switch (filteringInfo.FilterInfo.Split(':')[0])
             {
                 case "wholefield":
-                    VeículosView.Filter += (x) => x is Veículo veículo && (string)veículo.GetPropValue(filteringInfo.Property.Name) == textoFiltro;
+                    VeículosView.Filter += (x) => x is EntityBase veículo && (string)veículo.GetPropValue(filteringInfo.Property.Name) == filteringInfo.FilterInfo.Split(':')[1];
                     break;
                 case "contains":
-                    VeículosView.Filter += (x) => x is Veículo veículo && ((string)veículo.GetPropValue(filteringInfo.Property.Name)).Contains(textoFiltro);
+                    VeículosView.Filter += (x) => x is EntityBase veículo && ((string)veículo.GetPropValue(filteringInfo.Property.Name)).Contains(filteringInfo.FilterInfo.Split(':')[1]);
                     break;
                 case "startswith":
-                    VeículosView.Filter += (x) => x is Veículo veículo && ((string)veículo.GetPropValue(filteringInfo.Property.Name)).StartsWith(textoFiltro);
+                    VeículosView.Filter += (x) => x is EntityBase veículo && ((string)veículo.GetPropValue(filteringInfo.Property.Name)).StartsWith(filteringInfo.FilterInfo.Split(':')[1]);
                     break;
                 case "datebetween":
-
+                    string[] dates = filteringInfo.FilterInfo.Split(':')[1].Split(';');
+                    DateTime start = DateTime.Parse(dates[0]);
+                    DateTime end = DateTime.Parse(dates[1]).AddDays(1).AddSeconds(-1);
+                    VeículosView.Filter += (x) => x is EntityBase veículo && ((DateTime)veículo.GetPropValue(filteringInfo.Property.Name)).IsBetween(start, end);
                     break;
                 case "valuebetween":
-
+                    string[] values = filteringInfo.FilterInfo.Split(':')[1].Split(';');
+                    decimal startValue = decimal.Parse(values[0]);
+                    decimal endValue = decimal.Parse(values[1]);
+                    VeículosView.Filter += (x) => x is EntityBase veículo && ((decimal)veículo.GetPropValue(filteringInfo.Property.Name)).IsBetween(startValue, endValue);
                     break;
             }
         }
