@@ -7,7 +7,7 @@ using ControleFrota.Domain;
 
 namespace ControleFrota.State
 {
-    public class EntityStore<T> where T : EntityBase
+    public class EntityStore<T>
     {
         public T Entity { get; set; }
     }

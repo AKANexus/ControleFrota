@@ -28,10 +28,4 @@
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="5.0.1" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <None Update="appsettings.json">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	</ItemGroup>
-
 </Project>

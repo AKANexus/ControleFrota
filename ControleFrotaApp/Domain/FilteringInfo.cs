@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ControleFrota.Domain
 {
-    public class FilteringInfo
+    public class FilteringInfo : EntityBase
     {
         public PropertyInfo Property { get; set; }
         public string Description { get; set; }

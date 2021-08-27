@@ -20,7 +20,7 @@
         </Grid.RowDefinitions>
         <TextBlock Text="Campo" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10"></TextBlock>
         <ComboBox Grid.Column="0" Grid.Row="1" VerticalAlignment="Top" Margin="10" ItemsSource="{Binding Colunas}" DisplayMemberPath="Description" SelectedItem="{Binding SelectedPropDescPair, UpdateSourceTrigger=PropertyChanged}"/>
-        <Button Grid.Column="0" Grid.Row="3" Content="🗑 Limpar Filtros" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"  Margin="2.5" Command="{Binding Testar}"/>
+        <Button Grid.Column="0" Grid.Row="3" Content="🗑 Limpar Filtros" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="5"  Margin="2.5" Command="{Binding LimparFiltros}"/>
         
         
         <TextBlock d:Visibility="Collapsed"  Text="Informação a ser filtrada" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Visibility="{Binding CampoTexto}"/>

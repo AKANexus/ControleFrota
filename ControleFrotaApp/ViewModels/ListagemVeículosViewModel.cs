@@ -10,6 +10,7 @@ using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using ControleFrota.Domain;
+using ControleFrota.Extensions;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
 using ControleFrota.State;
@@ -89,13 +90,36 @@ namespace ControleFrota.ViewModels
                 Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
             }
 
-            VeículosView.Filter += Contains;
+            //VeículosView.Filter += Contains;
 
         }
 
         public bool Contains(object de)
         {
             return de is Veículo veículo && veículo.Placa.Contains("TES");
+        }
+
+        public void AplicaFiltro(FilteringInfo filteringInfo)
+        {
+            string textoFiltro = filteringInfo.FilterInfo.Split(':')[1];
+            switch (filteringInfo.FilterInfo.Split(':')[0])
+            {
+                case "wholefield":
+                    VeículosView.Filter += (x) => x is Veículo veículo && (string)veículo.GetPropValue(filteringInfo.Property.Name) == textoFiltro;
+                    break;
+                case "contains":
+                    VeículosView.Filter += (x) => x is Veículo veículo && ((string)veículo.GetPropValue(filteringInfo.Property.Name)).Contains(textoFiltro);
+                    break;
+                case "startswith":
+                    VeículosView.Filter += (x) => x is Veículo veículo && ((string)veículo.GetPropValue(filteringInfo.Property.Name)).StartsWith(textoFiltro);
+                    break;
+                case "datebetween":
+
+                    break;
+                case "valuebetween":
+
+                    break;
+            }
         }
     }
 
@@ -127,6 +151,8 @@ namespace ControleFrota.ViewModels
             _dialogGenerator.ViewModelExibido =
                 _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.Filtros);
             _dialogStore.RegisterDialog(_dialogGenerator);
+
+            _listagemVeículosViewModel.AplicaFiltro(_entityStore.Entity as FilteringInfo);
         }
 
         public event EventHandler CanExecuteChanged;

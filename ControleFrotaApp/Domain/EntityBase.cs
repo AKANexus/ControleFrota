@@ -19,8 +19,14 @@ namespace ControleFrota.Domain
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        public object GetPropValue(string propName)
+        {
+            return GetType().GetProperty(propName).GetValue(this, null);
+        }
     }
+
+
+
 
     public class ExtendedEntityBase : EntityBase, IDataErrorInfo
     {

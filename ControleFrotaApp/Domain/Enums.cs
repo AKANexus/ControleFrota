@@ -28,4 +28,11 @@ namespace ControleFrota.Domain
         EtanolAditivado = 4
     }
 
+    public enum TipoFiltro
+    {
+        Texto,
+        Data,
+        Numérico
+    }
+
 }
