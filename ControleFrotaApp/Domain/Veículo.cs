@@ -13,9 +13,9 @@ namespace ControleFrota.Domain
     {
         [Description("Placa")]
         public string Placa { get; set; }
-        [Description("Marca")]
+        //[Description("Marca")]
         public Marca Marca { get; set; }
-        [Description("Modelo")]
+        //[Description("Modelo")]
         public Modelo Modelo { get; set; }
         [Description("RENAVAM")]
         public string RENAVAM { get; set; }

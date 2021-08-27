@@ -14,12 +14,14 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <local:MenuPadrãoView/>
-        <Grid Grid.Row="1" Margin="5">
+        <TextBox IsReadOnly="True" Grid.Row="1" Text="{Binding FiltrosAplicados, Mode=OneWay}"/>
+        <Grid Grid.Row="2" Margin="5">
             <DataGrid ItemsSource="{Binding VeículosView}" SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
-                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True" EnableRowVirtualization="True">
+                      CanUserAddRows="False" SelectionUnit="FullRow" SelectionMode="Single" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True" EnableRowVirtualization="True">
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>

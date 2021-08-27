@@ -22,6 +22,7 @@ namespace ControleFrota.ViewModels.DialogWindows
     {
         private readonly EntityStore<EntityBase> _entityStore;
         private FilteringInfo _selectedPropDescPair;
+        private readonly IMessaging<Type> _typeMessaging;
         public ObservableCollection<FilteringInfo> Colunas { get; set; } = new();
         public TipoFiltro TipoFiltro { get; set; }
 
@@ -102,21 +103,27 @@ namespace ControleFrota.ViewModels.DialogWindows
         public string TextoDoFiltro { get; set; }
         public bool CampoInteiroChecked { get; set; }
         public bool ComeçandoComChecked { get; set; }
-        public bool ContendoChecked { get; set; }
+        public bool ContendoChecked { get; set; } = true;
 
         public FiltroListagemViewModel(IServiceProvider serviceProvider)
         {
             _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
-            foreach (PropertyInfo propertyInfo in _entityStore.Entity.GetType().GetProperties())
+            _typeMessaging = serviceProvider.GetRequiredService<IMessaging<Type>>();
+            List<FilteringInfo> campos = new();
+            foreach (PropertyInfo propertyInfo in _typeMessaging.Mensagem.GetProperties())
             {
                 var attrs = propertyInfo.GetCustomAttributes(true);
                 foreach (object attr in attrs)
                 {
                     if (attr is DescriptionAttribute descr)
-                        Colunas.Add(new FilteringInfo() { Property = propertyInfo, Description = descr.Description }); ;
+                        campos.Add(new FilteringInfo() { Property = propertyInfo, Description = descr.Description }); ;
                 }
             }
 
+            foreach (FilteringInfo filteringInfo in campos.OrderBy(x=>x.Property.Name))
+            {
+                Colunas.Add(filteringInfo);
+            }
             AplicaFiltro = new AplicaFiltroCommand(this, serviceProvider);
             AplicaExceção = new AplicarExceçãoCommand(this, serviceProvider);
             LimparFiltros = new LimparFiltrosCommand(serviceProvider);

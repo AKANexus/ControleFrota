@@ -14,11 +14,12 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <local:MenuPadrãoView/>
-        <Grid Grid.Row="1" Margin="5">
-            <DataGrid ItemsSource="{Binding Abastecimentos}" SelectedItem="{Binding AbastecimentoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
+        <Grid Grid.Row="2" Margin="5">
+            <DataGrid ItemsSource="{Binding AbastecimentosView}" SelectedItem="{Binding AbastecimentoSelecionado, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
                       CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">

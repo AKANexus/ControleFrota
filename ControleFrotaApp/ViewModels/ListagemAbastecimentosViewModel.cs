@@ -1,15 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using ControleFrota.Domain;
+using ControleFrota.Extensions;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
+using ControleFrota.State;
 using ControleFrota.ViewModels.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -21,6 +25,7 @@ namespace ControleFrota.ViewModels
         private Abastecimento _abastecimentoSelecionado;
         private readonly IMessaging<string> _stringMessaging;
         public ObservableCollection<Abastecimento> Abastecimentos { get; set; } = new();
+        public ICollectionView AbastecimentosView { get; set; }
 
         public Abastecimento AbastecimentoSelecionado
         {
@@ -46,6 +51,7 @@ namespace ControleFrota.ViewModels
 
             Cadastrar = new CadastrarNovoAbastecimentoCommand(this, serviceProvider);
             Editar = new EditarAbastecimentoCommand(this, serviceProvider);
+            Filtrar = new FiltrarAbastecimentosCommand(this, serviceProvider);
             PreencheDataGrid();
         }
 
@@ -60,10 +66,13 @@ namespace ControleFrota.ViewModels
 
             try
             {
-                foreach (Abastecimento abastecimento in await _abastecimentoDataService.GetAllAsNoTracking())
-                {
-                    Abastecimentos.Add(abastecimento);
-                }
+                //foreach (Abastecimento abastecimento in await _abastecimentoDataService.GetAllAsNoTracking())
+                //{
+                //    Abastecimentos.Add(abastecimento);
+                //}
+                AbastecimentosView =
+                    CollectionViewSource.GetDefaultView(await _abastecimentoDataService.GetAllAsNoTracking());
+                OnPropertyChanged(nameof(AbastecimentosView));
             }
             catch (Exception e)
             {
@@ -78,6 +87,53 @@ namespace ControleFrota.ViewModels
             }
         }
     }
+
+    public class FiltrarAbastecimentosCommand : ICommand
+    {
+        private readonly ListagemAbastecimentosViewModel _listagemAbastecimentosViewModel;
+        private readonly IDialogsStore _dialogStore;
+        private readonly IDialogViewModelFactory _dialogViewModelFactory;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly EntityStore<EntityBase> _entityStore;
+        private readonly FilterCollectionView _filterCollectionView;
+        private readonly IMessaging<Type> _typeMessaging;
+
+        public FiltrarAbastecimentosCommand(ListagemAbastecimentosViewModel listagemAbastecimentosViewModel, IServiceProvider serviceProvider)
+        {
+            _listagemAbastecimentosViewModel = listagemAbastecimentosViewModel;
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
+            _filterCollectionView = new();
+            _typeMessaging = serviceProvider.GetRequiredService<IMessaging<Type>>();
+
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _typeMessaging.Mensagem = typeof(Abastecimento);
+            _dialogGenerator.ViewModelExibido =
+                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.Filtros);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            if (_dialogGenerator.Resultado == DialogResult.OK)
+            {
+                _listagemAbastecimentosViewModel.AbastecimentosView.Filter += _filterCollectionView.AddNewFilter(_entityStore.Entity);
+                if (_entityStore.Entity is FilteringInfo fi)
+                {
+                    //_listagemAbastecimentosViewModel.AlteraFiltrosAplicadosString(fi);
+                }
+            }
+        }
+
+        public event EventHandler CanExecuteChanged;
+    }
+
 
     public class EditarAbastecimentoCommand : ICommand
     {

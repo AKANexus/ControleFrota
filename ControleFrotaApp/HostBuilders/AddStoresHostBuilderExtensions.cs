@@ -1,4 +1,5 @@
-﻿using ControleFrota.Domain;
+﻿using System;
+using ControleFrota.Domain;
 using ControleFrota.Services;
 using ControleFrota.State;
 using ControleFrota.State.Navigators;
@@ -19,6 +20,7 @@ namespace ControleFrota.HostBuilders
                 serviços.AddSingleton<IMessaging<(string, string)>, Messaging<(string, string)>>();
                 serviços.AddSingleton<IMessaging<bool>, Messaging<bool>>();
                 serviços.AddSingleton<IMessaging<string>, Messaging<string>>();
+                serviços.AddSingleton<IMessaging<Type>, Messaging<Type>>();
 
                 serviços.AddSingleton<BusyStateStore>();
                 serviços.AddSingleton<CurrentScopeStore>();

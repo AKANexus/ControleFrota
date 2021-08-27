@@ -24,8 +24,10 @@ namespace ControleFrota.ViewModels
         private readonly VeículoDataService _veículoDataService;
         private Veículo _veículoSelecionada;
         private readonly IMessaging<string> _stringMessaging;
-        public ObservableCollection<Veículo> Veículos { get; set; } = new();
 
+        private StringBuilder _filtrosAplicados = new();
+        //public ObservableCollection<Veículo> Veículos { get; set; } = new();
+        private CollectionViewSource _collectionViewSource;
         public Veículo VeículoSelecionado
         {
             get => _veículoSelecionada;
@@ -33,6 +35,11 @@ namespace ControleFrota.ViewModels
         }
 
         public ICollectionView VeículosView { get; set; }
+
+        public string FiltrosAplicados
+        {
+            get => _filtrosAplicados?.ToString();
+        }
 
         public bool HitTestVisible { get; set; } = true;
         public ICommand Cadastrar { get; }
@@ -53,15 +60,30 @@ namespace ControleFrota.ViewModels
             SaídaDeViatura = new SaídaDeViaturaCommand(this, serviceProvider);
             RetornoDeViatura = new RetornoDeViaturaCommand(this, serviceProvider);
             AbastecerViatura = new AbastecerViaturaCommand(this, serviceProvider);
-            Filtrar = new FiltrarCommand(this, serviceProvider);
+            Filtrar = new FiltrarVeículosCommand(this, serviceProvider);
             PreencheDataGrid();
 
         }
 
+        public void AlteraFiltrosAplicadosString(FilteringInfo fi)
+        {
+            if (fi.FilterInfo.StartsWith("clearfilters"))
+            {
+                _filtrosAplicados.Clear();
+            }
+            else
+            {
+                _filtrosAplicados.Append(fi.Property.Name);
+                _filtrosAplicados.Append("=");
+                _filtrosAplicados.Append(fi.FilterInfo);
+                _filtrosAplicados.Append(";");
+            }
+            OnPropertyChanged(nameof(FiltrosAplicados));
+        }
+
         public async Task PreencheDataGrid()
         {
-
-            Veículos.Clear();
+            //Veículos.Clear();
             _stringMessaging.Mensagem = null;
             HitTestVisible = false;
             OnPropertyChanged(nameof(HitTestVisible));
@@ -70,12 +92,16 @@ namespace ControleFrota.ViewModels
 
             try
             {
-                foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
-                {
-                    Veículos.Add(veículo);
-                }
+                //foreach (Veículo veículo in await _veículoDataService.GetAllAsNoTracking())
+                //{
+                //    Veículos.Add(veículo);
+                //}
 
-                VeículosView = CollectionViewSource.GetDefaultView(await _veículoDataService.GetAllAsNoTracking());
+                //VeículosView = CollectionViewSource.GetDefaultView(await _veículoDataService.GetAllAsNoTracking());
+                //_collectionViewSource = new CollectionViewSource
+                //    { Source = await _veículoDataService.GetAllAsNoTracking() };
+                //VeículosView = _collectionViewSource.View;
+                VeículosView = new ListCollectionView(await _veículoDataService.GetAllAsNoTracking());
                 OnPropertyChanged(nameof(VeículosView));
             }
             catch (Exception e)
@@ -89,28 +115,28 @@ namespace ControleFrota.ViewModels
                 OnPropertyChanged(nameof(HitTestVisible));
                 Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
             }
-
-            //VeículosView.Filter += Contains;
-
         }
-
     }
 
-    public class FiltrarCommand : ICommand
+    public class FiltrarVeículosCommand : ICommand
     {
         private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
         private readonly IDialogsStore _dialogStore;
         private readonly IDialogViewModelFactory _dialogViewModelFactory;
         private readonly IDialogGenerator _dialogGenerator;
         private readonly EntityStore<EntityBase> _entityStore;
+        private readonly FilterCollectionView _filterCollectionView;
+        private readonly IMessaging<Type> _typeMessaging;
 
-        public FiltrarCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
+        public FiltrarVeículosCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
         {
             _listagemVeículosViewModel = listagemVeículosViewModel;
             _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
             _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
             _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _typeMessaging = serviceProvider.GetRequiredService<IMessaging<Type>>();
             _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
+            _filterCollectionView = new();
         }
 
         public bool CanExecute(object parameter)
@@ -120,11 +146,18 @@ namespace ControleFrota.ViewModels
 
         public void Execute(object parameter)
         {
-            _entityStore.Entity = new Veículo();
+            _typeMessaging.Mensagem = typeof(Veículo);
             _dialogGenerator.ViewModelExibido =
                 _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.Filtros);
             _dialogStore.RegisterDialog(_dialogGenerator);
-            _listagemVeículosViewModel.VeículosView.FilterView(_entityStore.Entity);
+            if (_dialogGenerator.Resultado == DialogResult.OK)
+            {
+                _listagemVeículosViewModel.VeículosView.Filter += _filterCollectionView.AddNewFilter(_entityStore.Entity);
+                if (_entityStore.Entity is FilteringInfo fi)
+                {
+                    _listagemVeículosViewModel.AlteraFiltrosAplicadosString(fi);
+                }
+            }
         }
 
         public event EventHandler CanExecuteChanged;
