@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,21 @@ namespace ControleFrota.Domain
 {
     public class Veículo : EntityBase
     {
+        [Description("Placa")]
         public string Placa { get; set; }
+        [Description("Marca")]
         public Marca Marca { get; set; }
+        [Description("Modelo")]
         public Modelo Modelo { get; set; }
+        [Description("RENAVAM")]
         public string RENAVAM { get; set; }
+        [Description("Chassis")]
         public string Chassis { get; set; }
+        [Description("Último Licenciamento")]
         public DateTime ÚltimoLicenciamento { get; set; }
 
         [NotMapped]
+        [Description("Último Abastecimento")]
         public DateTime ÚltimoAbastecimento
         {
             get
@@ -27,6 +35,7 @@ namespace ControleFrota.Domain
         }
 
         [NotMapped]
+        [Description("Última Manutenção")]
         public DateTime ÚltimaManutenção
         {
             get
@@ -37,6 +46,7 @@ namespace ControleFrota.Domain
         }
 
         [NotMapped]
+        [Description("Último Motorista")]
         public string ÚltimoMotorista
         {
             get
@@ -58,6 +68,7 @@ namespace ControleFrota.Domain
         public ObservableCollection<ManutençãoProgramada> ManutençõesProgramadas { get; set; }
 
         [NotMapped]
+        [Description("Quilometragem")]
         public decimal ÚltimaQuilometragemInformada
         {
             get
@@ -70,8 +81,10 @@ namespace ControleFrota.Domain
         }
 
         public bool Ativo { get; set; } = true;
-        [NotMapped] public DateTime PróximoLicenciamento
-        {
+        [NotMapped]
+        [Description("Próximo Licenciamento")]
+        public DateTime PróximoLicenciamento
+            {
             get
             {
                 if (string.IsNullOrWhiteSpace(Placa)) return default;

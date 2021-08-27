@@ -23,6 +23,8 @@ namespace ControleFrota.HostBuilders
                 serviços.AddSingleton<BusyStateStore>();
                 serviços.AddSingleton<CurrentScopeStore>();
                 serviços.AddScoped<EntityStore<Veículo>>();
+                serviços.AddScoped<EntityStore<EntityBase>>();
+
             });
 
             return host;

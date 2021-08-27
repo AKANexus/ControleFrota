@@ -8,7 +8,7 @@ namespace ControleFrota.Domain
     /// <summary>
     /// Classe herdável que expõe uma chave ID (int), além de INotifyPropertyChanged
     /// </summary>
-    public class EntityBase : INotifyPropertyChanged
+    public abstract class EntityBase : INotifyPropertyChanged
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -42,6 +42,9 @@
         <DataTemplate DataType="{x:Type dialogviewmodels:CadastroAbastecimentoViewModel}">
             <dialogWindows:CadastroAbastecimento/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:FiltroListagemViewModel}">
+            <dialogWindows:FiltroListagemView/>
+        </DataTemplate>
 
     </Application.Resources>
 </Application>

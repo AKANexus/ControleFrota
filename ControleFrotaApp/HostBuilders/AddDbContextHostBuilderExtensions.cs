@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Diagnostics;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Configuration;
+
 
 namespace ControleFrota.HostBuilders
 {
@@ -12,7 +15,11 @@ namespace ControleFrota.HostBuilders
         {
             host.ConfigureServices((_, serviços) =>
             {
-                string connString = $"server=192.168.10.250;userid=AmbiSuite;password=;database=ControleFrota;ConvertZeroDateTime=True";
+                var builder = new ConfigurationBuilder()
+                    .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+                    .AddUserSecrets<App>();
+                var configuration = builder.Build();
+                string connString = configuration.GetConnectionString("DefaultDB");
                 ServerVersion version = new MySqlServerVersion(new Version(8, 0, 23));
                 Action<DbContextOptionsBuilder> configureDbContext = c =>
                 {

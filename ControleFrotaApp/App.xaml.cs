@@ -18,6 +18,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ControleFrota.HostBuilders;
+using Microsoft.Extensions.Configuration;
 
 namespace ControleFrota
 {
@@ -28,7 +29,6 @@ namespace ControleFrota
     {
         private readonly IHost _host;
         private readonly Logger log = new("Startup");
-
         public const int HWND_BROADCAST = 0xffff;
         public static readonly int WM_SHOWME = RegisterWindowMessage("WM_SHOWME");
         [DllImport("user32")]
@@ -55,6 +55,7 @@ namespace ControleFrota
         protected override void OnStartup(StartupEventArgs e)
         {
             Logger.Start(new FileInfo($"./Logs/LOG-{DateTime.Today:dd-MM-yy}.log"));
+
             _host.Start();
 
             string mutexName = "AmbiERP_" + System.Security.Principal.WindowsIdentity.GetCurrent().User?.AccountDomainSid;

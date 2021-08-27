@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
 using ControleFrota.Domain;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
+using ControleFrota.State;
 using ControleFrota.ViewModels.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -27,6 +30,8 @@ namespace ControleFrota.ViewModels
             get => _veículoSelecionada;
             set { _veículoSelecionada = value; OnPropertyChanged(nameof(VeículoSelecionado)); }
         }
+
+        public ICollectionView VeículosView { get; set; }
 
         public bool HitTestVisible { get; set; } = true;
         public ICommand Cadastrar { get; }
@@ -47,8 +52,9 @@ namespace ControleFrota.ViewModels
             SaídaDeViatura = new SaídaDeViaturaCommand(this, serviceProvider);
             RetornoDeViatura = new RetornoDeViaturaCommand(this, serviceProvider);
             AbastecerViatura = new AbastecerViaturaCommand(this, serviceProvider);
+            Filtrar = new FiltrarCommand(this, serviceProvider);
             PreencheDataGrid();
-            Debug.WriteLine("");
+
         }
 
         public async Task PreencheDataGrid()
@@ -67,6 +73,9 @@ namespace ControleFrota.ViewModels
                 {
                     Veículos.Add(veículo);
                 }
+
+                VeículosView = CollectionViewSource.GetDefaultView(await _veículoDataService.GetAllAsNoTracking());
+                OnPropertyChanged(nameof(VeículosView));
             }
             catch (Exception e)
             {
@@ -79,7 +88,48 @@ namespace ControleFrota.ViewModels
                 OnPropertyChanged(nameof(HitTestVisible));
                 Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
             }
+
+            VeículosView.Filter += Contains;
+
         }
+
+        public bool Contains(object de)
+        {
+            return de is Veículo veículo && veículo.Placa.Contains("TES");
+        }
+    }
+
+    public class FiltrarCommand : ICommand
+    {
+        private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
+        private readonly IDialogsStore _dialogStore;
+        private readonly IDialogViewModelFactory _dialogViewModelFactory;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly EntityStore<EntityBase> _entityStore;
+
+        public FiltrarCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
+        {
+            _listagemVeículosViewModel = listagemVeículosViewModel;
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _entityStore.Entity = new Veículo();
+            _dialogGenerator.ViewModelExibido =
+                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.Filtros);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 
     public class AbastecerViaturaCommand : ICommand
