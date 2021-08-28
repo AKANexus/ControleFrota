@@ -60,7 +60,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
-        public ObservableCollection<Motorista> Motoristas { get; set; } = new();
+        public ObservableCollection<Motorista> Motoristas { get; } = new();
         public Veículo VeículoSelecionado
         {
             get => AbastecimentoSelecionado?.Veículo;
@@ -71,7 +71,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
-        public ObservableCollection<Veículo> Veículos { get; set; } = new();
+        public ObservableCollection<Veículo> Veículos { get; } = new();
         public DateTime DataHora
         {
             get => AbastecimentoSelecionado?.DataHora ?? DateTime.Now;
@@ -216,7 +216,6 @@ namespace ControleFrota.ViewModels.DialogWindows
             if (_cadastroAbastecimentoViewModel.MotoristaSelecionado is null) return false;
             if (_cadastroAbastecimentoViewModel.VeículoSelecionado is null) return false;
             if (_cadastroAbastecimentoViewModel.AbastecimentoSelecionado.KM == default) return false;
-            //if (_cadastroAbastecimentoViewModel.CombustívelSelecionado is null) return false;
             if (string.IsNullOrWhiteSpace(_cadastroAbastecimentoViewModel.Posto)) return false;
             if (_cadastroAbastecimentoViewModel.AbastecimentoSelecionado.ValorPorLitro == default) return false;
             if (_cadastroAbastecimentoViewModel.Litragem == default) return false;

@@ -42,6 +42,10 @@
                         <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}"/>
                         <MenuItem Header="Retorno" Command="{Binding RetornoDeViatura}"/>
                         <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}"/>
+                        <MenuItem Header="Manutenção" Command="{Binding ManutençãoDeViatura}"/>
+                        <Separator/>
+                        <MenuItem Header="Histórico do Veículo" IsEnabled="False"/>
+                        <MenuItem Header="Inativar Viatura" IsEnabled="False"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.ColumnHeaderStyle>

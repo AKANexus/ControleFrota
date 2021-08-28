@@ -20,6 +20,10 @@
         <DataTemplate DataType="{x:Type viewmodels:ListagemAbastecimentosViewModel}">
             <views:ListagemAbastecimentos/>
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewmodels:ListagemManutençõesViewModel}">
+            <views:ListagemManutençõesView/>
+        </DataTemplate>
+
 
         <DataTemplate DataType="{x:Type dialogviewmodels:WorkInProgressViewModel}">
             <dialogWindows:WorkInProgressView/>
@@ -44,6 +48,9 @@
         </DataTemplate>
         <DataTemplate DataType="{x:Type dialogviewmodels:FiltroListagemViewModel}">
             <dialogWindows:FiltroListagemView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:CadastroManutençãoViewModel}">
+            <dialogWindows:CadastroManutençãoView/>
         </DataTemplate>
 
     </Application.Resources>

@@ -23,7 +23,8 @@ namespace ControleFrota.Services
         NovaViagem,
         RetornoDeViatura,
         CadastroDeAbastecimento,
-        Filtros
+        Filtros,
+        CadastroDeManutenção
     }
     public interface IDialogGenerator
     {

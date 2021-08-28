@@ -22,6 +22,7 @@ namespace ControleFrota.HostBuilders
                 serviços.AddScoped<AbastecimentoDataService>();
                 serviços.AddScoped<CombustívelDataService>();
                 serviços.AddScoped<SetorDataService>();
+                serviços.AddScoped<ManutençãoDataService>();
 
 
             });

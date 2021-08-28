@@ -9,14 +9,16 @@ namespace ControleFrota.ViewModels.Factories
         private readonly CriaViewModel<ListagemFuncionáriosViewModel> _createListagemMotoristasViewModel;
         private readonly CriaViewModel<ListagemViagensViewModel> _createListagemViagensViewModel;
         private readonly CriaViewModel<ListagemAbastecimentosViewModel> _createListagemAbastecimentosViewModel;
+        private readonly CriaViewModel<ListagemManutençõesViewModel> _createListagemManuteçõesViewModel;
 
 
-        public ViewModelFactory(CriaViewModel<ListagemVeículosViewModel> createListagemVeículosViewModel, CriaViewModel<ListagemFuncionáriosViewModel> createListagemMotoristasViewModel, CriaViewModel<ListagemViagensViewModel> createListagemViagensViewModel, CriaViewModel<ListagemAbastecimentosViewModel> createListagemAbastecimentosViewModel)
+        public ViewModelFactory(CriaViewModel<ListagemVeículosViewModel> createListagemVeículosViewModel, CriaViewModel<ListagemFuncionáriosViewModel> createListagemMotoristasViewModel, CriaViewModel<ListagemViagensViewModel> createListagemViagensViewModel, CriaViewModel<ListagemAbastecimentosViewModel> createListagemAbastecimentosViewModel, CriaViewModel<ListagemManutençõesViewModel> createListagemManuteçõesViewModel)
         {
             _createListagemVeículosViewModel = createListagemVeículosViewModel;
             _createListagemMotoristasViewModel = createListagemMotoristasViewModel;
             _createListagemViagensViewModel = createListagemViagensViewModel;
             _createListagemAbastecimentosViewModel = createListagemAbastecimentosViewModel;
+            _createListagemManuteçõesViewModel = createListagemManuteçõesViewModel;
         }
 
         public ViewModelBase CreateViewModel(TipoView tipoView)
@@ -27,6 +29,7 @@ namespace ControleFrota.ViewModels.Factories
                 TipoView.ListagemFuncionários => _createListagemMotoristasViewModel(),
                 TipoView.ListagemViagens => _createListagemViagensViewModel(),
                 TipoView.ListagemAbastecimentos => _createListagemAbastecimentosViewModel(),
+                TipoView.ListaManutenções => _createListagemManuteçõesViewModel(),
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

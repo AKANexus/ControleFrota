@@ -40,6 +40,7 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Marca)
                 .Include(x => x.Modelo)
                 .Include(x => x.Viagens)
+                .OrderBy(x=>x.Placa)
                 .ToListAsync();
         }
 

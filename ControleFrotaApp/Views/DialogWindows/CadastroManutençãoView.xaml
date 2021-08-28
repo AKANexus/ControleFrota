@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="ControleFrota.Views.DialogWindows.CadastroManutençãoView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:domain="clr-namespace:ControleFrota.Domain"
+             xmlns:auxiliares="clr-namespace:ControleFrota.Auxiliares"
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+             xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:CadastroManutençãoViewModel}"
+             d:DesignHeight="450">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="TiposReparo" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="domain:TipoReparo"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <auxiliares:EnumValueConverter x:Key="EnumValueConverter"/>
+        <auxiliares:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Manutenção 🛠" Grid.ColumnSpan="5" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+        <TextBlock  Grid.Row="1" Grid.Column="0" Text="Motorista" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                  HorizontalAlignment="Left" Width="250" Margin="5,10" ItemsSource="{Binding Motoristas}"
+                  DisplayMemberPath="Nome" SelectedValuePath="ID"
+                  SelectedItem="{Binding MotoristaSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding MotoristaSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock  Grid.Row="1" Grid.Column="3" Text="Veículo" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="4" VerticalAlignment="Center"
+                  HorizontalAlignment="Left" MinWidth="125" Margin="5,10" ItemsSource="{Binding Veículos}"
+                  DisplayMemberPath="Placa" SelectedValuePath="ID"
+                  SelectedItem="{Binding VeículoSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                  SelectedValue="{Binding VeículoSelecionado.ID, UpdateSourceTrigger=PropertyChanged}" />
+
+        <TextBlock  Grid.Row="2" Grid.Column="0" Text="KM" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="2" FontWeight="Normal" Text="{Binding KM}"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="110" d:Text="01175498960" Margin="5,10"/>
+
+        <TextBlock  Grid.Row="3" Grid.Column="0" Text="Data e Hora" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <DatePicker  FontSize="16" Grid.Row="3" FontWeight="Normal" SelectedDate="{Binding DataHora}" Grid.Column="1" VerticalAlignment="Center" Margin="5,10"/>
+
+
+        <TextBlock  Grid.Row="2" Grid.Column="2" Text="Tipo de Reparo" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <ComboBox FontSize="16" Grid.Row="2" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" Grid.ColumnSpan="2"
+                   Margin="5,10" ItemsSource="{Binding Mode=OneWay, Source={StaticResource TiposReparo}}" 
+                   SelectedItem="{Binding TipoReparoSelecionado, UpdateSourceTrigger=PropertyChanged}"
+                    >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Converter={StaticResource EnumDescriptionConverter}}"/>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <TextBlock  Grid.Row="3" Grid.Column="2" Text="Local" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="3" FontWeight="Normal" Text="{Binding Local}" Grid.Column="3" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" d:Text="Posto Carrefour" Margin="5,10" />
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Valor Total" FontSize="16" HorizontalAlignment="Right"
+                   VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
+        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding Valor}" Grid.Column="1" Grid.ColumnSpan="1"
+                 VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" />
+
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="Peça" FontSize="16" HorizontalAlignment="Right"
+                   VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
+        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding Peça, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" />
+
+
+
+        <Grid Grid.Row="5" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Salvar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding Salvar}"/>
+            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding Cancelar}"/>
+        </Grid>
+    </Grid>
+
+</UserControl>

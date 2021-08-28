@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="ControleFrota.Views.ListagemManutençõesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControleFrota.Views"
+             xmlns:auxiliares="clr-namespace:ControleFrota.Auxiliares"
+             xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemManutençõesViewModel}" Language="pt-BR"
+             d:DesignHeight="450" d:DesignWidth="800" IsHitTestVisible="{Binding HitTestVisible}">
+    <UserControl.Resources>
+        <auxiliares:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <local:MenuPadrãoView/>
+        <Grid Grid.Row="2" Margin="5">
+            <DataGrid ItemsSource="{Binding ManutençõesView}" SelectedItem="{Binding ManutençãoSelecionada, UpdateSourceTrigger=PropertyChanged, Mode=OneWayToSource}" AutoGenerateColumns="False"
+                      CanUserAddRows="False" HeadersVisibility="Column" CanUserReorderColumns="False" IsReadOnly="True">
+                <DataGrid.ColumnHeaderStyle>
+                    <Style TargetType="DataGridColumnHeader">
+                        <Setter Property="FontSize" Value="18"/>
+                        <Setter Property="FontWeight" Value="DemiBold"/>
+                        <Setter Property="Padding" Value="15,5"/>
+                    </Style>
+                </DataGrid.ColumnHeaderStyle>
+                <DataGrid.InputBindings>
+                    <MouseBinding MouseAction="LeftDoubleClick" Command="{Binding Editar}"></MouseBinding>
+                </DataGrid.InputBindings>
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Placa" Binding="{Binding Veículo.Placa}" FontSize="17" />
+                    <DataGridTextColumn Header="Peça" Binding="{Binding Peça}" FontSize="17"/>
+                    <DataGridTextColumn Header="Tipo de Reparo" Binding="{Binding TipoReparo, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
+                    <DataGridTextColumn Header="Quilometragem" Binding="{Binding KM, StringFormat={}{0:N0} km}" FontSize="17"/>
+                    <DataGridTextColumn Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>
+                    <DataGridTextColumn Header="Data e Hora" Binding="{Binding DataHora}" FontSize="17"/>
+                    <DataGridTextColumn Header="Preço" Binding="{Binding Preço, StringFormat={}{0:N2} R$/l}" FontSize="17"/>
+                    <DataGridTextColumn Header="Local" Binding="{Binding Local, StringFormat={}{0:N2} l}" FontSize="17"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+
+</UserControl>

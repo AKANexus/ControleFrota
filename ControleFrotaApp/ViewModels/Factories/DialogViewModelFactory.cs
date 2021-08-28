@@ -15,9 +15,18 @@ namespace ControleFrota.ViewModels.Factories
         private readonly CriaDialogViewModel<RetornoDeVeículoViewModel> _createRetornoDeVeículoViewModel;
         private readonly CriaDialogViewModel<CadastroAbastecimentoViewModel> _createCadastroAbastecimentoViewModel;
         private readonly CriaDialogViewModel<FiltroListagemViewModel> _createFiltroListagemViewModel;
+        private readonly CriaDialogViewModel<CadastroManutençãoViewModel> _createCadastroManutençãoViewModel;
 
 
-        public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel, CriaDialogViewModel<CadastroVeículoViewModel> createCadastroVeículoViewModel, CriaDialogViewModel<CadastroMotoristaViewModel> createCadastroMotoristaViewModel, CriaDialogViewModel<CadastroViagemViewModel> createCadastroViagemViewModel, CriaDialogViewModel<SaídaDeVeículoViewModel> createSaídaDeVeículoViewModel, CriaDialogViewModel<RetornoDeVeículoViewModel> createRetornoDeVeículoViewModel, CriaDialogViewModel<CadastroAbastecimentoViewModel> createCadastroAbastecimentoViewModel, CriaDialogViewModel<FiltroListagemViewModel> createFiltroListagemViewModel)
+        public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel,
+            CriaDialogViewModel<CadastroVeículoViewModel> createCadastroVeículoViewModel,
+            CriaDialogViewModel<CadastroMotoristaViewModel> createCadastroMotoristaViewModel,
+            CriaDialogViewModel<CadastroViagemViewModel> createCadastroViagemViewModel,
+            CriaDialogViewModel<SaídaDeVeículoViewModel> createSaídaDeVeículoViewModel,
+            CriaDialogViewModel<RetornoDeVeículoViewModel> createRetornoDeVeículoViewModel,
+            CriaDialogViewModel<CadastroAbastecimentoViewModel> createCadastroAbastecimentoViewModel,
+            CriaDialogViewModel<FiltroListagemViewModel> createFiltroListagemViewModel,
+            CriaDialogViewModel<CadastroManutençãoViewModel> createCadastroManutençãoViewModel)
         {
             _createWorkInProgressViewModel = createWorkInProgressViewModel;
             _createCadastroVeículoViewModel = createCadastroVeículoViewModel;
@@ -27,6 +36,7 @@ namespace ControleFrota.ViewModels.Factories
             _createRetornoDeVeículoViewModel = createRetornoDeVeículoViewModel;
             _createCadastroAbastecimentoViewModel = createCadastroAbastecimentoViewModel;
             _createFiltroListagemViewModel = createFiltroListagemViewModel;
+            _createCadastroManutençãoViewModel = createCadastroManutençãoViewModel;
         }
 
         public DialogContentViewModelBase CreateDialogContentViewModel(TipoDialogue tipoView)
@@ -41,6 +51,7 @@ namespace ControleFrota.ViewModels.Factories
                 TipoDialogue.RetornoDeViatura => _createRetornoDeVeículoViewModel(),
                 TipoDialogue.CadastroDeAbastecimento => _createCadastroAbastecimentoViewModel(),
                 TipoDialogue.Filtros => _createFiltroListagemViewModel(),
+                TipoDialogue.CadastroDeManutenção => _createCadastroManutençãoViewModel(),
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

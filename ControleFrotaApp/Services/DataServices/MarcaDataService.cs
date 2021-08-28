@@ -25,7 +25,7 @@ namespace ControleFrota.Services.DataServices
 
         public async Task<List<Marca>> GetAll()
         {
-            return await _context.Marcas.ToListAsync();
+            return await _context.Marcas.OrderBy(x=>x.Nome).ToListAsync();
         }
     }
 }

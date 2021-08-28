@@ -35,4 +35,12 @@ namespace ControleFrota.Domain
         Numérico
     }
 
+    public enum TipoReparo
+    {
+        [Description("Preventivo")]
+        Preventivo,
+        [Description("Reparativo")]
+        Reparativo
+    }
+
 }

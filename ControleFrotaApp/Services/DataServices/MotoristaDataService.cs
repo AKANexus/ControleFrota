@@ -30,6 +30,7 @@ namespace ControleFrota.Services.DataServices
         {
             return await _context.Motoristas
                 .Include(x=>x.Setor)
+                .OrderBy(x=>x.Nome)
                 .ToListAsync();
         }
 

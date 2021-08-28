@@ -21,7 +21,7 @@
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Cadastro de Veículo" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
+        <TextBlock Text="Cadastro de Veículo 🚘" Grid.ColumnSpan="4" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
         <TextBlock  Grid.Row="1" Grid.Column="0" Text="Placa" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <TextBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" CharacterCasing="Upper" Text="{Binding PlacaVeículo, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="100" d:Text="BRQ-6728" Margin="5,10"/>
         <TextBlock  Grid.Row="1" Grid.Column="2" Text="Marca" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>

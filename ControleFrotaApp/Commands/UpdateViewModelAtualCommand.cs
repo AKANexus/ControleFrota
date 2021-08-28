@@ -29,7 +29,6 @@ namespace ControleFrota.Commands
         {
             if (parameter is TipoView tipoView)
             {
-                if (tipoView == TipoView.ListaManutenções) return false;
                 return tipoView != _tipoView;
             }
 

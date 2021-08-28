@@ -27,7 +27,7 @@ namespace ControleFrota.ViewModels
 
         private StringBuilder _filtrosAplicados = new();
         //public ObservableCollection<Veículo> Veículos { get; set; } = new();
-        private CollectionViewSource _collectionViewSource;
+        //private CollectionViewSource _collectionViewSource;
         public Veículo VeículoSelecionado
         {
             get => _veículoSelecionada;
@@ -47,6 +47,7 @@ namespace ControleFrota.ViewModels
         public ICommand SaídaDeViatura { get; set; }
         public ICommand RetornoDeViatura { get; set; }
         public ICommand AbastecerViatura { get; set; }
+        public ICommand ManutençãoDeViatura { get; set; }
         public ICommand Filtrar { get; set; }
         public ICommand Inativar { get; set; }
         public ICommand Imprimir { get; set; }
@@ -60,6 +61,8 @@ namespace ControleFrota.ViewModels
             SaídaDeViatura = new SaídaDeViaturaCommand(this, serviceProvider);
             RetornoDeViatura = new RetornoDeViaturaCommand(this, serviceProvider);
             AbastecerViatura = new AbastecerViaturaCommand(this, serviceProvider);
+            ManutençãoDeViatura = new ManutençãoDeViaturaCommand(this, serviceProvider);
+
             Filtrar = new FiltrarVeículosCommand(this, serviceProvider);
             PreencheDataGrid();
 
@@ -116,6 +119,48 @@ namespace ControleFrota.ViewModels
                 Application.Current.Dispatcher.Invoke(() => { Mouse.OverrideCursor = null; });
             }
         }
+    }
+
+    public class ManutençãoDeViaturaCommand : ICommand
+    {
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly IDialogViewModelFactory _dialogVMFactory;
+        private readonly IDialogsStore _dialogStore;
+        private readonly IMessaging<int> _intMessaging;
+        private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
+        private readonly IMessaging<string> _stringMessaging;
+        public ManutençãoDeViaturaCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
+        {
+            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+            _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
+            _listagemVeículosViewModel = listagemVeículosViewModel;
+            _listagemVeículosViewModel.PropertyChanged += _listagemVeículosViewModel_PropertyChanged; ;
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _dialogVMFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+        }
+
+        private void _listagemVeículosViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            CanExecuteChanged?.Invoke(this, e);
+        }
+
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            _stringMessaging.Mensagem = _listagemVeículosViewModel.VeículoSelecionado.Placa;
+            _intMessaging.Mensagem = default;
+            _dialogGenerator.ViewModelExibido =
+                _dialogVMFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeManutenção);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            _listagemVeículosViewModel.PreencheDataGrid();
+        }
+
+        public event EventHandler? CanExecuteChanged;
     }
 
     public class FiltrarVeículosCommand : ICommand
