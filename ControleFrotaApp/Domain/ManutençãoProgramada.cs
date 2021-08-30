@@ -8,8 +8,25 @@ namespace ControleFrota.Domain
 {
     public class ManutençãoProgramada : EntityBase
     {
-        public Veículo Veículo { get; set; }
-        public Manutenção? Manutenção { get; set; }
-        public decimal KM { get; set; }
+        public decimal DeltaKM { get; set; }
+        public int DeltaDias { get; set; }
+        public ÁreaManutenção ÁreaManutenção { get; set; }
+        public TipoManutenção TipoManutenção { get; set; }
+        public TipoVeículo TipoVeículo { get; set; }
+
+        public ManutençãoProgramada()
+        {
+            
+        }
+
+        public ManutençãoProgramada(int id, decimal deltaKM, int deltaDias, ÁreaManutenção áreaManutenção, TipoManutenção tipoManutenção, TipoVeículo tipoVeículo)
+        {
+            ID = id;
+            DeltaKM = deltaKM;
+            DeltaDias = deltaDias;
+            ÁreaManutenção = áreaManutenção;
+            TipoManutenção = tipoManutenção;
+            TipoVeículo = tipoVeículo;
+        }
     }
 }

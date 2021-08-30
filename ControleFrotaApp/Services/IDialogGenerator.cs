@@ -24,7 +24,8 @@ namespace ControleFrota.Services
         RetornoDeViatura,
         CadastroDeAbastecimento,
         Filtros,
-        CadastroDeManutenção
+        CadastroDeManutenção,
+        CadastroDeModelos
     }
     public interface IDialogGenerator
     {

@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="ControleFrota.Views.DialogWindows.CadastroMarcaModeloView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
+             xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:domain="clr-namespace:ControleFrota.Domain"
+             mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:CadastroMarcaModeloViewModel}"
+             Height="450" Width="375">
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="TipoVeículos" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="domain:TipoVeículo"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+        <ObjectDataProvider x:Key="Marcas" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="domain:Marcas"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock HorizontalAlignment="Center" Margin="10">
+            <Run Text="Modelos 📖" Foreground="DarkCyan" FontSize="26" FontWeight="DemiBold"/>
+        </TextBlock>
+        <DataGrid Grid.Row="1" FontSize="18" CanUserDeleteRows="False" CanUserAddRows="True" HeadersVisibility="Column" SelectionMode="Single" SelectionUnit="FullRow" ItemsSource="{Binding Modelos}" AutoGenerateColumns="False" Margin="15">
+            <DataGrid.ColumnHeaderStyle>
+                <Style TargetType="{x:Type DataGridColumnHeader}">
+                    <Setter Property="FontWeight" Value="DemiBold"/>
+                </Style>
+            </DataGrid.ColumnHeaderStyle>
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn Header="Marca" Width="*"
+                                        ItemsSource="{Binding Source={StaticResource Marcas}}"
+                                        SelectedItemBinding="{Binding Marca}"/>
+                <DataGridTextColumn Header="Modelo" Binding="{Binding Nome}" Width="2*"/>
+                <DataGridComboBoxColumn Header="Tipo" Width="*"
+                                        ItemsSource="{Binding Source={StaticResource TipoVeículos}}"
+                                        SelectedItemBinding="{Binding TipoVeículo}"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Row="2" Margin="5,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Content="Salvar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding Salva}"/>
+            <Button Grid.Column="1" Content="Cancelar" VerticalAlignment="Bottom" HorizontalAlignment="Center" Padding="5" Command="{Binding CloseCurrentWindow}"/>
+        </Grid>
+
+    </Grid>
+</UserControl>

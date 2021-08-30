@@ -28,9 +28,16 @@ namespace ControleFrota.Services.DataServices
             return await _context.Modelos.ToListAsync();
         }
 
-        public async Task<List<Modelo>> GetAllByMarca(Marca marca)
+        public async Task<List<Modelo>> GetAllByMarca(Marcas marca)
         {
-            return await _context.Modelos.Where(x=>x.Marca.ID == marca.ID).OrderBy(x=>x.Nome).ToListAsync();
+            return await _context.Modelos.Where(x=>x.Marca == marca).OrderBy(x=>x.Nome).ToListAsync();
+        }
+
+        public async Task<Modelo> AddOrUpdate(Modelo modelo)
+        {
+            _context.Update(modelo);
+            await _context.SaveChangesAsync();
+            return modelo;
         }
     }
 }

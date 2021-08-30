@@ -29,6 +29,7 @@ namespace ControleFrota.ViewModels
             UpdateViewModelAtual = new UpdateViewModelAtualCommand(navigator, _viewModelFactory);
             //EditaEmitente = new EditaEmitenteCommand(serviceProvider);
             //AlteraSenhaFuncionario = new AlterarSenhaFuncionárioCommand(this, serviceProvider);
+            CadastroDeModelos = new CadastroDeModelosCommand(this, serviceProvider);
             UpdateViewModelAtual.Execute(TipoView.ListagemVeículos);
         }
 
@@ -48,8 +49,7 @@ namespace ControleFrota.ViewModels
         {
             get => !_busyStateStore.IsBusy;
         }
-
-        public ICommand AlteraSenhaFuncionario { get; set; }
+        public ICommand CadastroDeModelos { get; set; }
 
         private void _navigator_StateChanged()
         {
@@ -66,6 +66,34 @@ namespace ControleFrota.ViewModels
 
             OnPropertyChanged(nameof(ViewModelAtual));
         }
+    }
+
+    public class CadastroDeModelosCommand : ICommand
+    {
+        private readonly IDialogsStore _dialogStore;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly IDialogViewModelFactory _dialogViewModelFactory;
+
+        public CadastroDeModelosCommand(MainViewModel mainViewModel, IServiceProvider serviceProvider)
+        {
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object parameter)
+        {
+            _dialogGenerator.ViewModelExibido =
+                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.CadastroDeModelos);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+        }
+
+        public event EventHandler CanExecuteChanged;
     }
 
     //public class AlterarSenhaFuncionárioCommand : ICommand

@@ -57,4 +57,60 @@ namespace ControleFrota.Domain
         Manutenção
     }
 
+    public enum TipoVeículo
+    {
+        Carro,
+        Moto
+    }
+
+    public enum ÁreaManutenção
+    {
+        PneuPneus,
+        PneuAlinhamento,
+        PneuRodízio,
+        PneuCalotas,
+        PneusEstepe,
+        SuspensãoSuspensão,
+        MotorCorreias,
+        MotorMangueiras,
+        MotorVelas,
+        MotorInjeção,
+        MotorRadiador,
+        FreioPastilha,
+        FreioDisco,
+        BateriaBateria,
+        FluidoTransmissão,
+        FluidoFreio,
+        FluidoLimpador,
+        FluidoÓleo,
+        FiltroÓleo,
+        FiltroCombustível,
+        FiltroAr,
+        Lâmpadas,
+        Limpadores,
+        Outros
+    }
+
+    public enum TipoManutenção
+    {
+        Revisão,
+        Troca
+    }
+
+    public enum Marcas
+    {
+        Outros = -1,
+        Fiat = 1,
+        Ford,
+        Jeep,
+        Renault,
+        Volkswagen,
+        Yamaha,
+        Honda,
+        Suzuki,
+        Chevrolet,
+        Hyundai,
+        JAC
+    }
+
 }

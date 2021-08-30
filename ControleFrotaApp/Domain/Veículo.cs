@@ -13,8 +13,13 @@ namespace ControleFrota.Domain
     {
         [Description("Placa")]
         public string Placa { get; set; }
-        //[Description("Marca")]
-        public Marca Marca { get; set; }
+
+        [Description("Marca")]
+        [NotMapped]
+        public Marcas Marca
+        {
+            get => Modelo?.Marca ?? Marcas.Outros;
+        }
         //[Description("Modelo")]
         public Modelo Modelo { get; set; }
         [Description("RENAVAM")]
@@ -153,5 +158,15 @@ namespace ControleFrota.Domain
                 }
             }
         }
+
+        public List<ManutençãoProgramada> ManutençãoProgramadas { get; set; }
+        [NotMapped]
+        public TipoVeículo TipoVeículo => Modelo.TipoVeículo;
+
+        [NotMapped] public string TipoIcone => TipoVeículo switch {
+            TipoVeículo.Carro => "🚗",
+            TipoVeículo.Moto => "🏍",
+            _ => throw new ArgumentOutOfRangeException()
+        };
     }
 }

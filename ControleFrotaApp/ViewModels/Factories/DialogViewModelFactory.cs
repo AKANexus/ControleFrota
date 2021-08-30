@@ -16,6 +16,8 @@ namespace ControleFrota.ViewModels.Factories
         private readonly CriaDialogViewModel<CadastroAbastecimentoViewModel> _createCadastroAbastecimentoViewModel;
         private readonly CriaDialogViewModel<FiltroListagemViewModel> _createFiltroListagemViewModel;
         private readonly CriaDialogViewModel<CadastroManutençãoViewModel> _createCadastroManutençãoViewModel;
+        private readonly CriaDialogViewModel<CadastroMarcaModeloViewModel> _createCadastroModelosViewModel;
+
 
 
         public DialogViewModelFactory(CriaDialogViewModel<WorkInProgressViewModel> createWorkInProgressViewModel,
@@ -26,7 +28,7 @@ namespace ControleFrota.ViewModels.Factories
             CriaDialogViewModel<RetornoDeVeículoViewModel> createRetornoDeVeículoViewModel,
             CriaDialogViewModel<CadastroAbastecimentoViewModel> createCadastroAbastecimentoViewModel,
             CriaDialogViewModel<FiltroListagemViewModel> createFiltroListagemViewModel,
-            CriaDialogViewModel<CadastroManutençãoViewModel> createCadastroManutençãoViewModel)
+            CriaDialogViewModel<CadastroManutençãoViewModel> createCadastroManutençãoViewModel, CriaDialogViewModel<CadastroMarcaModeloViewModel> createCadastroModelosViewModel)
         {
             _createWorkInProgressViewModel = createWorkInProgressViewModel;
             _createCadastroVeículoViewModel = createCadastroVeículoViewModel;
@@ -37,6 +39,7 @@ namespace ControleFrota.ViewModels.Factories
             _createCadastroAbastecimentoViewModel = createCadastroAbastecimentoViewModel;
             _createFiltroListagemViewModel = createFiltroListagemViewModel;
             _createCadastroManutençãoViewModel = createCadastroManutençãoViewModel;
+            _createCadastroModelosViewModel = createCadastroModelosViewModel;
         }
 
         public DialogContentViewModelBase CreateDialogContentViewModel(TipoDialogue tipoView)
@@ -52,6 +55,7 @@ namespace ControleFrota.ViewModels.Factories
                 TipoDialogue.CadastroDeAbastecimento => _createCadastroAbastecimentoViewModel(),
                 TipoDialogue.Filtros => _createFiltroListagemViewModel(),
                 TipoDialogue.CadastroDeManutenção => _createCadastroManutençãoViewModel(),
+                TipoDialogue.CadastroDeModelos => _createCadastroModelosViewModel(),
                 _ => throw new ArgumentException("The ViewType does not have a ViewModel.", "viewType")
             };
         }

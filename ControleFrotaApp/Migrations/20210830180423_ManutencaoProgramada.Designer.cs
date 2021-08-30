@@ -3,14 +3,16 @@ using System;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210830180423_ManutencaoProgramada")]
+    partial class ManutencaoProgramada
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -205,13 +207,10 @@ namespace ControleFrota.Migrations
                     b.ToTable("ManutençãoProgramadas");
                 });
 
-            modelBuilder.Entity("ControleFrota.Domain.Modelo", b =>
+            modelBuilder.Entity("ControleFrota.Domain.Marca", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    b.Property<int>("Marca")
                         .HasColumnType("int");
 
                     b.Property<string>("Nome")
@@ -221,6 +220,75 @@ namespace ControleFrota.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("ID");
+
+                    b.ToTable("Marcas");
+
+                    b.HasData(
+                        new
+                        {
+                            ID = 1,
+                            Nome = "Fiat",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 2,
+                            Nome = "Ford",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 3,
+                            Nome = "Jeep",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 4,
+                            Nome = "Renault",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 5,
+                            Nome = "Volkswagen",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 6,
+                            Nome = "Yamaha",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 7,
+                            Nome = "Honda",
+                            TipoVeículo = 0
+                        },
+                        new
+                        {
+                            ID = 8,
+                            Nome = "Suzuki",
+                            TipoVeículo = 0
+                        });
+                });
+
+            modelBuilder.Entity("ControleFrota.Domain.Modelo", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("MarcaID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Nome")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("MarcaID");
 
                     b.ToTable("Modelos");
                 });
@@ -340,6 +408,9 @@ namespace ControleFrota.Migrations
                     b.Property<bool>("EmManutenção")
                         .HasColumnType("tinyint(1)");
 
+                    b.Property<int?>("MarcaID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("ModeloID")
                         .HasColumnType("int");
 
@@ -353,6 +424,8 @@ namespace ControleFrota.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("MarcaID");
 
                     b.HasIndex("ModeloID");
 
@@ -455,6 +528,15 @@ namespace ControleFrota.Migrations
                         .HasForeignKey("VeículoID1");
                 });
 
+            modelBuilder.Entity("ControleFrota.Domain.Modelo", b =>
+                {
+                    b.HasOne("ControleFrota.Domain.Marca", "Marca")
+                        .WithMany()
+                        .HasForeignKey("MarcaID");
+
+                    b.Navigation("Marca");
+                });
+
             modelBuilder.Entity("ControleFrota.Domain.Motorista", b =>
                 {
                     b.HasOne("ControleFrota.Domain.Setor", "Setor")
@@ -466,9 +548,15 @@ namespace ControleFrota.Migrations
 
             modelBuilder.Entity("ControleFrota.Domain.Veículo", b =>
                 {
+                    b.HasOne("ControleFrota.Domain.Marca", "Marca")
+                        .WithMany()
+                        .HasForeignKey("MarcaID");
+
                     b.HasOne("ControleFrota.Domain.Modelo", "Modelo")
                         .WithMany()
                         .HasForeignKey("ModeloID");
+
+                    b.Navigation("Marca");
 
                     b.Navigation("Modelo");
                 });

@@ -23,7 +23,7 @@ namespace ControleFrota.EFCore
         public DbSet<Abastecimento> Abastecimentos { get; set; }
         public DbSet<Manutenção> Manutençãos { get; set; }
         public DbSet<ManutençãoProgramada> ManutençãoProgramadas { get; set; }
-        public DbSet<Marca> Marcas { get; set; }
+        //public DbSet<Marca> Marcas { get; set; }
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<Motorista> Motoristas { get; set; }
         public DbSet<Viagem> Viagems { get; set; }
@@ -37,20 +37,6 @@ namespace ControleFrota.EFCore
         }
         protected override void OnModelCreating(ModelBuilder mb)
         {
-            List<Marca> marcasSeed = new()
-            {
-                new(1, "Fiat"),
-                new(2, "Ford"),
-                new(3, "Jeep"),
-                new(4, "Renault"),
-                new(5, "Volkswagen"),
-                new(6, "Yamaha"),
-                new(7, "Honda"),
-                new(8, "Suzuki")
-            };
-
-            mb.Entity<Marca>().HasData(marcasSeed);
-
             List<Combustível> combustíveeisSeed = new()
             {
                 new(1, "Gasolina Comum"),
@@ -80,6 +66,42 @@ namespace ControleFrota.EFCore
             };
 
             mb.Entity<TipoGasto>().HasData(gastosSeed);
+
+            List<ManutençãoProgramada> manutençãoProgramadasSeed = new()
+            {
+                new(1, 50000, 0, ÁreaManutenção.PneuPneus, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(2, 10000, 0, ÁreaManutenção.PneuPneus, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(3, 10000, 0, ÁreaManutenção.PneuAlinhamento, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(4, 10000, 0, ÁreaManutenção.PneuRodízio, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(5, 0, 7*365, ÁreaManutenção.PneusEstepe, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(7, 10000, 0, ÁreaManutenção.SuspensãoSuspensão, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(6, 100000, 0, ÁreaManutenção.SuspensãoSuspensão, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(8, 40000, 0, ÁreaManutenção.MotorCorreias, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(9, 5000, 0, ÁreaManutenção.MotorCorreias, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(10, 5000, 0, ÁreaManutenção.MotorMangueiras, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(11, 100000, 0, ÁreaManutenção.MotorVelas, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(12, 10000, 0, ÁreaManutenção.MotorVelas, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(13, 10000, 0, ÁreaManutenção.MotorInjeção, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(14, 0, 2*365, ÁreaManutenção.MotorRadiador, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(15, 5000, 0, ÁreaManutenção.MotorRadiador, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(16, 50000, 0, ÁreaManutenção.FreioPastilha, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(17, 10000, 0, ÁreaManutenção.FreioPastilha, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(18, 10000, 0, ÁreaManutenção.FreioDisco, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(19, 0, 2*365, ÁreaManutenção.BateriaBateria, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(20, 80000, 0, ÁreaManutenção.FluidoTransmissão, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(21, 0, 365, ÁreaManutenção.FluidoFreio, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(22, 10000, 0, ÁreaManutenção.FluidoFreio, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(23, 0, 30, ÁreaManutenção.FluidoLimpador, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(24, 7500, 0, ÁreaManutenção.FluidoÓleo, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(25, 5000, 0, ÁreaManutenção.FluidoÓleo, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(26, 7500, 0, ÁreaManutenção.FiltroÓleo, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(27, 5000, 0, ÁreaManutenção.FiltroÓleo, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(28, 20000, 0, ÁreaManutenção.FiltroCombustível, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(29, 0, 365, ÁreaManutenção.FiltroAr, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(30, 10000, 0, ÁreaManutenção.FiltroAr, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(31, 0, 60, ÁreaManutenção.Lâmpadas, TipoManutenção.Revisão, TipoVeículo.Carro),
+                new(32, 0, 30, ÁreaManutenção.Limpadores, TipoManutenção.Revisão, TipoVeículo.Carro),
+            };
 
             base.OnModelCreating(mb);
         }

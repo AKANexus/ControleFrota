@@ -5,8 +5,17 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
              xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
+             xmlns:system="clr-namespace:System;assembly=System.Runtime"
+             xmlns:domain="clr-namespace:ControleFrota.Domain"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance dialogWindows:CadastroVeículoViewModel}"
              >
+    <UserControl.Resources>
+        <ObjectDataProvider x:Key="Marcas" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="domain:Marcas"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+    </UserControl.Resources>
     <Grid Margin="20">
             <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
@@ -25,7 +34,7 @@
         <TextBlock  Grid.Row="1" Grid.Column="0" Text="Placa" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <TextBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="1" CharacterCasing="Upper" Text="{Binding PlacaVeículo, UpdateSourceTrigger=LostFocus}" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="100" d:Text="BRQ-6728" Margin="5,10"/>
         <TextBlock  Grid.Row="1" Grid.Column="2" Text="Marca" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Marcas}" DisplayMemberPath="Nome" SelectedValuePath="ID" SelectedItem="{Binding MarcaSelecionada, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding MarcaSelecionada.ID, UpdateSourceTrigger=PropertyChanged}"/>
+        <ComboBox FontSize="16" Grid.Row="1" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Mode=OneWay, Source={StaticResource Marcas}}" SelectedItem="{Binding MarcaSelecionada, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock  Grid.Row="2" Grid.Column="2" Text="Modelo" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <ComboBox FontSize="16" Grid.Row="2" FontWeight="Bold" Grid.Column="3" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="150" Margin="5,10" ItemsSource="{Binding Modelos}" DisplayMemberPath="Nome" SelectedValuePath="ID" SelectedItem="{Binding ModeloSelecionado, UpdateSourceTrigger=PropertyChanged}" SelectedValue="{Binding ModeloSelecionado.ID, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBlock  Grid.Row="2" Grid.Column="0" Text="RENAVAM" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>

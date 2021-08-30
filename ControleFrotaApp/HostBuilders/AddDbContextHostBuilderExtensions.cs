@@ -17,8 +17,12 @@ namespace ControleFrota.HostBuilders
             {
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
+#if DEBUG
+                    .AddUserSecrets<App>();
+#else
                     .AddJsonFile("appsettings.json");
-                    //.AddUserSecrets<App>();
+
+#endif
                 var configuration = builder.Build();
                 string connString = configuration.GetConnectionString("DefaultDB");
                 ServerVersion version = new MySqlServerVersion(new Version(8, 0, 23));

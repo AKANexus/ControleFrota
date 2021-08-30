@@ -25,7 +25,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Veículos.AsNoTracking()
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
-                .Include(x => x.Marca)
                 .Include(x => x.Modelo)
                 .Include(x => x.Viagens)
                 .ThenInclude(x=>x.Motorista)
@@ -37,7 +36,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Veículos
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
-                .Include(x => x.Marca)
                 .Include(x => x.Modelo)
                 .Include(x => x.Viagens)
                 .OrderBy(x=>x.Placa)
@@ -49,7 +47,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Veículos
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
-                .Include(x => x.Marca)
                 .Include(x => x.Modelo)
                 .Include(x => x.Viagens)
                 .Include(x => x.ManutençõesProgramadas)
@@ -61,7 +58,6 @@ namespace ControleFrota.Services.DataServices
             return await _context.Veículos
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
-                .Include(x => x.Marca)
                 .Include(x => x.Modelo)
                 .Include(x => x.Viagens)
                 .Include(x => x.ManutençõesProgramadas)

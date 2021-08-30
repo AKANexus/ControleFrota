@@ -101,15 +101,15 @@ namespace ControleFrota.ViewModels.DialogWindows
                 OnPropertyChanged(nameof(Valor));
             }
         }
-        public string Peça
-        {
-            get => ManutençãoSelecionada?.Peça;
-            set
-            {
-                ManutençãoSelecionada.Peça = value;
-                OnPropertyChanged(nameof(Peça));
-            }
-        }
+        //public string Peça
+        //{
+        //    get => ManutençãoSelecionada?.Peça;
+        //    set
+        //    {
+        //        ManutençãoSelecionada.Peça = value;
+        //        OnPropertyChanged(nameof(Peça));
+        //    }
+        //}
 
         public string Observações
         {
@@ -214,7 +214,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             if (_cadastroManutençãoViewModel.VeículoSelecionado is null) return false;
             if (_cadastroManutençãoViewModel.ManutençãoSelecionada.KM == default) return false;
             if (string.IsNullOrWhiteSpace(_cadastroManutençãoViewModel.Local)) return false;
-            if (string.IsNullOrWhiteSpace(_cadastroManutençãoViewModel.Peça)) return false;
+            //if (string.IsNullOrWhiteSpace(_cadastroManutençãoViewModel.Peça)) return false;
             if (_cadastroManutençãoViewModel.ManutençãoSelecionada.Preço == default) return false;
             return true;
         }

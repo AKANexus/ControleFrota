@@ -19,7 +19,7 @@ namespace ControleFrota.ViewModels.DialogWindows
     {
         private readonly CurrentScopeStore _currentScopeStore;
         private readonly VeículoDataService _veículoDataService;
-        private readonly MarcaDataService _marcaDataService;
+        //private readonly MarcaDataService _marcaDataService;
         private readonly ModeloDataService _modeloDataService;
 
         private readonly IMessaging<int> _intMessaging;
@@ -28,25 +28,22 @@ namespace ControleFrota.ViewModels.DialogWindows
         public Veículo VeículoSelecionado { get; set; }
 
 
-        public ObservableCollection<Marca> Marcas { get; set; } = new();
+        public ObservableCollection<Marcas> Marcas { get; set; } = new();
 
         public ObservableCollection<Modelo> Modelos { get; set; } = new();
 
         public ICommand CloseCurrentWindow { get; set; }
 
         public ICommand SalvaVeículo { get; set; }
-
-        public Marca MarcaSelecionada
+        public Marcas MarcaSelecionada
         {
             get
             {
-                return VeículoSelecionado?.Marca;
+                return VeículoSelecionado?.Modelo?.Marca ?? Domain.Marcas.Outros;
             }
             set
             {
-                VeículoSelecionado.Marca = value;
-                OnPropertyChanged(nameof(MarcaSelecionada));
-                PreencheModelos();
+                PreencheModelos(value);
             }
         }
         public Modelo ModeloSelecionado
@@ -115,7 +112,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             SalvaVeículo = new SalvaVeículoCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
 
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
-            _marcaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MarcaDataService>();
+            //_marcaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MarcaDataService>();
             _modeloDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ModeloDataService>();
 
             //_veículoEntityStore = _currentScopeStore.PegaEscopoAtual().GetRequiredService<EntityStore<Veículo>>();
@@ -127,10 +124,10 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         private async Task PreencheCampos()
         {
-            foreach (Marca marca in await _marcaDataService.GetAll())
-            {
-                Marcas.Add(marca);
-            }
+            //foreach (Marca marca in await _marcaDataService.GetAll())
+            //{
+            //    Marcas.Add(marca);
+            //}
 
             if (_intMessaging.Mensagem == default)
             {
@@ -140,14 +137,15 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
 
             VeículoSelecionado = await _veículoDataService.GetVeículoByID(_intMessaging.Mensagem);
-            await PreencheModelos();
+            await PreencheModelos(VeículoSelecionado.Modelo.Marca);
             OnPropertyChanged(null);
 
         }
 
-        private async Task PreencheModelos()
+        private async Task PreencheModelos(Marcas marcaSelecionada)
         {
-            foreach (Modelo modelo in await _modeloDataService.GetAllByMarca(VeículoSelecionado.Marca))
+            Modelos.Clear();
+            foreach (Modelo modelo in await _modeloDataService.GetAllByMarca(marcaSelecionada))
             {
                 Modelos.Add(modelo);
             }

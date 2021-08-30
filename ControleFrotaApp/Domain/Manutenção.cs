@@ -9,8 +9,12 @@ namespace ControleFrota.Domain
 {
     public class Manutenção : EntityBase
     {
-        [Description("Peça Reparada")]
-        public string Peça { get; set; }
+        //[Description("Peça Reparada")]
+        //public string Peça { get; set; }
+        [Description("Reparo")]
+        public ÁreaManutenção ÁreaManutenção { get; set; }
+        [Description("Tipo de reparo")]
+        public TipoManutenção TipoManutenção { get; set; }
         //[Description("Tipo do Reparo")]
         public TipoReparo TipoReparo { get; set; }
         [Description("Quilometragem")]
