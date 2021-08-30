@@ -164,8 +164,8 @@ namespace ControleFrota.Domain
         public TipoVeículo TipoVeículo => Modelo.TipoVeículo;
 
         [NotMapped] public string TipoIcone => TipoVeículo switch {
-            TipoVeículo.Carro => "🚗",
-            TipoVeículo.Moto => "🏍",
+            TipoVeículo.Carro => "🚗/C",
+            TipoVeículo.Moto => "🏍/M",
             _ => throw new ArgumentOutOfRangeException()
         };
     }

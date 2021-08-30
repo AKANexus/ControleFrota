@@ -28,7 +28,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <TextBlock HorizontalAlignment="Center" Margin="10">
-            <Run Text="Modelos 📖" Foreground="DarkCyan" FontSize="26" FontWeight="DemiBold"/>
+            <Run Text="Modelos 📖" FontSize="26" FontWeight="DemiBold"/>
         </TextBlock>
         <DataGrid Grid.Row="1" FontSize="18" CanUserDeleteRows="False" CanUserAddRows="True" HeadersVisibility="Column" SelectionMode="Single" SelectionUnit="FullRow" ItemsSource="{Binding Modelos}" AutoGenerateColumns="False" Margin="15">
             <DataGrid.ColumnHeaderStyle>

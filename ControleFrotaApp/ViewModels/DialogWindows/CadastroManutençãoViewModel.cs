@@ -71,6 +71,15 @@ namespace ControleFrota.ViewModels.DialogWindows
                 OnPropertyChanged(nameof(TipoReparoSelecionado));
             }
         }
+        public ÁreaManutenção AreaReparoSelecionada
+        {
+            get => ManutençãoSelecionada?.ÁreaManutenção ?? ÁreaManutenção.Outros;
+            set
+            {
+                ManutençãoSelecionada.ÁreaManutenção = value;
+                OnPropertyChanged(nameof(AreaReparoSelecionada));
+            }
+        }
 
         public DateTime DataHora
         {
@@ -134,6 +143,7 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public ICommand Salvar { get; set; }
         public ICommand Cancelar { get; set; }
+
 
         public CadastroManutençãoViewModel(IServiceProvider serviceProvider)
         {

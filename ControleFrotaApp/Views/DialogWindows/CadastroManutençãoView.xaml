@@ -17,6 +17,11 @@
                 <x:Type TypeName="domain:TipoReparo"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
+        <ObjectDataProvider x:Key="AreasReparo" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+            <ObjectDataProvider.MethodParameters>
+                <x:Type TypeName="domain:ÁreaManutenção"/>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
         <auxiliares:EnumValueConverter x:Key="EnumValueConverter"/>
         <auxiliares:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
@@ -83,8 +88,11 @@
 
         <TextBlock Grid.Row="4" Grid.Column="2" Text="Peça" FontSize="16" HorizontalAlignment="Right"
                    VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
-        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding Peça, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.ColumnSpan="2"
-                 VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" />
+
+        <ComboBox FontSize="16" Grid.Row="4" FontWeight="Normal" Grid.Column="3" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" 
+                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource AreasReparo}}" 
+                 SelectedItem="{Binding AreaReparoSelecionada, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBlock Grid.Row="5" Grid.RowSpan="2" Grid.Column="0" Text="Observações" FontSize="16" HorizontalAlignment="Right"
                    VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />

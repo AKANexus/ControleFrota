@@ -61,8 +61,8 @@ namespace ControleFrota.EFCore
             {
                 new(1, "Pedágio"),
                 new(2, "Hospedagem"),
-                new(3, "Alimentação"),
-                new(4, "Abastecimento*")
+                new(3, "Alimentação")
+                //new(4, "Abastecimento*")
             };
 
             mb.Entity<TipoGasto>().HasData(gastosSeed);
@@ -102,6 +102,8 @@ namespace ControleFrota.EFCore
                 new(31, 0, 60, ÁreaManutenção.Lâmpadas, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(32, 0, 30, ÁreaManutenção.Limpadores, TipoManutenção.Revisão, TipoVeículo.Carro),
             };
+
+            mb.Entity<ManutençãoProgramada>().HasData(manutençãoProgramadasSeed);
 
             base.OnModelCreating(mb);
         }
