@@ -6,10 +6,12 @@
              xmlns:local="clr-namespace:ControleFrota.Views"
              xmlns:viewModels="clr-namespace:ControleFrota.ViewModels"
              xmlns:auxiliares="clr-namespace:ControleFrota.Auxiliares"
+             xmlns:domain="clr-namespace:ControleFrota.Domain"
              mc:Ignorable="d" d:DataContext="{d:DesignInstance viewModels:ListagemVeículosViewModel}"
              d:DesignHeight="1080" d:DesignWidth="1920" Language="pt-BR" IsHitTestVisible="{Binding HitTestVisible}">
     <UserControl.Resources>
         <auxiliares:DefaultDateToBlank x:Key="DefaultDateToBlank"/>
+        <auxiliares:EnumDescriptionConverter x:Key="EnumDescriptionConverter"/>
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
@@ -25,24 +27,27 @@
                 <DataGrid.RowStyle>
                     <Style TargetType="{x:Type DataGridRow}">
                         <Style.Triggers>
-                            <DataTrigger Binding="{Binding EmUso}" Value="True">
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.EmUso }">
                                 <Setter Property="Foreground" Value="DarkOrange"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding EmUso}" Value="False">
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.Garagem }">
                                 <Setter Property="Foreground" Value="Black"/>
                             </DataTrigger>
-                            <DataTrigger Binding="{Binding PróximoDoLicenciamento}" Value="True">
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.Licenciamento }">
                                 <Setter Property="Foreground" Value="Red"/>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.Inativo }">
+                                <Setter Property="Foreground" Value="DarkGray"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>
                 </DataGrid.RowStyle>
                 <DataGrid.ContextMenu>
-                    <ContextMenu>
-                        <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}"/>
-                        <MenuItem Header="Retorno" Command="{Binding RetornoDeViatura}"/>
-                        <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}"/>
-                        <MenuItem Header="Manutenção" Command="{Binding ManutençãoDeViatura}"/>
+                    <ContextMenu Width="Auto">
+                        <MenuItem Header="Saída" Command="{Binding SaídaDeViatura}" Icon="🔺"/>
+                        <MenuItem Header="Retorno" Command="{Binding RetornoDeViatura}" Icon="🔻"/>
+                        <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}" Icon="⛽"/>
+                        <MenuItem Header="Manutenção" Command="{Binding ManutençãoDeViatura}" Icon="🛠"/>
                         <Separator/>
                         <MenuItem Header="Histórico do Veículo" IsEnabled="False"/>
                         <MenuItem Header="Inativar Viatura" IsEnabled="False"/>
@@ -63,20 +68,13 @@
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca.Nome}" FontSize="17"/>
                     <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo.Nome}" FontSize="17"/>
                     <DataGridTextColumn Header="Quilometragem" Binding="{Binding ÚltimaQuilometragemInformada, StringFormat={}{0:N0} km}" FontSize="17"/>
-                    <DataGridTextColumn Header="RENAVAM" Binding="{Binding RENAVAM}" FontSize="17"/>
+                    <DataGridTextColumn Visibility="Collapsed" Header="RENAVAM" Binding="{Binding RENAVAM}" FontSize="17"/>
                     <DataGridTextColumn Header="Próximo Licenciamento" Binding="{Binding PróximoLicenciamento, StringFormat=MMM/yy}" FontSize="17"/>
                     <DataGridTextColumn Header="Último Abastecimento" Binding="{Binding ÚltimoAbastecimento, Converter={StaticResource DefaultDateToBlank}}" FontSize="17"/>
                     <DataGridTextColumn Header="Última Manutenção" Binding="{Binding ÚltimaManutenção, Converter={StaticResource DefaultDateToBlank}}" FontSize="17"/>
                     <DataGridTextColumn Header="Último Motorista" Binding="{Binding ÚltimoMotorista}" FontSize="17"/>
+                    <DataGridTextColumn Header="Status" Binding="{Binding Status, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"></DataGridTextColumn>
                 </DataGrid.Columns>
-                <!--<DataGrid.InputBindings>
-                    <MouseBinding MouseAction="RightClick" Command=""></MouseBinding>
-                </DataGrid.InputBindings>-->
-                <!--<DataGrid.CellStyle>
-                    <Style TargetType="{x:Type DataGridCell}">
-                        <Setter Property="Template"></Setter>
-                    </Style>
-                </DataGrid.CellStyle>-->
             </DataGrid>
         </Grid>
     </Grid>

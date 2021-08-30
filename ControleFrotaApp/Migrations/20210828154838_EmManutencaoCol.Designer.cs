@@ -3,14 +3,16 @@ using System;
 using ControleFrota.EFCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ControleFrota.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    partial class MainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210828154838_EmManutencaoCol")]
+    partial class EmManutencaoCol
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -141,9 +143,6 @@ namespace ControleFrota.Migrations
 
                     b.Property<int?>("MotoristaID")
                         .HasColumnType("int");
-
-                    b.Property<string>("Observações")
-                        .HasColumnType("longtext");
 
                     b.Property<string>("Peça")
                         .HasColumnType("longtext");

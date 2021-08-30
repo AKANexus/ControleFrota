@@ -109,6 +109,49 @@ namespace ControleFrota.Domain
         [NotMapped]
         public bool PróximoDoLicenciamento => PróximoLicenciamento <= DateTime.Now.AddDays(60);
 
+        public bool EmManutenção { get; set; } = false;
         [NotMapped] public int IdViagemEmAberto => Viagens.FirstOrDefault(x => x.Retorno == default)?.ID ?? default;
+
+        [NotMapped]
+        //[Description("Status do Veículo")]
+        public StatusVeículo Status
+        {
+            get
+            {
+                if (!Ativo)
+                {
+                    if (PróximoDoLicenciamento)
+                    {
+                        return StatusVeículo.Licenciamento;
+                    }
+                    else
+                    {
+                        return StatusVeículo.Inativo;
+                    }
+                }
+                else
+                {
+                    if (EmUso)
+                    {
+                        return StatusVeículo.EmUso;
+                    }
+                    else
+                    {
+                        if (EmManutenção)
+                        {
+                            return StatusVeículo.Manutenção;
+                        }
+                        if (PróximoDoLicenciamento)
+                        {
+                            return StatusVeículo.Licenciamento;
+                        }
+                        else
+                        {
+                            return StatusVeículo.Garagem;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

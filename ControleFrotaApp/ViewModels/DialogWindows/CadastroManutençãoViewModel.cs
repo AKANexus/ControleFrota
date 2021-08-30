@@ -111,6 +111,16 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
+        public string Observações
+        {
+            get => ManutençãoSelecionada?.Observações;
+            set
+            {
+                ManutençãoSelecionada.Observações = value;
+                OnPropertyChanged(nameof(Observações));
+            }
+        }
+
         public string KM
         {
             get => (_manutençãoSelecionada?.KM ?? default).ToString("F2") + " km";

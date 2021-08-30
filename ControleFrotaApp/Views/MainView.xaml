@@ -23,13 +23,13 @@
                 <TextBlock><Run Text="⛽  " Foreground="DarkRed"/><Run Text="Abastecimentos"/></TextBlock>
             </Button>
             <Button Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListaManutenções}">
-                <TextBlock><Run Text="🛠  " Foreground="DarkGoldenrod"/><Run Text="Manutenções"/></TextBlock>
+                <TextBlock><Run Text="🛠  " Foreground="DarkMagenta"/><Run Text="Manutenções"/></TextBlock>
             </Button>
             <Button Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListagemVeículos}">
                 <TextBlock><Run Text="🚘  " Foreground="DarkGreen"/><Run Text="Veículos"/></TextBlock>
             </Button>
             <Button Padding="10, 5" Margin="5" FontSize="24" FontWeight="DemiBold" FontFamily="Lato" Command="{Binding UpdateViewModelAtual}" CommandParameter="{x:Static navigators:TipoView.ListagemFuncionários}">
-                <TextBlock><Run Text="👨‍✈  " Foreground="DarkMagenta"/><Run Text="Motoristas"/></TextBlock>
+                <TextBlock><Run Text="👨‍✈  " Foreground="DarkOrange"/><Run Text="Motoristas"/></TextBlock>
             </Button>
         </StackPanel>
         <ContentControl Grid.Row="1" Content="{Binding ViewModelAtual}"/>

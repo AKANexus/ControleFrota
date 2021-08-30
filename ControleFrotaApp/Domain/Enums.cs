@@ -43,4 +43,18 @@ namespace ControleFrota.Domain
         Reparativo
     }
 
+    public enum StatusVeículo
+    {
+        [Description("Garagem")]
+        Garagem,
+        [Description("Em uso")]
+        EmUso,
+        [Description("Inativo")]
+        Inativo,
+        [Description("Próximo do Licenciamento")]
+        Licenciamento,
+        [Description("Em Manutenção")]
+        Manutenção
+    }
+
 }

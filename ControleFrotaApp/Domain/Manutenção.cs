@@ -25,5 +25,8 @@ namespace ControleFrota.Domain
         public Veículo Veículo { get; set; }
         //[Description("Motorista")]
         public Motorista Motorista { get; set; }
+
+        [Description("Observações")] 
+        public string Observações { get; set; }
     }
 }
