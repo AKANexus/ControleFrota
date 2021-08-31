@@ -70,7 +70,6 @@ namespace ControleFrota.Domain
         public ObservableCollection<Viagem> Viagens { get; set; }
         public ObservableCollection<Manutenção> Manutenções { get; set; }
         public ObservableCollection<Abastecimento> Abastecimentos { get; set; }
-        public ObservableCollection<ManutençãoProgramada> ManutençõesProgramadas { get; set; }
 
         [NotMapped]
         [Description("Quilometragem")]
@@ -159,7 +158,6 @@ namespace ControleFrota.Domain
             }
         }
 
-        public List<ManutençãoProgramada> ManutençãoProgramadas { get; set; }
         [NotMapped]
         public TipoVeículo TipoVeículo => Modelo.TipoVeículo;
 

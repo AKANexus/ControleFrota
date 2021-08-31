@@ -34,7 +34,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             Salva = new SalvaMarcasCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
 
-            _modeloDataService = serviceProvider.GetRequiredService<ModeloDataService>();
+            _modeloDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ModeloDataService>();
             PreencheDataGrid();
         }
 
@@ -47,7 +47,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
-        
+
 
     }
 
@@ -57,6 +57,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         private readonly CurrentScopeStore _currentScopeStore;
         private readonly ModeloDataService _modeloDataService;
         private readonly IDialogsStore _dialogStore;
+        private readonly ManutençãoProgramadaDataService _manutençãoProgramada;
 
         public SalvaMarcasCommand(CadastroMarcaModeloViewModel cadastroMarcaModeloViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
         {
@@ -64,12 +65,24 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore = serviceProvider.GetRequiredService<CurrentScopeStore>();
             _modeloDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ModeloDataService>();
             _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _manutençãoProgramada = _currentScopeStore.PegaEscopoAtual()
+                .GetRequiredService<ManutençãoProgramadaDataService>();
         }
 
         protected override async Task ExecuteAsync(object parameter)
         {
             foreach (Modelo modelo in _cadastroMarcaModeloViewModel.Modelos)
             {
+                var y = await _manutençãoProgramada.GetAll();
+                if (modelo.ModeloManutenções.All(x => x.ManutençãoProgramada.TipoVeículo != modelo.TipoVeículo))
+                {
+                    modelo.ModeloManutenções.Clear();
+                    await _modeloDataService.AddOrUpdate(modelo);
+                    foreach (ManutençãoProgramada manutençãoProgramada in await _manutençãoProgramada.GetAllByTipo(modelo.TipoVeículo))
+                    {
+                        modelo.ModeloManutenções.Add(new() { Modelo = modelo, ManutençãoProgramada = manutençãoProgramada });
+                    }
+                }
                 await _modeloDataService.AddOrUpdate(modelo);
             }
             _dialogStore.CloseDialog(DialogResult.OK);

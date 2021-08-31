@@ -23,7 +23,6 @@ namespace ControleFrota.EFCore
         public DbSet<Abastecimento> Abastecimentos { get; set; }
         public DbSet<Manutenção> Manutençãos { get; set; }
         public DbSet<ManutençãoProgramada> ManutençãoProgramadas { get; set; }
-        //public DbSet<Marca> Marcas { get; set; }
         public DbSet<Modelo> Modelos { get; set; }
         public DbSet<Motorista> Motoristas { get; set; }
         public DbSet<Viagem> Viagems { get; set; }
@@ -104,6 +103,19 @@ namespace ControleFrota.EFCore
             };
 
             mb.Entity<ManutençãoProgramada>().HasData(manutençãoProgramadasSeed);
+
+            mb.Entity<ModeloManutenção>()
+                .HasKey(mm => new { mm.ModeloId, mm.ManutençãoProgramadaId });
+
+            mb.Entity<ModeloManutenção>()
+                .HasOne(x => x.Modelo)
+                .WithMany(x => x.ModeloManutenções)
+                .HasForeignKey(mm => mm.ModeloId);
+
+            mb.Entity<ModeloManutenção>()
+                .HasOne(x => x.ManutençãoProgramada)
+                .WithMany(x => x.ModeloManutenções)
+                .HasForeignKey(mm => mm.ManutençãoProgramadaId);
 
             base.OnModelCreating(mb);
         }

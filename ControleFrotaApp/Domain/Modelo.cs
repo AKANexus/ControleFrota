@@ -11,6 +11,6 @@ namespace ControleFrota.Domain
         public Marcas Marca { get; set; } = Marcas.Outros;
         public string Nome { get; set; }
         public TipoVeículo TipoVeículo { get; set; }
-
+        public List<ModeloManutenção> ModeloManutenções { get; set; } = new();
     }
 }

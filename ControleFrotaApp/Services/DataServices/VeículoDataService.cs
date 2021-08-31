@@ -26,8 +26,9 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
                 .Include(x => x.Modelo)
+                .ThenInclude(x => x.ModeloManutenções)
                 .Include(x => x.Viagens)
-                .ThenInclude(x=>x.Motorista)
+                .ThenInclude(x => x.Motorista)
                 .ToListAsync();
         }
 
@@ -37,8 +38,9 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
                 .Include(x => x.Modelo)
+                .ThenInclude(x => x.ModeloManutenções)
                 .Include(x => x.Viagens)
-                .OrderBy(x=>x.Placa)
+                .OrderBy(x => x.Placa)
                 .ToListAsync();
         }
 
@@ -48,8 +50,8 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
                 .Include(x => x.Modelo)
+                .ThenInclude(x => x.ModeloManutenções)
                 .Include(x => x.Viagens)
-                .Include(x => x.ManutençõesProgramadas)
                 .FirstOrDefaultAsync(x => x.ID == id);
         }
 
@@ -59,8 +61,8 @@ namespace ControleFrota.Services.DataServices
                 .Include(x => x.Abastecimentos)
                 .Include(x => x.Manutenções)
                 .Include(x => x.Modelo)
+                .ThenInclude(x => x.ModeloManutenções)
                 .Include(x => x.Viagens)
-                .Include(x => x.ManutençõesProgramadas)
                 .FirstOrDefaultAsync(x => x.Placa == placa);
         }
 

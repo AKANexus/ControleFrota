@@ -13,6 +13,7 @@ namespace ControleFrota.Domain
         public ÁreaManutenção ÁreaManutenção { get; set; }
         public TipoManutenção TipoManutenção { get; set; }
         public TipoVeículo TipoVeículo { get; set; }
+        public List<ModeloManutenção> ModeloManutenções { get; set; }
 
         public ManutençãoProgramada()
         {

@@ -25,7 +25,10 @@ namespace ControleFrota.Services.DataServices
 
         public async Task<List<Modelo>> GetAll()
         {
-            return await _context.Modelos.ToListAsync();
+            return await _context.Modelos
+                .Include(x=>x.ModeloManutenções)
+                .ThenInclude(mm=>mm.ManutençãoProgramada)
+                .ToListAsync();
         }
 
         public async Task<List<Modelo>> GetAllByMarca(Marcas marca)
