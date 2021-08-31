@@ -81,6 +81,16 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
+        public TipoManutenção TipoManutençãoSelecionada
+        {
+            get => ManutençãoSelecionada?.TipoManutenção ?? TipoManutenção.Revisão;
+            set
+            {
+                ManutençãoSelecionada.TipoManutenção = value;
+                OnPropertyChanged(nameof(TipoManutençãoSelecionada));
+            }
+        }
+
         public DateTime DataHora
         {
             get => _manutençãoSelecionada?.DataHora ?? DateTime.Now;

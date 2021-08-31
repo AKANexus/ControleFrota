@@ -102,6 +102,16 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
+        public string Registro
+        {
+            get => VeículoSelecionado?.Registro.ToString();
+            set
+            {
+                VeículoSelecionado.Registro = int.Parse(value);
+                OnPropertyChanged(nameof(Registro));
+            }
+        }
+
 
         public CadastroVeículoViewModel(IServiceProvider serviceProvider)
         {

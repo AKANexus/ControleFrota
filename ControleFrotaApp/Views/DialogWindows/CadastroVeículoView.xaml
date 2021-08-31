@@ -43,6 +43,9 @@
         <DatePicker FontSize="16" Grid.Row="3" FontWeight="Normal" SelectedDate="{Binding ÚltimoLicenciamento, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" MinWidth="110" d:Text="01175498960" Margin="5,10"/>
         <TextBlock  Grid.Row="3" Grid.Column="2" Text="Chassis" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
         <TextBox FontSize="16" Grid.Row="3" FontWeight="Normal" Text="{Binding Chassis}"  Grid.Column="3" VerticalAlignment="Center" d:Text="01175498960" Margin="5,10"/>
+        
+        <TextBlock  Grid.Row="4" Grid.Column="0" Text="Número" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
+        <TextBox FontSize="16" Grid.Row="4" FontWeight="Normal" Text="{Binding Registro}"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" Width="35" d:Text="28" Margin="5,10"/>
 
         <Grid Grid.Row="4" Grid.Column="2" Grid.ColumnSpan="2" Margin="5,10">
             <Grid.ColumnDefinitions>

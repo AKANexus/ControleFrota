@@ -80,7 +80,11 @@ namespace ControleFrota.ViewModels.DialogWindows
                     await _modeloDataService.AddOrUpdate(modelo);
                     foreach (ManutençãoProgramada manutençãoProgramada in await _manutençãoProgramada.GetAllByTipo(modelo.TipoVeículo))
                     {
-                        modelo.ModeloManutenções.Add(new() { Modelo = modelo, ManutençãoProgramada = manutençãoProgramada });
+                        modelo.ModeloManutenções.Add(new()
+                        {
+                            Modelo = modelo, 
+                            ManutençãoProgramada = manutençãoProgramada
+                        });
                     }
                 }
                 await _modeloDataService.AddOrUpdate(modelo);

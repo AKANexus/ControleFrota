@@ -54,7 +54,9 @@ namespace ControleFrota.Domain
         [Description("Próximo do Licenciamento")]
         Licenciamento,
         [Description("Em Manutenção")]
-        Manutenção
+        Manutenção,
+        [Description("Manutenção Pendente")]
+        ManutençãoPendente
     }
 
     public enum TipoVeículo
@@ -65,29 +67,53 @@ namespace ControleFrota.Domain
 
     public enum ÁreaManutenção
     {
+        [Description("Pneus")]
         PneuPneus,
+        [Description("Alinhamento")]
         PneuAlinhamento,
+        [Description("Rodízio de Pneus")]
         PneuRodízio,
+        [Description("Calots")]
         PneuCalotas,
+        [Description("Estepe")]
         PneusEstepe,
+        [Description("Suspensão")]
         SuspensãoSuspensão,
+        [Description("Correias do Motor")]
         MotorCorreias,
+        [Description("Mangueiras do Motor")]
         MotorMangueiras,
+        [Description("Velas de Ignição")]
         MotorVelas,
+        [Description("Injeção")]
         MotorInjeção,
+        [Description("Radiador")]
         MotorRadiador,
+        [Description("Pastilhas de Freio")]
         FreioPastilha,
+        [Description("Discos dos Freios")]
         FreioDisco,
+        [Description("Bateria")]
         BateriaBateria,
+        [Description("Fluido de Transmissão")]
         FluidoTransmissão,
+        [Description("Fluido de Freio")]
         FluidoFreio,
+        [Description("Fluido do Limpador")]
         FluidoLimpador,
+        [Description("Óleo")]
         FluidoÓleo,
+        [Description("Filtro do Óleo")]
         FiltroÓleo,
+        [Description("Filtro de Combustível")]
         FiltroCombustível,
+        [Description("Filtro de Ar")]
         FiltroAr,
+        [Description("Lâmpadas")]
         Lâmpadas,
+        [Description("Limpadores")]
         Limpadores,
+        [Description("Outros")]
         Outros
     }
 

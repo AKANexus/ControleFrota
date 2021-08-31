@@ -36,6 +36,9 @@
                             <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.Licenciamento }">
                                 <Setter Property="Foreground" Value="Red"/>
                             </DataTrigger>
+                            <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.ManutençãoPendente }">
+                                <Setter Property="Foreground" Value="DarkMagenta"/>
+                            </DataTrigger>
                             <DataTrigger Binding="{Binding Status}" Value="{x:Static domain:StatusVeículo.Inativo }">
                                 <Setter Property="Foreground" Value="DarkGray"/>
                             </DataTrigger>
@@ -65,6 +68,7 @@
                 </DataGrid.InputBindings>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Placa" Binding="{Binding Placa}" FontSize="17" />
+                    <DataGridTextColumn Header="Núm" Binding="{Binding Registro}" FontSize="17" Width="Auto" />
                     <DataGridTextColumn Header="T" Binding="{Binding TipoIcone}" Width="Auto"/>
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
                     <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo.Nome}" FontSize="17"/>
@@ -75,6 +79,7 @@
                     <DataGridTextColumn Header="Última Manutenção" Binding="{Binding ÚltimaManutenção, Converter={StaticResource DefaultDateToBlank}}" FontSize="17"/>
                     <DataGridTextColumn Header="Último Motorista" Binding="{Binding ÚltimoMotorista}" FontSize="17"/>
                     <DataGridTextColumn Header="Status" Binding="{Binding Status, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"></DataGridTextColumn>
+                    <DataGridTextColumn Header="Item de Manutenção" Binding="{Binding DescriçãoPróximaManutenção}" FontSize="17"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
