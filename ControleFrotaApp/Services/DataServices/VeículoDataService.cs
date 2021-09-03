@@ -76,5 +76,20 @@ namespace ControleFrota.Services.DataServices
             await _context.SaveChangesAsync();
             return veículo;
         }
+
+        public async Task<Veículo> GetFullVeículoAsNoTracking(Veículo veículoSelecionado)
+        {
+            return await _context.Veículos
+                .Include(x => x.Abastecimentos)
+                .ThenInclude(x=>x.Motorista)
+                .Include(x => x.Manutenções)
+                .ThenInclude(x => x.Motorista)
+                .Include(x => x.Modelo)
+                .ThenInclude(x => x.ModeloManutenções)
+                .ThenInclude(x => x.ManutençãoProgramada)
+                .Include(x => x.Viagens)
+                .ThenInclude(x => x.Motorista)
+                .FirstOrDefaultAsync(x => x.ID == veículoSelecionado.ID);
+        }
     }
 }

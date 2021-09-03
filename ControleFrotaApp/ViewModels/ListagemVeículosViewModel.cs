@@ -3,18 +3,26 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using ControleFrota.Auxiliares;
+using ControleFrota.Commands;
 using ControleFrota.Domain;
 using ControleFrota.Extensions;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
 using ControleFrota.State;
+using ControleFrota.ViewModels.DialogWindows;
 using ControleFrota.ViewModels.Factories;
+using FastReport;
+using FastReport.Data;
+using FastReport.Export.Html;
+using FastReport.Export.PdfSimple;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ControleFrota.ViewModels
@@ -22,7 +30,7 @@ namespace ControleFrota.ViewModels
     public class ListagemVeículosViewModel : ViewModelBase
     {
         private readonly VeículoDataService _veículoDataService;
-        private Veículo _veículoSelecionada;
+        private Veículo _veículoSelecionado;
         private readonly IMessaging<string> _stringMessaging;
 
         private StringBuilder _filtrosAplicados = new();
@@ -30,8 +38,12 @@ namespace ControleFrota.ViewModels
         //private CollectionViewSource _collectionViewSource;
         public Veículo VeículoSelecionado
         {
-            get => _veículoSelecionada;
-            set { _veículoSelecionada = value; OnPropertyChanged(nameof(VeículoSelecionado)); }
+            get => _veículoSelecionado;
+            set
+            {
+                _veículoSelecionado = value;
+                OnPropertyChanged(nameof(VeículoSelecionado));
+            }
         }
 
         public ICollectionView VeículosView { get; set; }
@@ -51,6 +63,7 @@ namespace ControleFrota.ViewModels
         public ICommand Filtrar { get; set; }
         public ICommand Inativar { get; set; }
         public ICommand Imprimir { get; set; }
+        public ICommand GerarRelatório { get; set; }
 
         public ListagemVeículosViewModel(IServiceProvider serviceProvider)
         {
@@ -64,6 +77,7 @@ namespace ControleFrota.ViewModels
             ManutençãoDeViatura = new ManutençãoDeViaturaCommand(this, serviceProvider);
 
             Filtrar = new FiltrarVeículosCommand(this, serviceProvider);
+            GerarRelatório = new GerarRelatórioCommand(this, serviceProvider, exception => { });
             PreencheDataGrid();
 
         }
@@ -120,6 +134,60 @@ namespace ControleFrota.ViewModels
             }
         }
     }
+
+    public class GerarRelatórioCommand : AsyncCommandBase
+    {
+        private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
+        private readonly VeículoDataService _veículoDataService;
+
+
+        public GerarRelatórioCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
+        {
+            _listagemVeículosViewModel = listagemVeículosViewModel;
+            _veículoDataService = serviceProvider.GetRequiredService<VeículoDataService>();
+        }
+
+        public override bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+        protected override async Task ExecuteAsync(object parameter)
+        {
+            try
+            {
+                Veículo veículoTotal = await _veículoDataService.GetFullVeículoAsNoTracking(_listagemVeículosViewModel.VeículoSelecionado);
+                ReportObject ro = new(veículoTotal, DateTime.Now.AddMonths(-1), DateTime.Now);
+                var z = new List<ReportObject>() { ro };
+                //var x = ro.ConverteParaJson();
+                //var y = File.CreateText("reportJson.json");
+                //await y.WriteAsync(x);
+                //y.Close();
+                //string xBase64 = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(x));
+                Report report = new Report();
+                report.Load("reportTemplate.frx");
+                report.RegisterData(z, "ReportObject");
+                //report.LoadFromString($"Json={xBase64};Encoding=utf-8");
+                report.Prepare();
+                //var reportExport = new FastReport.Export.Image.ImageExport();
+                //report.Export(reportExport, "report.jpeg");
+                var reportExport = new PDFSimpleExport();
+                report.Export(reportExport, "report.pdf");
+                //Debug.Write(x);
+                //Debug.WriteLine("x");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
+        }
+
+
+        public override event EventHandler CanExecuteChanged;
+    }
+
 
     public class ManutençãoDeViaturaCommand : ICommand
     {

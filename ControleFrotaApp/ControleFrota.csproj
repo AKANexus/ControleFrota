@@ -12,8 +12,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="DinkToPdf" Version="1.0.8" />
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
+		<PackageReference Include="FastReport.OpenSource" Version="2021.3.30" />
+		<PackageReference Include="FastReport.OpenSource.Data.Json" Version="2021.3.0" />
+		<PackageReference Include="FastReport.OpenSource.Export.PdfSimple" Version="2021.3.15" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.9">
 			<PrivateAssets>all</PrivateAssets>
@@ -32,6 +34,12 @@
 	<ItemGroup>
 	  <None Update="appsettings.json">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </None>
+	  <None Update="libwkhtmltox.dylib">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	  <None Update="reportTemplate.frx">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
 

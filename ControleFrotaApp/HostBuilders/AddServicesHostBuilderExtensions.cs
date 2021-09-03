@@ -1,5 +1,7 @@
 ﻿using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
+//using DinkToPdf;
+//using DinkToPdf.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -24,7 +26,7 @@ namespace ControleFrota.HostBuilders
                 serviços.AddScoped<SetorDataService>();
                 serviços.AddScoped<ManutençãoDataService>();
                 serviços.AddScoped<ManutençãoProgramadaDataService>();
-
+                //serviços.AddSingleton(new SynchronizedConverter(new PdfTools()));
             });
             return host;
         }

@@ -52,7 +52,7 @@
                         <MenuItem Header="Abastecer" Command="{Binding AbastecerViatura}" Icon="⛽"/>
                         <MenuItem Header="Manutenção" Command="{Binding ManutençãoDeViatura}" Icon="🛠"/>
                         <Separator/>
-                        <MenuItem Header="Histórico do Veículo" IsEnabled="False"/>
+                        <MenuItem Header="Relatório do Veículo" Command="{Binding GerarRelatório}"/>
                         <MenuItem Header="Inativar Viatura" IsEnabled="False"/>
                     </ContextMenu>
                 </DataGrid.ContextMenu>

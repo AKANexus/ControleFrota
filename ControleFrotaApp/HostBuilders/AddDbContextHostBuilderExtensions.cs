@@ -18,7 +18,9 @@ namespace ControleFrota.HostBuilders
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
 #if DEBUG
-                    .AddUserSecrets<App>();
+                    //.AddUserSecrets<App>();
+                    .AddJsonFile("appsettings.json");
+
 #else
                     .AddJsonFile("appsettings.json");
 

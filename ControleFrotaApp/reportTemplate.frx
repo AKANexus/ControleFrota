@@ -1,0 +1,190 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/02/2021 15:21:14" ReportInfo.Modified="09/03/2021 10:30:59" ReportInfo.CreatorVersion="2021.3.28.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="ReportObject" ReferenceName="ReportObject" DataType="null" Enabled="true">
+      <Column Name="DataInício" DataType="System.String"/>
+      <Column Name="DataFim" DataType="System.String"/>
+      <Column Name="Marca" DataType="System.String"/>
+      <Column Name="Modelo" DataType="System.String"/>
+      <Column Name="Placa" DataType="System.String"/>
+      <Column Name="Quilometragem" DataType="System.String"/>
+      <Column Name="PróximoLicenciamento" DataType="System.String"/>
+      <Column Name="ÚltimoAbastecimento" DataType="System.String"/>
+      <Column Name="ÚltimaManutenção" DataType="System.String"/>
+      <BusinessObjectDataSource Name="ManutençãoJsons" DataType="null" Enabled="true">
+        <Column Name="KM" DataType="System.String"/>
+        <Column Name="Custo" DataType="System.String"/>
+        <Column Name="DataHora" DataType="System.String"/>
+        <Column Name="Motorista" DataType="System.String"/>
+        <Column Name="TipoReparo" DataType="System.String"/>
+        <Column Name="TipoManutenção" DataType="System.String"/>
+        <Column Name="ÁreaManutenção" DataType="System.String"/>
+      </BusinessObjectDataSource>
+      <BusinessObjectDataSource Name="ViagemJsons" DataType="null" Enabled="true">
+        <Column Name="Motorista" DataType="System.String"/>
+        <Column Name="KMInicial" DataType="System.String"/>
+        <Column Name="KMFinal" DataType="System.String"/>
+        <Column Name="Saída" DataType="System.String"/>
+        <Column Name="Entrada" DataType="System.String"/>
+      </BusinessObjectDataSource>
+      <BusinessObjectDataSource Name="AbastecimentoJsons" DataType="null" Enabled="true">
+        <Column Name="KM" DataType="System.String"/>
+        <Column Name="Motorista" DataType="System.String"/>
+        <Column Name="ValorTotal" DataType="System.String"/>
+        <Column Name="Litragem" DataType="System.String"/>
+        <Column Name="ValorPorLitro" DataType="System.String"/>
+        <Column Name="DataHora" DataType="System.String"/>
+        <Column Name="Posto" DataType="System.String"/>
+        <Column Name="Combustível" DataType="System.String"/>
+        <Column Name="FormaPagamento" DataType="System.String"/>
+      </BusinessObjectDataSource>
+    </BusinessObjectDataSource>
+  </Dictionary>
+  <ReportPage Name="Page1" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="37.8">
+      <TextObject Name="Text1" Width="718.2" Height="37.8" Text="Relatório da Viatura [ReportObject.Placa]" HorzAlign="Center" Font="Lato Black, 24pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="718.2" Height="37.8">
+      <TextObject Name="Text2" Top="9.45" Width="718.2" Height="18.9" Text="Período de [ReportObject.DataInício] a [ReportObject.DataFim]" HorzAlign="Center" Font="Lato, 12pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data4" Top="83.6" Width="718.2" Height="122.85">
+      <TableObject Name="Table2" Left="47.25" Top="9.45" Width="623.64" Height="94.5">
+        <TableColumn Name="Column6" Width="155.91"/>
+        <TableColumn Name="Column7" Width="155.91"/>
+        <TableColumn Name="Column8" Width="155.91"/>
+        <TableColumn Name="Column9" Width="155.91"/>
+        <TableRow Name="Row6">
+          <TableCell Name="Cell26" Fill.Color="LightGray" Text="Marca" Font="Lato Black, 10pt"/>
+          <TableCell Name="Cell27" Fill.Color="LightGray" Text="Modelo" Font="Lato Black, 10pt"/>
+          <TableCell Name="Cell28" Fill.Color="LightGray" Text="Placa" VertAlign="Center" Font="Lato Black, 10pt"/>
+          <TableCell Name="Cell29" Fill.Color="LightGray" Text="Quilometragem" Font="Lato Black, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row7">
+          <TableCell Name="Cell31" Text="[ReportObject.Marca]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell32" Text="[ReportObject.Modelo]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell33" Text="[ReportObject.Placa]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell34" Text="[ReportObject.Quilometragem]" VertAlign="Center" Font="Lato, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row8">
+          <TableCell Name="Cell36" Font="Arial, 10pt"/>
+          <TableCell Name="Cell37" Font="Arial, 10pt"/>
+          <TableCell Name="Cell38" Font="Arial, 10pt"/>
+          <TableCell Name="Cell39" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row9">
+          <TableCell Name="Cell41" Fill.Color="LightGray" Text="Próx. Licenciamento" Font="Lato Black, 10pt"/>
+          <TableCell Name="Cell42" Fill.Color="LightGray" Text="Último Abastecimento" Font="Lato Black, 10pt"/>
+          <TableCell Name="Cell43" Fill.Color="LightGray" Text="Última Manutenção" Font="Lato Black, 10pt"/>
+          <TableCell Name="Cell44" Fill.Color="LightGray" Font="Arial, 10pt"/>
+        </TableRow>
+        <TableRow Name="Row10">
+          <TableCell Name="Cell46" Text="[ReportObject.PróximoLicenciamento]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell47" Text="[ReportObject.ÚltimoAbastecimento]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell48" Text="[ReportObject.ÚltimaManutenção]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell49" Font="Arial, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <LineObject Name="Line1" Top="122.85" Width="727.65"/>
+    </DataBand>
+    <DataBand Name="Data1" Top="284.38" Width="718.2" Height="18.9">
+      <TableObject Name="Table7" Left="47.25" Width="623.7" Height="18.9" Border.Lines="Bottom">
+        <TableColumn Name="Column30" Width="124.74"/>
+        <TableColumn Name="Column31" Width="124.74"/>
+        <TableColumn Name="Column32" Width="124.74"/>
+        <TableColumn Name="Column33" Width="124.74"/>
+        <TableColumn Name="Column34" Width="124.74"/>
+        <TableRow Name="Row16">
+          <TableCell Name="Cell75" Text="[ReportObject.ViagemJsons.Motorista]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell76" Text="[ReportObject.ViagemJsons.KMInicial]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell77" Text="[ReportObject.ViagemJsons.Saída]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell78" Text="[ReportObject.ViagemJsons.KMFinal]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell79" Text="[ReportObject.ViagemJsons.Entrada]" VertAlign="Center" Font="Lato, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Top="210.45" Width="718.2" Height="69.93">
+        <TextObject Name="Text3" Left="47.25" Top="18.9" Width="623.7" Height="18.9" Fill.Color="LightGray" Text="Viagens" HorzAlign="Center" Font="Lato Black, 10pt"/>
+        <TableObject Name="Table3" Left="47.25" Top="37.8" Width="623.7" Height="20.79" Fill.Color="LightGray">
+          <TableColumn Name="Column10" Width="124.74"/>
+          <TableColumn Name="Column11" Width="124.74"/>
+          <TableColumn Name="Column12" Width="124.74"/>
+          <TableColumn Name="Column13" Width="124.74"/>
+          <TableColumn Name="Column14" Width="124.74"/>
+          <TableRow Name="Row11" Height="20.79">
+            <TableCell Name="Cell50" Text="Motorista" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell51" Text="KM Saída" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell52" Text="Saída" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell53" Text="KM Retorno" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell54" Text="Retorno" Font="Lato Black, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+    <DataBand Name="Data2" Top="381.21" Width="718.2" Height="18.9">
+      <TableObject Name="Table8" Left="47.25" Width="623.7" Height="18.9" Border.Lines="Bottom">
+        <TableColumn Name="Column35" Width="124.74"/>
+        <TableColumn Name="Column36" Width="124.74"/>
+        <TableColumn Name="Column37" Width="124.74"/>
+        <TableColumn Name="Column38" Width="124.74"/>
+        <TableColumn Name="Column39" Width="124.74"/>
+        <TableRow Name="Row21">
+          <TableCell Name="Cell100" Text="[ReportObject.AbastecimentoJsons.Motorista]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell101" Text="[ReportObject.AbastecimentoJsons.KM]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell102" Text="[ReportObject.AbastecimentoJsons.ValorPorLitro]" Font="Lato, 10pt"/>
+          <TableCell Name="Cell103" Text="[ReportObject.AbastecimentoJsons.Litragem]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell104" Text="[ReportObject.AbastecimentoJsons.ValorTotal]" VertAlign="Center" Font="Lato, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader2" Top="307.28" Width="718.2" Height="69.93">
+        <TextObject Name="Text4" Left="47.25" Top="18.9" Width="623.7" Height="18.9" Fill.Color="LightGray" Text="Abastecimentos" HorzAlign="Center" Font="Lato Black, 10pt"/>
+        <TableObject Name="Table6" Left="47.25" Top="37.8" Width="623.7" Height="20.79" Fill.Color="LightGray">
+          <TableColumn Name="Column25" Width="124.74"/>
+          <TableColumn Name="Column26" Width="124.74"/>
+          <TableColumn Name="Column27" Width="124.74"/>
+          <TableColumn Name="Column28" Width="124.74"/>
+          <TableColumn Name="Column29" Width="124.74"/>
+          <TableRow Name="Row15" Height="20.79">
+            <TableCell Name="Cell70" Text="Motorista" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell71" Text="Quilometragem" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell72" Text="Preço por Litro" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell73" Text="Litragem" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell74" Text="Valor Total" Font="Lato Black, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+    <DataBand Name="Data3" Top="476.15" Width="718.2" Height="18.9">
+      <TableObject Name="Table10" Left="47.25" Width="623.7" Height="18.9" Border.Lines="Bottom">
+        <TableColumn Name="Column45" Width="124.74"/>
+        <TableColumn Name="Column46" Width="124.74"/>
+        <TableColumn Name="Column47" Width="124.74"/>
+        <TableColumn Name="Column48" Width="124.74"/>
+        <TableColumn Name="Column49" Width="124.74"/>
+        <TableRow Name="Row23">
+          <TableCell Name="Cell110" Text="[ReportObject.ManutençãoJsons.Motorista]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell111" Text="[ReportObject.ManutençãoJsons.KM]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell112" Text="[ReportObject.ManutençãoJsons.TipoManutenção]" Font="Lato, 10pt"/>
+          <TableCell Name="Cell113" Text="[ReportObject.ManutençãoJsons.ÁreaManutenção]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell114" Text="[ReportObject.ManutençãoJsons.Custo]" VertAlign="Center" Font="Lato, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader3" Top="404.11" Width="718.2" Height="68.04">
+        <TextObject Name="Text5" Left="47.25" Top="18.9" Width="623.7" Height="18.9" Fill.Color="LightGray" Text="Manutenções" HorzAlign="Center" Font="Lato Black, 10pt"/>
+        <TableObject Name="Table9" Left="47.25" Top="37.8" Width="623.7" Height="20.79" Fill.Color="LightGray">
+          <TableColumn Name="Column40" Width="124.74"/>
+          <TableColumn Name="Column41" Width="124.74"/>
+          <TableColumn Name="Column42" Width="124.74"/>
+          <TableColumn Name="Column43" Width="124.74"/>
+          <TableColumn Name="Column44" Width="124.74"/>
+          <TableRow Name="Row22" Height="20.79">
+            <TableCell Name="Cell105" Text="Motorista" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell106" Text="Quilometragem" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell107" Text="Tipo de Manut." Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell108" Text="Objeto da Manut." Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell109" Text="Valor Total" Font="Lato Black, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="499.05" Width="718.2" Height="18.9"/>
+  </ReportPage>
+</Report>
