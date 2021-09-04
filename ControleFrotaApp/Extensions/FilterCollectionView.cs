@@ -39,6 +39,9 @@ namespace ControleFrota.Extensions
                     decimal endValue = decimal.Parse(values[1]);
                     _filtros.AddFilter((x) => x is EntityBase entityBase && ((decimal)entityBase.GetPropValue(filteringInfo.Property.Name)).IsBetween(startValue, endValue));
                     break;
+                case "enumvalue":
+                    _filtros.AddFilter((x) => x is EntityBase entityBase && ((Enum)entityBase.GetPropValue(filteringInfo.Property.Name)).Equals(Enum.Parse(filteringInfo.Property.PropertyType, filteringInfo.FilterInfo.Split(':')[1])));
+                    break;
                 case "clearfilters":
                     _filtros.RemoveAllFilters();
                     return null;

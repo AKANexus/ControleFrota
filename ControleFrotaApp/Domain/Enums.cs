@@ -32,7 +32,8 @@ namespace ControleFrota.Domain
     {
         Texto,
         Data,
-        Numérico
+        Numérico,
+        Enum
     }
 
     public enum TipoReparo

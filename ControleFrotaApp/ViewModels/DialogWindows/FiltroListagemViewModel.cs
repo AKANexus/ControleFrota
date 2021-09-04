@@ -9,12 +9,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Windows;
+using System.Windows.Forms;
 using System.Windows.Input;
 using ControleFrota.Commands;
 using ControleFrota.Domain;
 using ControleFrota.Services;
 using ControleFrota.State;
 using Microsoft.Extensions.DependencyInjection;
+using DialogResult = ControleFrota.Services.DialogResult;
+using MessageBox = System.Windows.MessageBox;
 
 namespace ControleFrota.ViewModels.DialogWindows
 {
@@ -44,10 +47,9 @@ namespace ControleFrota.ViewModels.DialogWindows
                 CampoData = Visibility.Visible;
                 CampoTexto = Visibility.Collapsed;
                 CampoNumerico = Visibility.Collapsed;
+                CampoEnum = Visibility.Collapsed;
                 TipoFiltro = TipoFiltro.Data;
-                OnPropertyChanged(nameof(CampoTexto));
-                OnPropertyChanged(nameof(CampoNumerico));
-                OnPropertyChanged(nameof(CampoData));
+
             }
 
             else if (SelectedPropDescPair.Property.PropertyType == typeof(string))
@@ -55,10 +57,8 @@ namespace ControleFrota.ViewModels.DialogWindows
                 CampoData = Visibility.Collapsed;
                 CampoTexto = Visibility.Visible;
                 CampoNumerico = Visibility.Collapsed;
+                CampoEnum = Visibility.Collapsed;
                 TipoFiltro = TipoFiltro.Texto;
-                OnPropertyChanged(nameof(CampoNumerico));
-                OnPropertyChanged(nameof(CampoData));
-                OnPropertyChanged(nameof(CampoTexto));
             }
 
             else if (SelectedPropDescPair.Property.PropertyType == typeof(int) ||
@@ -68,20 +68,36 @@ namespace ControleFrota.ViewModels.DialogWindows
                 CampoData = Visibility.Collapsed;
                 CampoTexto = Visibility.Collapsed;
                 CampoNumerico = Visibility.Visible;
+                CampoEnum = Visibility.Collapsed;
                 TipoFiltro = TipoFiltro.Numérico;
-                OnPropertyChanged(nameof(CampoData));
-                OnPropertyChanged(nameof(CampoTexto));
-                OnPropertyChanged(nameof(CampoNumerico));
             }
-            else
+            else if (SelectedPropDescPair.Property.PropertyType.IsEnum)
             {
+                ListaDeEnums.Clear();
+                foreach (var value in Enum.GetValues(SelectedPropDescPair.Property.PropertyType))
+                {
+                    ListaDeEnums.Add((Enum)value);
+                }
+
                 CampoData = Visibility.Collapsed;
                 CampoTexto = Visibility.Collapsed;
                 CampoNumerico = Visibility.Collapsed;
-                OnPropertyChanged(nameof(CampoData));
-                OnPropertyChanged(nameof(CampoTexto));
-                OnPropertyChanged(nameof(CampoNumerico));
+                CampoEnum = Visibility.Visible;
+                TipoFiltro = TipoFiltro.Enum;
             }
+            else
+            {
+                MessageBox.Show("Campo não tem um método de filtro definido");
+                CampoData = Visibility.Collapsed;
+                CampoTexto = Visibility.Collapsed;
+                CampoNumerico = Visibility.Collapsed;
+                CampoEnum = Visibility.Collapsed;
+            }
+
+            OnPropertyChanged(nameof(CampoTexto));
+            OnPropertyChanged(nameof(CampoNumerico));
+            OnPropertyChanged(nameof(CampoData));
+            OnPropertyChanged(nameof(CampoEnum));
         }
 
         public ICommand Testar { get; set; }
@@ -93,6 +109,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         public Visibility CampoTexto { get; set; } = Visibility.Collapsed;
         public Visibility CampoNumerico { get; set; } = Visibility.Collapsed;
         public Visibility CampoData { get; set; } = Visibility.Collapsed;
+        public Visibility CampoEnum { get; set; } = Visibility.Collapsed;
 
         public DateTime DataInicial { get; set; } = DateTime.Now.AddMonths(-1);
         public DateTime DataFinal { get; set; } = DateTime.Now;
@@ -105,11 +122,15 @@ namespace ControleFrota.ViewModels.DialogWindows
         public bool ComeçandoComChecked { get; set; }
         public bool ContendoChecked { get; set; } = true;
 
+        public ObservableCollection<Enum> ListaDeEnums { get; set; }
+        public Enum EnumSelecionado { get; set; }
+
         public FiltroListagemViewModel(IServiceProvider serviceProvider)
         {
             _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
             _typeMessaging = serviceProvider.GetRequiredService<IMessaging<Type>>();
             List<FilteringInfo> campos = new();
+            ListaDeEnums = new();
             foreach (PropertyInfo propertyInfo in _typeMessaging.Mensagem.GetProperties())
             {
                 var attrs = propertyInfo.GetCustomAttributes(true);
@@ -219,6 +240,9 @@ namespace ControleFrota.ViewModels.DialogWindows
                     break;
                 case TipoFiltro.Numérico:
                     _filtroListagemViewModel.SelectedPropDescPair.FilterInfo = $"valuebetween:{_filtroListagemViewModel.ValorInicial};{_filtroListagemViewModel.ValorFinal}";
+                    break;
+                case TipoFiltro.Enum:
+                    _filtroListagemViewModel.SelectedPropDescPair.FilterInfo = $"enumvalue:{_filtroListagemViewModel.EnumSelecionado}";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException();
