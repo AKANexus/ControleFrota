@@ -15,8 +15,7 @@ namespace ControleFrota.Domain
         [Description("Placa")]
         public string Placa { get; set; }
 
-        [Description("Marca")]
-        [NotMapped]
+        [Description("Marca"), NotMapped] 
         public Marcas Marca
         {
             get => Modelo?.Marca ?? Marcas.Outros;
@@ -32,8 +31,7 @@ namespace ControleFrota.Domain
         [Description("Último Licenciamento")]
         public DateTime ÚltimoLicenciamento { get; set; }
 
-        [NotMapped]
-        [Description("Último Abastecimento")]
+        [NotMapped, Description("Último Abastecimento")] 
         public DateTime ÚltimoAbastecimento
         {
             get
@@ -42,8 +40,7 @@ namespace ControleFrota.Domain
             }
         }
 
-        [NotMapped]
-        [Description("Última Manutenção")]
+        [NotMapped, Description("Última Manutenção")] 
         public DateTime ÚltimaManutenção
         {
             get
@@ -53,8 +50,7 @@ namespace ControleFrota.Domain
             }
         }
 
-        [NotMapped]
-        [Description("Último Motorista")]
+        [NotMapped, Description("Último Motorista")] 
         public string ÚltimoMotorista
         {
             get
@@ -74,8 +70,7 @@ namespace ControleFrota.Domain
         public ObservableCollection<Manutenção> Manutenções { get; set; }
         public ObservableCollection<Abastecimento> Abastecimentos { get; set; }
 
-        [NotMapped]
-        [Description("Quilometragem")]
+        [NotMapped, Description("Quilometragem")] 
         public decimal ÚltimaQuilometragemInformada
         {
             get
@@ -88,8 +83,8 @@ namespace ControleFrota.Domain
         }
 
         public bool Ativo { get; set; } = true;
-        [NotMapped]
-        [Description("Próximo Licenciamento")]
+
+        [NotMapped, Description("Próximo Licenciamento")] 
         public DateTime PróximoLicenciamento
         {
             get
@@ -119,8 +114,7 @@ namespace ControleFrota.Domain
         public bool EmManutenção { get; set; } = false;
         [NotMapped] public int IdViagemEmAberto => Viagens.FirstOrDefault(x => x.Retorno == default)?.ID ?? default;
 
-        [NotMapped]
-        //[Description("Status do Veículo")]
+        [NotMapped, Description("Status do Veículo")] 
         public StatusVeículo Status
         {
             get
@@ -166,7 +160,7 @@ namespace ControleFrota.Domain
             }
         }
 
-        [NotMapped]
+        [Description("Tipo do Veículo"), NotMapped] 
         public TipoVeículo TipoVeículo => Modelo.TipoVeículo;
 
         [NotMapped]
@@ -209,7 +203,7 @@ namespace ControleFrota.Domain
             }
         }
 
-        [NotMapped]
+        [NotMapped, Description("Próxima Manutenção")]
         public string DescriçãoPróximaManutenção => PróximaManutenção is not null
             ? $"{PróximaManutenção.TipoManutenção.GetEnumDescription()} de {PróximaManutenção.ÁreaManutenção.GetEnumDescription()}"
             : null;
