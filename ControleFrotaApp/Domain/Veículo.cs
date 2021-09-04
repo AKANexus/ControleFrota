@@ -20,7 +20,8 @@ namespace ControleFrota.Domain
         {
             get => Modelo?.Marca ?? Marcas.Outros;
         }
-        //[Description("Modelo")]
+
+        [NotMapped, Description("Modelo")] public string ModeloString => Modelo?.Nome;
         public Modelo Modelo { get; set; }
         [Description("Número de Registro")] 
         public int Registro { get; set; }

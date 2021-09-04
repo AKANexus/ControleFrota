@@ -119,7 +119,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore.CriaNovoEscopo();
 
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
-            SalvaVeículo = new SalvaVeículoCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            SalvaVeículo = new SalvaVeículoCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
 
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
             //_marcaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MarcaDataService>();

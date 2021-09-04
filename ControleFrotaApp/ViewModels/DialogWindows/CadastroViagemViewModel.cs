@@ -116,7 +116,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore.CriaNovoEscopo();
 
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
-            SalvaViagem = new SalvaViagemCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            SalvaViagem = new SalvaViagemCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
 
             _viagemDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ViagemDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();

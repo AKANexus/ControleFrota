@@ -28,7 +28,6 @@ namespace ControleFrota.EFCore
         public DbSet<Viagem> Viagems { get; set; }
         public DbSet<TipoGasto> TipoGastos { get; set; }
         public DbSet<Gasto> Gastos { get; set; }
-        public DbSet<Combustível> Combustívels { get; set; }
         public DbSet<Setor> Setors { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -36,16 +35,6 @@ namespace ControleFrota.EFCore
         }
         protected override void OnModelCreating(ModelBuilder mb)
         {
-            List<Combustível> combustíveeisSeed = new()
-            {
-                new(1, "Gasolina Comum"),
-                new(2, "Gasolina Aditivada"),
-                new(3, "Etanol Comum"),
-                new(4, "Etanol Aditivado")
-            };
-
-            mb.Entity<Combustível>().HasData(combustíveeisSeed);
-
             List<Setor> setorsSeed = new()
             {
                 new(1, "Infraestrutura"),
@@ -72,7 +61,7 @@ namespace ControleFrota.EFCore
                 new(2, 10000, 0, ÁreaManutenção.PneuPneus, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(3, 10000, 0, ÁreaManutenção.PneuAlinhamento, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(4, 10000, 0, ÁreaManutenção.PneuRodízio, TipoManutenção.Revisão, TipoVeículo.Carro),
-                new(5, 0, 7*365, ÁreaManutenção.PneusEstepe, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(5, 0, 7 * 365, ÁreaManutenção.PneusEstepe, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(7, 10000, 0, ÁreaManutenção.SuspensãoSuspensão, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(6, 100000, 0, ÁreaManutenção.SuspensãoSuspensão, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(8, 40000, 0, ÁreaManutenção.MotorCorreias, TipoManutenção.Troca, TipoVeículo.Carro),
@@ -81,12 +70,12 @@ namespace ControleFrota.EFCore
                 new(11, 100000, 0, ÁreaManutenção.MotorVelas, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(12, 10000, 0, ÁreaManutenção.MotorVelas, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(13, 10000, 0, ÁreaManutenção.MotorInjeção, TipoManutenção.Revisão, TipoVeículo.Carro),
-                new(14, 0, 2*365, ÁreaManutenção.MotorRadiador, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(14, 0, 2 * 365, ÁreaManutenção.MotorRadiador, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(15, 5000, 0, ÁreaManutenção.MotorRadiador, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(16, 50000, 0, ÁreaManutenção.FreioPastilha, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(17, 10000, 0, ÁreaManutenção.FreioPastilha, TipoManutenção.Revisão, TipoVeículo.Carro),
                 new(18, 10000, 0, ÁreaManutenção.FreioDisco, TipoManutenção.Revisão, TipoVeículo.Carro),
-                new(19, 0, 2*365, ÁreaManutenção.BateriaBateria, TipoManutenção.Troca, TipoVeículo.Carro),
+                new(19, 0, 2 * 365, ÁreaManutenção.BateriaBateria, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(20, 80000, 0, ÁreaManutenção.FluidoTransmissão, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(21, 0, 365, ÁreaManutenção.FluidoFreio, TipoManutenção.Troca, TipoVeículo.Carro),
                 new(22, 10000, 0, ÁreaManutenção.FluidoFreio, TipoManutenção.Revisão, TipoVeículo.Carro),

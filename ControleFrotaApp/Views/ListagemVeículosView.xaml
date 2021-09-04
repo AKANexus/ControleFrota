@@ -71,7 +71,7 @@
                     <DataGridTextColumn Header="Núm" Binding="{Binding Registro}" FontSize="17" Width="Auto" />
                     <DataGridTextColumn Header="T" Binding="{Binding TipoIcone}" Width="Auto"/>
                     <DataGridTextColumn Header="Marca" Binding="{Binding Marca, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
-                    <DataGridTextColumn Header="Modelo" Binding="{Binding Modelo.Nome}" FontSize="17"/>
+                    <DataGridTextColumn Header="Modelo" Binding="{Binding ModeloString}" FontSize="17"/>
                     <DataGridTextColumn Header="Quilometragem" Binding="{Binding ÚltimaQuilometragemInformada, StringFormat={}{0:N0} km}" FontSize="17"/>
                     <DataGridTextColumn Visibility="Collapsed" Header="RENAVAM" Binding="{Binding RENAVAM}" FontSize="17"/>
                     <DataGridTextColumn Header="Próximo Licenciamento" Binding="{Binding PróximoLicenciamento, StringFormat=MMM/yy}" FontSize="17"/>

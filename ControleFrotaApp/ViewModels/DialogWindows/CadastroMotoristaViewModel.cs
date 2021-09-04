@@ -72,7 +72,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore.CriaNovoEscopo();
 
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
-            SalvaMotorista = new SalvaMotoristaCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            SalvaMotorista = new SalvaMotoristaCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
 
             _motoristaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MotoristaDataService>();
             _setorDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<SetorDataService>();

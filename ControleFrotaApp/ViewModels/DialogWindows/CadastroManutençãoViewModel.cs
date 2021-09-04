@@ -160,7 +160,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore = serviceProvider.GetRequiredService<CurrentScopeStore>();
             _currentScopeStore.CriaNovoEscopo();
 
-            Salvar = new SalvarManutençãoCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            Salvar = new SalvarManutençãoCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
             Cancelar = new CloseCurrentWindowCommand(serviceProvider);
 
             _manutençãoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ManutençãoDataService>();

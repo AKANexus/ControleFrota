@@ -135,7 +135,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore.CriaNovoEscopo();
 
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
-            SalvaAbastecimento = new SalvaAbastecimento(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            SalvaAbastecimento = new SalvaAbastecimento(this, serviceProvider, x => MessageBox.Show(x.Message));
 
             _abastecimentoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<AbastecimentoDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();

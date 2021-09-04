@@ -49,7 +49,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             _currentScopeStore.CriaNovoEscopo();
 
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
-            SalvaViagem = new SalvaRetornoDeViatura(this, serviceProvider, (x) => MessageBox.Show(x.Message));
+            SalvaViagem = new SalvaRetornoDeViatura(this, serviceProvider, x => MessageBox.Show(x.Message));
             //AcrescentaAbastecimento = new AcrescentaAbastecimentoCommand(this, serviceProvider, (x) => MessageBox.Show(x.Message));
 
             _viagemDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ViagemDataService>();

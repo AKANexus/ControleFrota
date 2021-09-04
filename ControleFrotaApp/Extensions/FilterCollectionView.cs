@@ -19,28 +19,28 @@ namespace ControleFrota.Extensions
             switch (filteringInfo.FilterInfo.Split(':')[0])
             {
                 case "wholefield":
-                    _filtros.AddFilter(x => x is EntityBase entityBase && (string)entityBase.GetPropValue(filteringInfo.Property.Name) == filteringInfo.FilterInfo.Split(':')[1]);
+                    _filtros.AddFilter(x => x is EntityBase entityBase && ((string)entityBase.GetPropValue(filteringInfo.Property.Name)).Equals(filteringInfo.FilterInfo.Split(':')[1], StringComparison.OrdinalIgnoreCase));
                     break;
                 case "contains":
-                    _filtros.AddFilter(x => x is EntityBase entityBase && ((string)entityBase.GetPropValue(filteringInfo.Property.Name)).Contains(filteringInfo.FilterInfo.Split(':')[1]));
+                    _filtros.AddFilter(x => x is EntityBase entityBase && ((string)entityBase.GetPropValue(filteringInfo.Property.Name)).Contains(filteringInfo.FilterInfo.Split(':')[1], StringComparison.OrdinalIgnoreCase));
                     break;
                 case "startswith":
-                    _filtros.AddFilter((x) => x is EntityBase entityBase && ((string)entityBase.GetPropValue(filteringInfo.Property.Name)).StartsWith(filteringInfo.FilterInfo.Split(':')[1]));
+                    _filtros.AddFilter(x => x is EntityBase entityBase && ((string)entityBase.GetPropValue(filteringInfo.Property.Name)).StartsWith(filteringInfo.FilterInfo.Split(':')[1], StringComparison.OrdinalIgnoreCase));
                     break;
                 case "datebetween":
                     string[] dates = filteringInfo.FilterInfo.Split(':')[1].Split(';');
                     DateTime start = DateTime.Parse(dates[0]);
                     DateTime end = DateTime.Parse(dates[1]).AddDays(1).AddSeconds(-1);
-                    _filtros.AddFilter((x) => x is EntityBase entityBase && ((DateTime)entityBase.GetPropValue(filteringInfo.Property.Name)).IsBetween(start, end));
+                    _filtros.AddFilter(x => x is EntityBase entityBase && ((DateTime)entityBase.GetPropValue(filteringInfo.Property.Name)).IsBetween(start, end));
                     break;
                 case "valuebetween":
                     string[] values = filteringInfo.FilterInfo.Split(':')[1].Split(';');
                     decimal startValue = decimal.Parse(values[0]);
                     decimal endValue = decimal.Parse(values[1]);
-                    _filtros.AddFilter((x) => x is EntityBase entityBase && ((decimal)entityBase.GetPropValue(filteringInfo.Property.Name)).IsBetween(startValue, endValue));
+                    _filtros.AddFilter(x => x is EntityBase entityBase && ((decimal)entityBase.GetPropValue(filteringInfo.Property.Name)).IsBetween(startValue, endValue));
                     break;
                 case "enumvalue":
-                    _filtros.AddFilter((x) => x is EntityBase entityBase && ((Enum)entityBase.GetPropValue(filteringInfo.Property.Name)).Equals(Enum.Parse(filteringInfo.Property.PropertyType, filteringInfo.FilterInfo.Split(':')[1])));
+                    _filtros.AddFilter(x => x is EntityBase entityBase && ((Enum)entityBase.GetPropValue(filteringInfo.Property.Name)).Equals(Enum.Parse(filteringInfo.Property.PropertyType, filteringInfo.FilterInfo.Split(':')[1])));
                     break;
                 case "clearfilters":
                     _filtros.RemoveAllFilters();

@@ -12,9 +12,9 @@ namespace ControleFrota.Domain
     {
         [Description("Quilometragem")]
         public decimal KM { get; set; }
-        //[Description("Combustível")]
+        [Description("Combustível")]
         public Combustíveis Combustível { get; set; } = Combustíveis.GasolinaAditivada;
-        //[Description("Motorista")]
+        [NotMapped, Description("Motorista")] public string MotoristaString => Motorista?.Nome;
         public Motorista Motorista { get; set; }
 
         [NotMapped] 
