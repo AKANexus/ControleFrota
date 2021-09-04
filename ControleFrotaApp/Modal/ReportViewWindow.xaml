@@ -1,0 +1,49 @@
+﻿<Window x:Class="ControleFrota.Modal.ReportViewWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ControleFrota.Modal"
+        mc:Ignorable="d"
+        Title="ReportViewWindow" d:Height="1080" d:Width="1920" WindowStartupLocation="CenterOwner" WindowStyle="SingleBorderWindow" WindowState="Maximized">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Menu Grid.Row="0" FontSize="18">
+            <Button Content="💾" ToolTip="Salvar Como..." Click="Salvar_Click" Focusable="False"/>
+            <Button Content="🖨" ToolTip="Imprimir" Click="Imprimir_Click" Focusable="False"/>
+            <Separator/>
+            <Button Content="➖" ToolTip="Menos Zoom" Click="ZoomOut_Click" Focusable="False"/>
+            <TextBox Name="zoomNumérico" Width="72" Text="100 %"/>
+            <Button Content="➕" ToolTip="Mais Zoom" Click="ZoomIn_Click" Focusable="False"/>
+        </Menu>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Slider Visibility="Collapsed" Grid.Column="0" Maximum="4" Orientation="Vertical" Value="1" HorizontalAlignment="Left" Minimum="0.50" x:Name="slider"/>
+            <ScrollViewer Name="scrollViewer" Grid.Column="1" VerticalScrollBarVisibility="Visible" HorizontalScrollBarVisibility="Visible" MouseEnter="ScrollViewer_OnMouseEnter">
+
+                <Grid Name="grid" RenderTransformOrigin="0.5,0.5" Background="DarkGray">
+                    <Grid.LayoutTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="scaleTransform"/>
+                        </TransformGroup>
+                    </Grid.LayoutTransform>
+                    <Viewbox Grid.Column="0" Grid.Row="0">
+                        <ContentPresenter Name="imageContentPresenter" Margin="250">
+                            <ContentPresenter.Effect>
+                                <DropShadowEffect></DropShadowEffect>
+                            </ContentPresenter.Effect>
+                        </ContentPresenter>
+                    </Viewbox>
+                </Grid>
+
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+
+</Window>

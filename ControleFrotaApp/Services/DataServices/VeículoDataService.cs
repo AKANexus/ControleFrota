@@ -77,7 +77,7 @@ namespace ControleFrota.Services.DataServices
             return veículo;
         }
 
-        public async Task<Veículo> GetFullVeículoAsNoTracking(Veículo veículoSelecionado)
+        public async Task<Veículo> GetFullVeículoAsNoTracking(int id)
         {
             return await _context.Veículos
                 .Include(x => x.Abastecimentos)
@@ -89,7 +89,7 @@ namespace ControleFrota.Services.DataServices
                 .ThenInclude(x => x.ManutençãoProgramada)
                 .Include(x => x.Viagens)
                 .ThenInclude(x => x.Motorista)
-                .FirstOrDefaultAsync(x => x.ID == veículoSelecionado.ID);
+                .FirstOrDefaultAsync(x => x.ID == id);
         }
     }
 }

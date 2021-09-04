@@ -63,8 +63,8 @@ namespace ControleFrota.Auxiliares
                     Motorista = viagem.Motorista.Nome,
                     KMInicial = viagem.KMInicial.ToString("##.0 km"),
                     KMFinal = viagem.KMFinal == default ? "Em viagem" : viagem.KMFinal.ToString("##.0 km"),
-                    Saída = viagem.Saída.ToShortDateString(),
-                    Entrada = viagem.Retorno == default ? "Em viagem" : viagem.Retorno.ToShortDateString()
+                    Saída = viagem.Saída.ToString("dd/MM/yy HH:mm"),
+                    Entrada = viagem.Retorno == default ? "Em viagem" : viagem.Retorno.ToString("dd/MM/yy HH:mm")
                 });
             }
 
@@ -96,9 +96,9 @@ namespace ControleFrota.Auxiliares
         public string PróximoLicenciamento => _veículo.PróximoLicenciamento.ToString("MM/yyyy");
         public string ÚltimoAbastecimento => _veículo.ÚltimoAbastecimento.ToShortDateString();
         public string ÚltimaManutenção => _veículo.ÚltimaManutenção.ToShortDateString();
-        public List<ManutençãoJson> ManutençãoJsons => _manutenções;
-        public List<ViagemJson> ViagemJsons => _viagens;
-        public List<AbastecimentoJson> AbastecimentoJsons => _abastecimentos;
+        public List<ManutençãoJson> Manutencoes => _manutenções;
+        public List<ViagemJson> Viagens => _viagens;
+        public List<AbastecimentoJson> Abastecimentos => _abastecimentos;
 
         public string ConverteParaJson()
         {

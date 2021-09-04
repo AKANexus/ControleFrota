@@ -139,49 +139,33 @@ namespace ControleFrota.ViewModels
     {
         private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
         private readonly VeículoDataService _veículoDataService;
+        private readonly IDialogGenerator _dialogGenerator;
+        private readonly IDialogViewModelFactory _dialogViewModelFactory;
+        private readonly IDialogsStore _dialogStore;
+        private readonly IMessaging<int> _intMessaging;
 
 
         public GerarRelatórioCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
         {
             _listagemVeículosViewModel = listagemVeículosViewModel;
-            _veículoDataService = serviceProvider.GetRequiredService<VeículoDataService>();
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
         }
 
         public override bool CanExecute(object parameter)
         {
-            return true;
+            return _listagemVeículosViewModel.VeículoSelecionado is not null;
         }
 
         protected override async Task ExecuteAsync(object parameter)
         {
-            try
-            {
-                Veículo veículoTotal = await _veículoDataService.GetFullVeículoAsNoTracking(_listagemVeículosViewModel.VeículoSelecionado);
-                ReportObject ro = new(veículoTotal, DateTime.Now.AddMonths(-1), DateTime.Now);
-                var z = new List<ReportObject>() { ro };
-                //var x = ro.ConverteParaJson();
-                //var y = File.CreateText("reportJson.json");
-                //await y.WriteAsync(x);
-                //y.Close();
-                //string xBase64 = System.Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(x));
-                Report report = new Report();
-                report.Load("reportTemplate.frx");
-                report.RegisterData(z, "ReportObject");
-                //report.LoadFromString($"Json={xBase64};Encoding=utf-8");
-                report.Prepare();
-                //var reportExport = new FastReport.Export.Image.ImageExport();
-                //report.Export(reportExport, "report.jpeg");
-                var reportExport = new PDFSimpleExport();
-                report.Export(reportExport, "report.pdf");
-                //Debug.Write(x);
-                //Debug.WriteLine("x");
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-                throw;
-            }
-            
+            _intMessaging.Mensagem = _listagemVeículosViewModel.VeículoSelecionado.ID;
+            _dialogGenerator.ViewModelExibido =
+                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.Relatório);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            _listagemVeículosViewModel.PreencheDataGrid();
         }
 
 

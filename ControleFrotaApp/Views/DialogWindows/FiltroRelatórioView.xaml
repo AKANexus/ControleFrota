@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ControleFrota.Views.DialogWindows"
              xmlns:dialogWindows="clr-namespace:ControleFrota.ViewModels.DialogWindows"
              d:DataContext="{d:DesignInstance dialogWindows:FiltroRelatórioViewModel}"
-             mc:Ignorable="d" Width="299" FontFamily="Lato">
+             mc:Ignorable="d" Width="399" FontFamily="Lato" FontSize="14">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -15,31 +15,41 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Histórico do Veículo" Grid.Row="0" FontSize="24" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Visibility="Visible"/>
-        <TextBlock Text="Intervalo de Data" Grid.Row="1"  HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Visibility="Visible"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.4*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Histórico do Veículo" Grid.Row="0" Grid.ColumnSpan="2" FontSize="24" FontWeight="DemiBold" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10" Visibility="Visible"/>
+        <!--<TextBlock Text="Intervalo de Data" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10" Visibility="Visible"/>-->
         <Grid Grid.Row="2" Margin="15" Visibility="Visible">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="0.45*"/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock Text="Valor Inicial" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
-            <TextBlock Grid.Row="1" Text="Valor Final" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+            <TextBlock Text="De" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
+            <TextBlock Grid.Row="1" Text="Até" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="5"/>
             <DatePicker Grid.Column="1" SelectedDate="{Binding DataInicial}" Margin="5"/>
             <DatePicker Grid.Row="1" Grid.Column="1" SelectedDate="{Binding DataFinal}" Margin="5"/>
         </Grid>
+        <Border Grid.Row="2" Grid.Column="1" Margin="10" BorderThickness="1" BorderBrush="DarkGray">
+            <StackPanel  VerticalAlignment="Center">
+                <CheckBox Content="Abastecimentos" IsChecked="{Binding AbastecimentosChecked}" Margin="2.5" />
+                <CheckBox Content="Manutenções" IsChecked="{Binding ManutençõesChecked}" Margin="2.5" />
+                <CheckBox Content="Viagens" IsChecked="{Binding ViagensChecked}" Margin="2.5" />
+            </StackPanel></Border>
 
-        <Grid Grid.Row="4" Margin="15">
+        <Grid Grid.Row="4" Margin="20,15,20,15" Grid.Column="0" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Content="Cancelar" IsCancel="True" Margin="2.5" CommandParameter="{Binding CloseCurrentWindow}"/>
-            <Button Content="Filtrar" Grid.Column="2" Margin="2.5" Command="{Binding ImprimirRelatório}"/>
+            <Button Content="Cancelar" IsCancel="True" Margin="0.5" Padding="5" CommandParameter="{Binding CloseCurrentWindow}"/>
+            <Button Content="Gerar Relatório" Grid.Column="2" Padding="5" Margin="0.5" Command="{Binding ImprimirRelatório}"/>
         </Grid>
     </Grid>
 

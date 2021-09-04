@@ -12,6 +12,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+	  <None Remove="Views\DialogWindows\report.jpeg" />
+	</ItemGroup>
+
+	<ItemGroup>
 		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" />
 		<PackageReference Include="FastReport.OpenSource" Version="2021.3.30" />
 		<PackageReference Include="FastReport.OpenSource.Data.Json" Version="2021.3.0" />
@@ -38,7 +42,7 @@
 	  <None Update="libwkhtmltox.dylib">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
-	  <None Update="reportTemplate.frx">
+	  <None Update="ReportFramework.frx">
 	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 	  </None>
 	</ItemGroup>
