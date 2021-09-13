@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ControleFrota.Extensions;
 
 namespace ControleFrota.Domain
 {
@@ -32,5 +33,8 @@ namespace ControleFrota.Domain
 
         [Description("Observações")] 
         public string Observações { get; set; }
+
+        public string ReportÁreaManutenção => ÁreaManutenção.GetEnumDescription();
+        public string ReportTipoReparo => TipoReparo.GetEnumDescription();
     }
 }

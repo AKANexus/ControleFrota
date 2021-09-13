@@ -55,8 +55,11 @@
         <DataTemplate DataType="{x:Type dialogviewmodels:CadastroMarcaModeloViewModel}">
             <dialogWindows:CadastroMarcaModeloView/>
         </DataTemplate>
-        <DataTemplate DataType="{x:Type dialogviewmodels:FiltroRelatórioViewModel}">
-            <dialogWindows:FiltroRelatórioView/>
+        <DataTemplate DataType="{x:Type dialogviewmodels:FiltroRelatórioVeículoViewModel}">
+            <dialogWindows:FiltroRelatórioVeículoView/>
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type dialogviewmodels:FiltroRelatórioManutençõesViewModel}">
+            <dialogWindows:FiltroRelatórioManutençõesView/>
         </DataTemplate>
 
     </Application.Resources>

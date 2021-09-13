@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/13/2021 15:58:20" ReportInfo.Modified="09/13/2021 16:55:55" ReportInfo.CreatorVersion="2021.3.28.0">
+  <Dictionary>
+    <BusinessObjectDataSource Name="Manutenções" ReferenceName="Manutenções" DataType="null" Enabled="true">
+      <BusinessObjectDataSource Name="Manutenções1" Alias="Manutenções" DataType="null" PropName="Manutenções" Enabled="true">
+        <Column Name="ÁreaManutenção" DataType="null"/>
+        <Column Name="TipoManutenção" DataType="null"/>
+        <Column Name="TipoReparo" DataType="null"/>
+        <Column Name="KM" DataType="System.Decimal"/>
+        <Column Name="Preço" DataType="System.Decimal"/>
+        <Column Name="Local" DataType="System.String"/>
+        <Column Name="DataHora" DataType="System.DateTime"/>
+        <Column Name="Veículo" DataType="null">
+          <Column Name="Placa" DataType="System.String"/>
+          <Column Name="Marca" DataType="null"/>
+          <Column Name="ModeloString" DataType="System.String"/>
+          <Column Name="Modelo" DataType="null"/>
+          <Column Name="Registro" DataType="System.Int32"/>
+          <Column Name="RENAVAM" DataType="System.String"/>
+          <Column Name="Chassis" DataType="System.String"/>
+          <Column Name="ÚltimoLicenciamento" DataType="System.DateTime"/>
+          <Column Name="ÚltimoAbastecimento" DataType="System.DateTime"/>
+          <Column Name="ÚltimaManutenção" DataType="System.DateTime"/>
+          <Column Name="ÚltimoMotorista" DataType="System.String"/>
+          <Column Name="EmUso" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <BusinessObjectDataSource Name="Viagens" Enabled="false" DataType="null"/>
+          <BusinessObjectDataSource Name="Manutenções2" Alias="Manutenções" Enabled="false" DataType="null" PropName="Manutenções"/>
+          <BusinessObjectDataSource Name="Abastecimentos" Enabled="false" DataType="null"/>
+          <Column Name="ÚltimaQuilometragemInformada" DataType="System.Decimal"/>
+          <Column Name="Ativo" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="PróximoLicenciamento" DataType="System.DateTime"/>
+          <Column Name="PróximoDoLicenciamento" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="EmManutenção" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="IdViagemEmAberto" DataType="System.Int32"/>
+          <Column Name="Status" DataType="null"/>
+          <Column Name="TipoVeículo" DataType="null"/>
+          <Column Name="TipoIcone" DataType="System.String"/>
+          <Column Name="PróximaManutenção" DataType="null"/>
+          <Column Name="DescriçãoPróximaManutenção" DataType="System.String"/>
+          <Column Name="ID" DataType="System.Int32"/>
+        </Column>
+        <Column Name="Motorista" DataType="null">
+          <Column Name="Nome" DataType="System.String"/>
+          <Column Name="CNH" DataType="System.String"/>
+          <Column Name="ValidadeCNH" DataType="System.DateTime"/>
+          <Column Name="Ativo" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="Setor" DataType="null"/>
+          <Column Name="PróximoDoVencimento" DataType="System.Boolean" BindableControl="CheckBox"/>
+          <Column Name="ID" DataType="System.Int32"/>
+        </Column>
+        <Column Name="Observações" DataType="System.String"/>
+        <Column Name="ReportÁreaManutenção" DataType="System.String"/>
+        <Column Name="ReportTipoReparo" DataType="System.String"/>
+        <Column Name="ID" DataType="System.Int32"/>
+      </BusinessObjectDataSource>
+      <Column Name="DataInicial" DataType="System.DateTime"/>
+      <Column Name="DataFinal" DataType="System.DateTime"/>
+    </BusinessObjectDataSource>
+    <Total Name="TotalPreço" Expression="[Manutenções.Manutenções.Preço]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" Landscape="true" PaperWidth="297" PaperHeight="210" RawPaperSize="9" Watermark.Font="Arial, 60pt">
+    <ReportTitleBand Name="ReportTitle1" Width="1047.06" Height="37.8">
+      <TextObject Name="Text1" Width="1048.95" Height="37.8" Text="Relatório de Manutenções" HorzAlign="Center" Font="Lato Black, 24pt"/>
+    </ReportTitleBand>
+    <PageHeaderBand Name="PageHeader1" Top="41.8" Width="1047.06" Height="37.8">
+      <TextObject Name="Text2" Top="9.45" Width="1048.95" Height="18.9" Text="Período de [Manutenções.DataInicial] a [Manutenções.DataFinal]" HorzAlign="Center" Font="Lato, 12pt"/>
+    </PageHeaderBand>
+    <DataBand Name="Data1" Top="127.29" Width="1047.06" Height="18.9" DataSource="Manutenções1">
+      <TableObject Name="Table7" Left="18.9" Width="1007.36" Height="18.9" Border.Lines="Bottom">
+        <TableColumn Name="Column30" Width="125.92"/>
+        <TableColumn Name="Column31" Width="125.92"/>
+        <TableColumn Name="Column32" Width="125.92"/>
+        <TableColumn Name="Column33" Width="125.92"/>
+        <TableColumn Name="Column34" Width="125.92"/>
+        <TableColumn Name="Column35" Width="125.92"/>
+        <TableColumn Name="Column36" Width="125.92"/>
+        <TableColumn Name="Column37" Width="125.92"/>
+        <TableRow Name="Row16">
+          <TableCell Name="Cell75" Text="[Manutenções.Manutenções.Veículo.Placa]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell76" Text="[Manutenções.Manutenções.ReportÁreaManutenção]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell77" Text="[Manutenções.Manutenções.ReportTipoReparo]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell78" Text="[Manutenções.Manutenções.KM]" Format="Custom" Format.Format="0 km" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell79" Text="[Manutenções.Manutenções.Motorista.Nome]" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell80" Text="[Manutenções.Manutenções.DataHora]" Format="Date" Format.Format="d" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell81" Text="[Manutenções.Manutenções.Preço]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="R$" Format.PositivePattern="2" Format.NegativePattern="9" VertAlign="Center" Font="Lato, 10pt"/>
+          <TableCell Name="Cell82" Text="[Manutenções.Manutenções.Local]" VertAlign="Center" Font="Lato, 10pt"/>
+        </TableRow>
+      </TableObject>
+      <DataHeaderBand Name="DataHeader1" Top="83.6" Width="1047.06" Height="39.69">
+        <TableObject Name="Table3" Left="18.9" Top="9.45" Width="1007.36" Height="20.79" Fill.Color="LightGray">
+          <TableColumn Name="Column1" Width="125.92"/>
+          <TableColumn Name="Column2" Width="125.92"/>
+          <TableColumn Name="Column3" Width="125.92"/>
+          <TableColumn Name="Column4" Width="125.92"/>
+          <TableColumn Name="Column5" Width="125.92"/>
+          <TableColumn Name="Column6" Width="125.92"/>
+          <TableColumn Name="Column7" Width="125.92"/>
+          <TableColumn Name="Column8" Width="125.92"/>
+          <TableRow Name="Row11" Height="20.79">
+            <TableCell Name="Cell1" Text="Placa" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell2" Text="Peça" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell3" Text="Tipo de Reparo" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell4" Text="KM" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell5" Text="Motorista" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell6" Text="Data" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell7" Text="Preço" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell8" Text="Local" Font="Lato Black, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataHeaderBand>
+      <DataFooterBand Name="DataFooter1" Top="150.19" Width="1047.06" Height="37.8">
+        <TableObject Name="Table8" Left="18.9" Width="1007.36" Height="18.9" Border.Lines="Top" Border.Width="2">
+          <TableColumn Name="Column38" Width="125.92"/>
+          <TableColumn Name="Column39" Width="125.92"/>
+          <TableColumn Name="Column40" Width="125.92"/>
+          <TableColumn Name="Column41" Width="125.92"/>
+          <TableColumn Name="Column42" Width="125.92"/>
+          <TableColumn Name="Column43" Width="125.92"/>
+          <TableColumn Name="Column44" Width="125.92"/>
+          <TableColumn Name="Column45" Width="125.92"/>
+          <TableRow Name="Row17">
+            <TableCell Name="Cell83" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell84" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell85" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell86" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell87" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell88" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell89" Text="[TotalPreço]" Format="Currency" Format.UseLocale="false" Format.DecimalDigits="2" Format.DecimalSeparator="," Format.GroupSeparator="." Format.CurrencySymbol="R$" Format.PositivePattern="2" Format.NegativePattern="9" VertAlign="Center" Font="Lato, 10pt"/>
+            <TableCell Name="Cell90" VertAlign="Center" Font="Lato, 10pt"/>
+          </TableRow>
+        </TableObject>
+      </DataFooterBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="191.99" Width="1047.06" Height="18.9"/>
+  </ReportPage>
+</Report>

@@ -18,9 +18,9 @@ namespace ControleFrota.Views.DialogWindows
     /// <summary>
     /// Interaction logic for FiltroRelatório.xaml
     /// </summary>
-    public partial class FiltroRelatórioView : UserControl
+    public partial class FiltroRelatórioVeículoView : UserControl
     {
-        public FiltroRelatórioView()
+        public FiltroRelatórioVeículoView()
         {
             InitializeComponent();
         }

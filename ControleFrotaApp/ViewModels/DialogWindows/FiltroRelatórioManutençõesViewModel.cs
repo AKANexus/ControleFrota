@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -10,37 +9,35 @@ using System.Windows.Input;
 using ControleFrota.Auxiliares;
 using ControleFrota.Commands;
 using ControleFrota.Domain;
+using ControleFrota.Extensions;
 using ControleFrota.Modal;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
 using ControleFrota.State;
-using ControleFrota.Views.DialogWindows;
 using FastReport;
 using FastReport.Export.Image;
-using FastReport.Export.PdfSimple;
-//using DinkToPdf;
+using Microsoft.EntityFrameworkCore.Migrations.Operations;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ControleFrota.ViewModels.DialogWindows
 {
-    public class FiltroRelatórioViewModel : DialogContentViewModelBase
+    public class FiltroRelatórioManutençõesViewModel : DialogContentViewModelBase
     {
         public ICommand CloseCurrentWindow { get; set; }
         public ICommand ImprimirRelatório { get; set; }
         private readonly BusyStateStore _busyStateStore;
         public bool IsHitTestVisible { get; set; }
-        public bool AbastecimentosChecked { get; set; } = true;
-        public bool ManutençõesChecked { get; set; } = true;
-        public bool ViagensChecked { get; set; } = true;
+        public bool CarrosChecked { get; set; } = true;
+        public bool MotosChecked { get; set; } = true;
 
         public DateTime DataInicial { get; set; } = DateTime.Now.AddMonths(-1);
         public DateTime DataFinal { get; set; } = DateTime.Now;
 
 
-        public FiltroRelatórioViewModel(IServiceProvider serviceProvider)
+        public FiltroRelatórioManutençõesViewModel(IServiceProvider serviceProvider)
         {
             CloseCurrentWindow = new CloseCurrentWindowCommand(serviceProvider);
-            ImprimirRelatório = new ImprimirRelatórioCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
+            ImprimirRelatório = new ImprimirRelatórioManutençõesCommand(this, serviceProvider, x => MessageBox.Show(x.Message));
             _busyStateStore = serviceProvider.GetRequiredService<BusyStateStore>();
             _busyStateStore.PropertyChanged += _busyStateStore_PropertyChanged;
         }
@@ -65,20 +62,18 @@ namespace ControleFrota.ViewModels.DialogWindows
         }
     }
 
-    public class ImprimirRelatórioCommand : AsyncCommandBase
+    public class ImprimirRelatórioManutençõesCommand : AsyncCommandBase
     {
-        private readonly FiltroRelatórioViewModel _filtroRelatórioViewModel;
-        private readonly VeículoDataService _veículoDataService;
-        private readonly IMessaging<int> _intMessaging;
+        private readonly FiltroRelatórioManutençõesViewModel _filtroRelatórioManutençõesViewModel;
+        private readonly ManutençãoDataService _manutençãoDataService;
         private readonly IDialogsStore _dialogStore;
         private readonly BusyStateStore _busyStateStore;
 
-        public ImprimirRelatórioCommand(FiltroRelatórioViewModel filtroRelatórioViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
+        public ImprimirRelatórioManutençõesCommand(FiltroRelatórioManutençõesViewModel filtroRelatórioManutençõesViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
         {
-            _filtroRelatórioViewModel = filtroRelatórioViewModel;
+            _filtroRelatórioManutençõesViewModel = filtroRelatórioManutençõesViewModel;
             var currentScope = serviceProvider.GetRequiredService<CurrentScopeStore>();
-            _veículoDataService = currentScope.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
-            _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
+            _manutençãoDataService = currentScope.PegaEscopoAtual().GetRequiredService<ManutençãoDataService>();
             _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
             _busyStateStore = serviceProvider.GetRequiredService<BusyStateStore>();
         }
@@ -88,37 +83,47 @@ namespace ControleFrota.ViewModels.DialogWindows
             _busyStateStore.IsBusy = true;
             try
             {
-                Veículo veículoTotal = await _veículoDataService.GetFullVeículoAsNoTracking(_intMessaging.Mensagem);
-                ReportObject ro = new(veículoTotal, _filtroRelatórioViewModel.DataInicial,
-                    _filtroRelatórioViewModel.DataFinal);
-                if (!_filtroRelatórioViewModel.AbastecimentosChecked) ro.Abastecimentos.Clear();
-                if (!_filtroRelatórioViewModel.ManutençõesChecked) ro.Manutencoes.Clear();
-                if (!_filtroRelatórioViewModel.ViagensChecked) ro.Viagens.Clear();
+                List<Manutenção> manutenções = new();
+                foreach (Manutenção manutenção in (await _manutençãoDataService.GetAllAsNoTracking()).Where(x =>
+                    x.DataHora.IsBetween(_filtroRelatórioManutençõesViewModel.DataInicial,
+                        _filtroRelatórioManutençõesViewModel.DataFinal)))
+                {
+                    if (manutenção.Veículo.TipoVeículo == TipoVeículo.Carro &&
+                        _filtroRelatórioManutençõesViewModel.MotosChecked)
+                    {
+                        manutenções.Add(manutenção);
+                    }
 
-                var z = new List<ReportObject> { ro };
+                    if (manutenção.Veículo.TipoVeículo == TipoVeículo.Moto &&
+                        _filtroRelatórioManutençõesViewModel.CarrosChecked)
+                    {
+                        manutenções.Add(manutenção);
+                    }
+                }
+                ReportObjectManutenções rom = new(manutenções, _filtroRelatórioManutençõesViewModel.DataInicial,
+                    _filtroRelatórioManutençõesViewModel.DataFinal);
+
+                var z = new List<ReportObjectManutenções> { rom };
                 Report report = new Report();
 
+                ReportObjectManutenções rom1 = new(new(), DateTime.Now, DateTime.Now);
+                var nike = new List<ReportObjectManutenções> { rom1 };
 
-                report.Load("ReportFramework.frx");
-                report.RegisterData(z, "Veiculo");
+                report.Load("ReportFrameworkM.frx");
+                report.Report.Dictionary.RegisterBusinessObject(nike, "Manutenções", 3, true);
+                report.Save("ReportFrameworkM.frx");
+
+
+                report.Load("ReportFrameworkM.frx");
+                report.RegisterData(z, "Manutenções");
                 report.Prepare();
-                //var reportExport = new PDFSimpleExport();
-                //report.Export(reportExport, @"Report.pdf");
                 var reportExport = new ImageExport();
                 string tempFile = Path.GetTempFileName();
                 report.Export(reportExport, tempFile);
-                //MessageBox.Show("Clique \"OK\" para abrir o relatório!");
                 ReportViewWindow rvv = new ReportViewWindow(tempFile, report);
                 _busyStateStore.IsBusy = false;
                 rvv.ShowDialog();
-                //ProcessStartInfo pi = new ProcessStartInfo
-                //{
-                //    FileName = "explorer",
-                //    Arguments = "\"Report.pdf\""
-                //};
-                //Process.Start(pi);
                 _dialogStore.CloseDialog(DialogResult.OK);
-                //Debug.WriteLine("OK!");
             }
             catch (Exception e)
             {
@@ -133,3 +138,4 @@ namespace ControleFrota.ViewModels.DialogWindows
         }
     }
 }
+

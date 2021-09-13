@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using ControleFrota.Commands;
 using ControleFrota.Domain;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
@@ -42,6 +43,7 @@ namespace ControleFrota.ViewModels
             NovaViagem = new NovaViagemCommand(this, serviceProvider);
             RetornoViagem = new RetornoViagemCommand(this, serviceProvider);
             Editar = new EditarViagemCommand(this, serviceProvider);
+            Imprimir = new FakeCommand();
             PreencheDataGrid();
         }
 

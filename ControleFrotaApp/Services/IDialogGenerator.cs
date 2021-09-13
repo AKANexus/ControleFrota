@@ -26,7 +26,8 @@ namespace ControleFrota.Services
         Filtros,
         CadastroDeManutenção,
         CadastroDeModelos,
-        Relatório
+        RelatórioVeículo,
+        RelatórioManutenções
     }
     public interface IDialogGenerator
     {

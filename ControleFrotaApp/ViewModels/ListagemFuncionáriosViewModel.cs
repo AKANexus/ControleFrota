@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using ControleFrota.Commands;
 using ControleFrota.Domain;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
@@ -41,7 +42,7 @@ namespace ControleFrota.ViewModels
 
             Cadastrar = new CadastrarNovoMotoristaCommand(this, serviceProvider);
             Editar = new EditarMotoristaCommand(this, serviceProvider);
-
+            Imprimir = new FakeCommand();
             PreencheDataGrid();
         }
 

@@ -13,6 +13,7 @@ using ControleFrota.Extensions;
 using ControleFrota.Services;
 using ControleFrota.Services.DataServices;
 using ControleFrota.State;
+using ControleFrota.ViewModels.DialogWindows;
 using ControleFrota.ViewModels.Factories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -31,7 +32,8 @@ namespace ControleFrota.ViewModels
         }
         public ICommand Cadastrar { get; }
         public ICommand Editar { get; }
-        public ICommand Filtrar { get; set; }
+        public ICommand Filtrar { get; }
+        public ICommand Imprimir { get; }
         public bool HitTestVisible { get; set; } = true;
 
 
@@ -42,7 +44,7 @@ namespace ControleFrota.ViewModels
             Cadastrar = new CadastrarNovaManutençãoCommand(this, serviceProvider);
             Editar = new EditarManutençãoCommand(this, serviceProvider);
             Filtrar = new FiltrarManutençõesCommand(this, serviceProvider);
-
+            Imprimir = new GerarRelatórioManutençõesCommand(this, serviceProvider);
             PreencheGrid();
         }
 
@@ -88,6 +90,38 @@ namespace ControleFrota.ViewModels
             OnPropertyChanged(nameof(FiltrosAplicados));
         }
 
+    }
+
+    public class GerarRelatórioManutençõesCommand : ICommand
+    {
+        private readonly ListagemManutençõesViewModel _listagemManutençõesViewModel;
+        private readonly IDialogsStore _dialogStore;
+        private readonly IDialogViewModelFactory _dialogViewModelFactory;
+        private readonly IDialogGenerator _dialogGenerator;
+
+        public GerarRelatórioManutençõesCommand(ListagemManutençõesViewModel listagemManutençõesViewModel, IServiceProvider serviceProvider)
+        {
+            _listagemManutençõesViewModel = listagemManutençõesViewModel;
+            _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
+            _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
+            _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
+
+        }
+
+        public bool CanExecute(object? parameter)
+        {
+            return true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            _dialogGenerator.ViewModelExibido =
+                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.RelatórioManutenções);
+            _dialogStore.RegisterDialog(_dialogGenerator);
+            _listagemManutençõesViewModel.PreencheGrid();
+        }
+
+        public event EventHandler? CanExecuteChanged;
     }
 
     public class EditarManutençãoCommand : ICommand

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
+using ControleFrota.Commands;
 using ControleFrota.Domain;
 using ControleFrota.Extensions;
 using ControleFrota.Services;
@@ -26,6 +27,8 @@ namespace ControleFrota.ViewModels
         private readonly IMessaging<string> _stringMessaging;
         public ObservableCollection<Abastecimento> Abastecimentos { get; set; } = new();
         public ICollectionView AbastecimentosView { get; set; }
+        public FilterCollectionView FCV = new();
+        public FilteringInfo CurrentFilteringInfo { get; set; }
 
         public Abastecimento AbastecimentoSelecionado
         {
@@ -52,6 +55,7 @@ namespace ControleFrota.ViewModels
             Cadastrar = new CadastrarNovoAbastecimentoCommand(this, serviceProvider);
             Editar = new EditarAbastecimentoCommand(this, serviceProvider);
             Filtrar = new FiltrarAbastecimentosCommand(this, serviceProvider);
+            Imprimir = new FakeCommand();
             PreencheDataGrid();
         }
 
@@ -66,12 +70,10 @@ namespace ControleFrota.ViewModels
 
             try
             {
-                //foreach (Abastecimento abastecimento in await _abastecimentoDataService.GetAllAsNoTracking())
-                //{
-                //    Abastecimentos.Add(abastecimento);
-                //}
                 AbastecimentosView =
                     CollectionViewSource.GetDefaultView(await _abastecimentoDataService.GetAllAsNoTracking());
+                if (CurrentFilteringInfo is not null)
+                    AbastecimentosView.Filter += FCV.AddNewFilter(CurrentFilteringInfo);
                 OnPropertyChanged(nameof(AbastecimentosView));
             }
             catch (Exception e)
@@ -95,7 +97,6 @@ namespace ControleFrota.ViewModels
         private readonly IDialogViewModelFactory _dialogViewModelFactory;
         private readonly IDialogGenerator _dialogGenerator;
         private readonly EntityStore<EntityBase> _entityStore;
-        private readonly FilterCollectionView _filterCollectionView;
         private readonly IMessaging<Type> _typeMessaging;
 
         public FiltrarAbastecimentosCommand(ListagemAbastecimentosViewModel listagemAbastecimentosViewModel, IServiceProvider serviceProvider)
@@ -105,7 +106,6 @@ namespace ControleFrota.ViewModels
             _dialogViewModelFactory = serviceProvider.GetRequiredService<IDialogViewModelFactory>();
             _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
             _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
-            _filterCollectionView = new();
             _typeMessaging = serviceProvider.GetRequiredService<IMessaging<Type>>();
 
         }
@@ -123,11 +123,12 @@ namespace ControleFrota.ViewModels
             _dialogStore.RegisterDialog(_dialogGenerator);
             if (_dialogGenerator.Resultado == DialogResult.OK)
             {
-                _listagemAbastecimentosViewModel.AbastecimentosView.Filter += _filterCollectionView.AddNewFilter(_entityStore.Entity);
-                if (_entityStore.Entity is FilteringInfo fi)
-                {
-                    //_listagemAbastecimentosViewModel.AlteraFiltrosAplicadosString(fi);
-                }
+                _listagemAbastecimentosViewModel.AbastecimentosView.Filter += _listagemAbastecimentosViewModel.FCV.AddNewFilter(_entityStore.Entity);
+                _listagemAbastecimentosViewModel.CurrentFilteringInfo = _entityStore.Entity as FilteringInfo;
+                //if (_entityStore.Entity is FilteringInfo fi)
+                //{
+                //    _listagemAbastecimentosViewModel.AlteraFiltrosAplicadosString(fi);
+                //}
             }
         }
 

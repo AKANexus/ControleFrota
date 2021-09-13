@@ -12,7 +12,7 @@
             <Button Content="Editar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Editar}"/>
             <Button Content="Inativar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Inativar}" IsEnabled="False"/>
             <Button Content="Filtrar" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Filtrar}"/>
-            <Button Content="Imprimir" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Imprimir}" IsEnabled="False"/>
+            <Button Content="Imprimir" Padding="10, 5" Margin="5" FontSize="20" FontWeight="Normal" FontFamily="Lato" Command="{Binding Imprimir}"/>
         </StackPanel>
     </Grid>
 </UserControl>

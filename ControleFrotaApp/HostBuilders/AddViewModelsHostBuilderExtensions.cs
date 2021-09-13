@@ -35,7 +35,8 @@ namespace ControleFrota.HostBuilders
                 serviços.AddTransient<FiltroListagemViewModel>();
                 serviços.AddTransient<CadastroManutençãoViewModel>();
                 serviços.AddTransient<CadastroMarcaModeloViewModel>();
-                serviços.AddTransient<FiltroRelatórioViewModel>();
+                serviços.AddTransient<FiltroRelatórioVeículoViewModel>();
+                serviços.AddTransient<FiltroRelatórioManutençõesViewModel>();
 
 
 
@@ -70,8 +71,10 @@ namespace ControleFrota.HostBuilders
                     serviceProvider.GetRequiredService<CadastroManutençãoViewModel>);
                 serviços.AddSingleton<CriaDialogViewModel<CadastroMarcaModeloViewModel>>(serviceProvider =>
                     serviceProvider.GetRequiredService<CadastroMarcaModeloViewModel>);
-                serviços.AddSingleton<CriaDialogViewModel<FiltroRelatórioViewModel>>(serviceProvider =>
-                    serviceProvider.GetRequiredService<FiltroRelatórioViewModel>);
+                serviços.AddSingleton<CriaDialogViewModel<FiltroRelatórioVeículoViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<FiltroRelatórioVeículoViewModel>); 
+                serviços.AddSingleton<CriaDialogViewModel<FiltroRelatórioManutençõesViewModel>>(serviceProvider =>
+                    serviceProvider.GetRequiredService<FiltroRelatórioManutençõesViewModel>);
 
             });
             return host;

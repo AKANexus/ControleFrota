@@ -33,6 +33,8 @@ namespace ControleFrota.ViewModels
         private Veículo _veículoSelecionado;
         private readonly IMessaging<string> _stringMessaging;
 
+        public FilterCollectionView FCV = new();
+        public FilteringInfo CurrentFilteringInfo { get; set; }
         private StringBuilder _filtrosAplicados = new();
         //public ObservableCollection<Veículo> Veículos { get; set; } = new();
         //private CollectionViewSource _collectionViewSource;
@@ -75,9 +77,9 @@ namespace ControleFrota.ViewModels
             RetornoDeViatura = new RetornoDeViaturaCommand(this, serviceProvider);
             AbastecerViatura = new AbastecerViaturaCommand(this, serviceProvider);
             ManutençãoDeViatura = new ManutençãoDeViaturaCommand(this, serviceProvider);
-
+            Imprimir = new FakeCommand();
             Filtrar = new FiltrarVeículosCommand(this, serviceProvider);
-            GerarRelatório = new GerarRelatórioCommand(this, serviceProvider, exception => { });
+            GerarRelatório = new GerarRelatórioVeículoCommand(this, serviceProvider, exception => { });
             PreencheDataGrid();
 
         }
@@ -119,6 +121,8 @@ namespace ControleFrota.ViewModels
                 //    { Source = await _veículoDataService.GetAllAsNoTracking() };
                 //VeículosView = _collectionViewSource.View;
                 VeículosView = new ListCollectionView(await _veículoDataService.GetAllAsNoTracking());
+                if (CurrentFilteringInfo is not null)
+                    VeículosView.Filter += FCV.AddNewFilter(CurrentFilteringInfo);
                 OnPropertyChanged(nameof(VeículosView));
             }
             catch (Exception e)
@@ -135,7 +139,7 @@ namespace ControleFrota.ViewModels
         }
     }
 
-    public class GerarRelatórioCommand : AsyncCommandBase
+    public class GerarRelatórioVeículoCommand : AsyncCommandBase
     {
         private readonly ListagemVeículosViewModel _listagemVeículosViewModel;
         private readonly VeículoDataService _veículoDataService;
@@ -145,7 +149,7 @@ namespace ControleFrota.ViewModels
         private readonly IMessaging<int> _intMessaging;
 
 
-        public GerarRelatórioCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
+        public GerarRelatórioVeículoCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider, Action<Exception> onException) : base(onException)
         {
             _listagemVeículosViewModel = listagemVeículosViewModel;
             _dialogStore = serviceProvider.GetRequiredService<IDialogsStore>();
@@ -163,7 +167,7 @@ namespace ControleFrota.ViewModels
         {
             _intMessaging.Mensagem = _listagemVeículosViewModel.VeículoSelecionado.ID;
             _dialogGenerator.ViewModelExibido =
-                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.Relatório);
+                _dialogViewModelFactory.CreateDialogContentViewModel(TipoDialogue.RelatórioVeículo);
             _dialogStore.RegisterDialog(_dialogGenerator);
             _listagemVeículosViewModel.PreencheDataGrid();
         }
@@ -222,7 +226,6 @@ namespace ControleFrota.ViewModels
         private readonly IDialogViewModelFactory _dialogViewModelFactory;
         private readonly IDialogGenerator _dialogGenerator;
         private readonly EntityStore<EntityBase> _entityStore;
-        private readonly FilterCollectionView _filterCollectionView;
         private readonly IMessaging<Type> _typeMessaging;
 
         public FiltrarVeículosCommand(ListagemVeículosViewModel listagemVeículosViewModel, IServiceProvider serviceProvider)
@@ -233,7 +236,6 @@ namespace ControleFrota.ViewModels
             _dialogGenerator = serviceProvider.GetRequiredService<IDialogGenerator>();
             _typeMessaging = serviceProvider.GetRequiredService<IMessaging<Type>>();
             _entityStore = serviceProvider.GetRequiredService<EntityStore<EntityBase>>();
-            _filterCollectionView = new();
         }
 
         public bool CanExecute(object parameter)
@@ -249,7 +251,8 @@ namespace ControleFrota.ViewModels
             _dialogStore.RegisterDialog(_dialogGenerator);
             if (_dialogGenerator.Resultado == DialogResult.OK)
             {
-                _listagemVeículosViewModel.VeículosView.Filter += _filterCollectionView.AddNewFilter(_entityStore.Entity);
+                _listagemVeículosViewModel.VeículosView.Filter += _listagemVeículosViewModel.FCV.AddNewFilter(_entityStore.Entity);
+                _listagemVeículosViewModel.CurrentFilteringInfo = _entityStore.Entity as FilteringInfo;
                 if (_entityStore.Entity is FilteringInfo fi)
                 {
                     _listagemVeículosViewModel.AlteraFiltrosAplicadosString(fi);

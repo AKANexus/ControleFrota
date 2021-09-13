@@ -24,6 +24,7 @@ namespace ControleFrota.Services.DataServices
             return await _context.Manutençãos.AsNoTracking()
                 .Include(x => x.Motorista)
                 .Include(x => x.Veículo)
+                .ThenInclude(y=>y.Modelo)
                 .ToListAsync();
         }
 

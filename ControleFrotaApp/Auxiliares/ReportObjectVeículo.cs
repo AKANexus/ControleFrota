@@ -12,7 +12,7 @@ using ControleFrota.Extensions;
 
 namespace ControleFrota.Auxiliares
 {
-    public class ReportObject
+    public class ReportObjectVeículo
     {
         private readonly Veículo _veículo;
         private readonly DateTime _dataInicial;
@@ -22,7 +22,7 @@ namespace ControleFrota.Auxiliares
         private readonly List<ViagemJson> _viagens;
         private readonly List<AbastecimentoJson> _abastecimentos;
 
-        public ReportObject(Veículo veículo, DateTime dataInicial, DateTime dataFinal)
+        public ReportObjectVeículo(Veículo veículo, DateTime dataInicial, DateTime dataFinal)
         {
             Thread.CurrentThread.CurrentCulture = ptBR;
             _veículo = veículo;
