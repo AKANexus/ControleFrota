@@ -52,6 +52,16 @@ namespace ControleFrota.ViewModels.DialogWindows
             }
         }
 
+        public string PeçaOutros
+        {
+            get => ManutençãoSelecionada?.PeçaOutros;
+            set
+            {
+                ManutençãoSelecionada.PeçaOutros = value;
+                OnPropertyChanged(nameof(PeçaOutros));
+            }
+        }
+
         public Veículo VeículoSelecionado
         {
             get => ManutençãoSelecionada?.Veículo;
@@ -78,6 +88,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             {
                 ManutençãoSelecionada.ÁreaManutenção = value;
                 OnPropertyChanged(nameof(AreaReparoSelecionada));
+                OnPropertyChanged(nameof(OutrosVisibility));
             }
         }
 
@@ -120,15 +131,8 @@ namespace ControleFrota.ViewModels.DialogWindows
                 OnPropertyChanged(nameof(Valor));
             }
         }
-        //public string Peça
-        //{
-        //    get => ManutençãoSelecionada?.Peça;
-        //    set
-        //    {
-        //        ManutençãoSelecionada.Peça = value;
-        //        OnPropertyChanged(nameof(Peça));
-        //    }
-        //}
+
+        public Visibility OutrosVisibility => AreaReparoSelecionada == ÁreaManutenção.Outros ? Visibility.Visible : Visibility.Collapsed;
 
         public string Observações
         {
@@ -153,7 +157,7 @@ namespace ControleFrota.ViewModels.DialogWindows
 
         public ICommand Salvar { get; set; }
         public ICommand Cancelar { get; set; }
-
+        public List<ÁreaManutenção> PeçasList { get; set; }
 
         public CadastroManutençãoViewModel(IServiceProvider serviceProvider)
         {
@@ -166,10 +170,9 @@ namespace ControleFrota.ViewModels.DialogWindows
             _manutençãoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<ManutençãoDataService>();
             _intMessaging = serviceProvider.GetRequiredService<IMessaging<int>>();
             _stringMessaging = serviceProvider.GetRequiredService<IMessaging<string>>();
-            //_combustivelDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<CombustívelDataService>();
             _veículoDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<VeículoDataService>();
             _motoristaDataService = _currentScopeStore.PegaEscopoAtual().GetRequiredService<MotoristaDataService>();
-
+            PeçasList = Enum.GetValues<ÁreaManutenção>().OrderBy(x => x.GetEnumDescription()).ToList();
             PreencheCampos();
         }
 
@@ -177,6 +180,7 @@ namespace ControleFrota.ViewModels.DialogWindows
         {
             foreach (Motorista motorista in await _motoristaDataService.GetAll())
             {
+                if(motorista.Ativo)
                 Motoristas.Add(motorista);
             }
 

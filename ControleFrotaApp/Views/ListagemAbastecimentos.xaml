@@ -29,7 +29,7 @@
                     </Style>
                 </DataGrid.ColumnHeaderStyle>
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="Placa" Binding="{Binding Veículo.Placa}" FontSize="17" />
+                    <DataGridTextColumn Header="Placa" Binding="{Binding Placa}" FontSize="17" />
                     <DataGridTextColumn Header="Combustível" Binding="{Binding Combustível, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
                     <DataGridTextColumn Header="Posto" Binding="{Binding Posto}" FontSize="17"/>
                     <DataGridTextColumn Header="Quilometragem" Binding="{Binding KM, StringFormat={}{0:N0} km}" FontSize="17"/>

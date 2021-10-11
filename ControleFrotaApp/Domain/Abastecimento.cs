@@ -31,6 +31,8 @@ namespace ControleFrota.Domain
         [Description("Valor Total")]
         public decimal ValorTotal { get; set; }
         //[Description("Forma de Pagamento")]
+
+        [Description("Placa")] public string Placa => Veículo.Placa;
         public FormasPagamento FormasPagamento { get; set; } = FormasPagamento.Dinheiro;
     }
 }

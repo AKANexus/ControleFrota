@@ -49,7 +49,7 @@ namespace ControleFrota.ViewModels
         public async Task PreencheDataGrid()
         {
             Motoristas.Clear();
-            foreach (Motorista motorista in await _motoristaDataService.GetAllAsNoTracking())
+            foreach (Motorista motorista in await _motoristaDataService.GetAllAtivosAsNoTracking())
             {
                 Motoristas.Add(motorista);
             }

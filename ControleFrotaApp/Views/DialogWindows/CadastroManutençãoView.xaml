@@ -17,11 +17,11 @@
                 <x:Type TypeName="domain:TipoReparo"/>
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
-        <ObjectDataProvider x:Key="AreasReparo" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
+        <!--<ObjectDataProvider x:Key="AreasReparo" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="domain:ÁreaManutenção"/>
             </ObjectDataProvider.MethodParameters>
-        </ObjectDataProvider>
+        </ObjectDataProvider>-->
         <ObjectDataProvider x:Key="NívelDeReparo" MethodName="GetValues" ObjectType="{x:Type system:Enum}">
             <ObjectDataProvider.MethodParameters>
                 <x:Type TypeName="domain:TipoManutenção"/>
@@ -37,7 +37,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="1.1*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -45,7 +45,8 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition/>
+            <RowDefinition />
+            <RowDefinition />
             <RowDefinition/>
         </Grid.RowDefinitions>
         <TextBlock Text="Manutenção 🛠" Grid.ColumnSpan="5" FontSize="26" FontFamily="Lato" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,10" />
@@ -83,8 +84,8 @@
         </ComboBox>
 
         <TextBlock  Grid.Row="3" Grid.Column="2" Text="Local" FontSize="16" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold"/>
-        <TextBox FontSize="16" Grid.Row="3" FontWeight="Normal" Text="{Binding Local}" Grid.Column="3" Grid.ColumnSpan="2"
-                 VerticalAlignment="Center" d:Text="Posto Carrefour" Margin="5,10" />
+        <TextBox FontSize="16" Grid.Row="3" FontWeight="Normal" Text="{Binding Local, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" d:Text="Posto Carrefour" Margin="5,10" Width="187" />
 
         <TextBlock Grid.Row="4" Grid.Column="0" Text="Valor Total" FontSize="16" HorizontalAlignment="Right"
                    VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
@@ -102,9 +103,11 @@
         <TextBlock Grid.Row="5" Grid.Column="2" Text="Peça" FontSize="16" HorizontalAlignment="Right"
                    VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
 
-        <ComboBox FontSize="16" Grid.Row="5" FontWeight="Normal" Grid.Column="3" Grid.ColumnSpan="2"
+        <!--ItemsSource="{Binding Mode=OneWay, Source={StaticResource AreasReparo}}"-->
+
+<ComboBox FontSize="16" Grid.Row="5" FontWeight="Normal" Grid.Column="3" Grid.ColumnSpan="2"
                  VerticalAlignment="Center" d:Text="01175498960" Margin="5,10" 
-                 ItemsSource="{Binding Mode=OneWay, Source={StaticResource AreasReparo}}" 
+                 ItemsSource="{Binding PeçasList}"
                  SelectedItem="{Binding AreaReparoSelecionada, UpdateSourceTrigger=PropertyChanged}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
@@ -113,13 +116,19 @@
             </ComboBox.ItemTemplate>
         </ComboBox>
 
-        <TextBlock Grid.Row="5" Grid.RowSpan="2" Grid.Column="0" Text="Observações" FontSize="16" HorizontalAlignment="Right"
+        <TextBlock Grid.Row="6" Grid.Column="2" Text="Outros" FontSize="16" HorizontalAlignment="Right" Visibility="{Binding OutrosVisibility}"
                    VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
-        <TextBox FontSize="16" Grid.Row="5" Grid.RowSpan="2" FontWeight="Normal" Text="{Binding Observações, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="2"
-                 d:Text="01175498960" Margin="5,10,50,10" AcceptsReturn="True"/>
+
+        <TextBox FontSize="16" Grid.Row="6" FontWeight="Normal" Text="{Binding PeçaOutros, UpdateSourceTrigger=PropertyChanged}" Grid.Column="3" Grid.ColumnSpan="2"
+                 VerticalAlignment="Center" d:Text="Posto Carrefour" Margin="5,5" Width="187" Visibility="{Binding OutrosVisibility}" />
+
+        <TextBlock Grid.Row="5" Grid.RowSpan="3" Grid.Column="0" Text="Observações" FontSize="16" HorizontalAlignment="Right"
+                   VerticalAlignment="Center" Margin="5,10" FontWeight="DemiBold" />
+        <TextBox FontSize="16" Grid.Row="5" Grid.RowSpan="3" FontWeight="Normal" Text="{Binding Observações, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Grid.ColumnSpan="1"
+                 d:Text="01175498960" Margin="5,10,5,10" AcceptsReturn="True" TextWrapping="Wrap" Width="205"/>
 
 
-        <Grid Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,10">
+        <Grid Grid.Row="7" Grid.Column="3" Grid.ColumnSpan="2" Margin="5,10">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>

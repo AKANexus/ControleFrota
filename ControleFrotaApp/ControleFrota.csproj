@@ -4,6 +4,7 @@
 		<OutputType>WinExe</OutputType>
 		<TargetFramework>net5.0-windows</TargetFramework>
 		<UseWPF>true</UseWPF>
+		<Version>0.0.0.10</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -12,7 +13,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Remove="Views\DialogWindows\report.jpeg" />
+		<None Remove="Views\DialogWindows\report.jpeg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -36,18 +37,18 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Update="appsettings.json">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </None>
-	  <None Update="libwkhtmltox.dylib">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="ReportFramework.frx">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
-	  <None Update="ReportFrameworkM.frx">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="libwkhtmltox.dylib">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
+		<None Update="ReportFramework.frx">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="ReportFrameworkM.frx">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 
 </Project>

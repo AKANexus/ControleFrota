@@ -69,53 +69,63 @@ namespace ControleFrota.Domain
     public enum ÁreaManutenção
     {
         [Description("Pneus")]
-        PneuPneus,
+        PneuPneus =0,
         [Description("Alinhamento")]
-        PneuAlinhamento,
+        PneuAlinhamento =1,
         [Description("Rodízio de Pneus")]
-        PneuRodízio,
+        PneuRodízio =2,
         [Description("Calots")]
-        PneuCalotas,
+        PneuCalotas =3,
         [Description("Estepe")]
-        PneusEstepe,
+        PneusEstepe =4,
         [Description("Suspensão")]
-        SuspensãoSuspensão,
+        SuspensãoSuspensão =5,
         [Description("Correias do Motor")]
-        MotorCorreias,
+        MotorCorreias =6,
         [Description("Mangueiras do Motor")]
-        MotorMangueiras,
+        MotorMangueiras =7,
         [Description("Velas de Ignição")]
-        MotorVelas,
+        MotorVelas =8,
         [Description("Injeção")]
-        MotorInjeção,
+        MotorInjeção =9,
         [Description("Radiador")]
-        MotorRadiador,
-        [Description("Pastilhas de Freio")]
-        FreioPastilha,
-        [Description("Discos dos Freios")]
-        FreioDisco,
+        MotorRadiador =10,
+        [Description("Pastilhas/Lonas de Freio")]
+        FreioPastilha =11,
+        [Description("Discos/Tambores dos Freios")]
+        FreioDisco =12,
         [Description("Bateria")]
-        BateriaBateria,
+        BateriaBateria =13,
         [Description("Fluido de Transmissão")]
-        FluidoTransmissão,
+        FluidoTransmissão =14,
         [Description("Fluido de Freio")]
-        FluidoFreio,
+        FluidoFreio =15,
         [Description("Fluido do Limpador")]
-        FluidoLimpador,
+        FluidoLimpador =16,
         [Description("Óleo")]
-        FluidoÓleo,
+        FluidoÓleo =17,
         [Description("Filtro do Óleo")]
-        FiltroÓleo,
+        FiltroÓleo =18,
         [Description("Filtro de Combustível")]
-        FiltroCombustível,
+        FiltroCombustível =19,
         [Description("Filtro de Ar")]
-        FiltroAr,
-        [Description("Lâmpadas")]
-        Lâmpadas,
+        FiltroAr =20,
+        [Description("Lâmpadas/Lanternas")]
+        Lâmpadas =21,
         [Description("Limpadores")]
-        Limpadores,
+        Limpadores =22,
         [Description("Outros")]
-        Outros
+        Outros =23,
+        [Description("Pinças dos Freio (M)")]
+        MotoFreiosPinças =24,
+        [Description("Carburador")]
+        MotoCarburador =25,
+        [Description("Pinhão (M)")]
+        MotoPinhão =26,
+        [Description("Coroa (M)")]
+        MotoCoroa =27,
+        [Description("Correntes/Correias")]
+        MotoCorrente =28,
     }
 
     public enum TipoManutenção

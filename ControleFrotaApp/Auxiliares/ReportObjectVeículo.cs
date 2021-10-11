@@ -77,7 +77,7 @@ namespace ControleFrota.Auxiliares
                     ValorPorLitro = abastecimento.ValorPorLitro.ToString("##.000 R$/l"),
                     Litragem = abastecimento.Litragem.ToString("##.0 l"),
                     ValorTotal = abastecimento.ValorTotal.ToString("C2"),
-                    DataHora = abastecimento.DataHora.ToShortDateString(),
+                    DataHora = abastecimento.DataHora.ToString("dd/MM HH:mm"),
                     Posto = abastecimento.Posto,
                     Combustível = abastecimento.Combustível.GetEnumDescription(),
                     FormaPagamento = abastecimento.FormasPagamento.ToString()

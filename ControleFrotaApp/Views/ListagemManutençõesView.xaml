@@ -34,13 +34,14 @@
 
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Placa" Binding="{Binding Veículo.Placa}" FontSize="17" />
-                    <DataGridTextColumn Header="Peça" Binding="{Binding Peça}" FontSize="17"/>
-                    <DataGridTextColumn Header="Tipo de Reparo" Binding="{Binding TipoReparo, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
+                    <DataGridTextColumn Header="Tipo de Reparo" Binding="{Binding TipoManutenção, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
+                    <DataGridTextColumn Header="Peça" Binding="{Binding PeçaReparadaString}" FontSize="17"/>
+                    <DataGridTextColumn Header="Repar/Preven" Binding="{Binding TipoReparo, Converter={StaticResource EnumDescriptionConverter}}" FontSize="17"/>
                     <DataGridTextColumn Header="Quilometragem" Binding="{Binding KM, StringFormat={}{0:N0} km}" FontSize="17"/>
                     <DataGridTextColumn Header="Motorista" Binding="{Binding Motorista.Nome}" FontSize="17"/>
                     <DataGridTextColumn Header="Data e Hora" Binding="{Binding DataHora}" FontSize="17"/>
                     <DataGridTextColumn Header="Preço" Binding="{Binding Preço, StringFormat={}{0:N2} R$/l}" FontSize="17"/>
-                    <DataGridTextColumn Header="Local" Binding="{Binding Local, StringFormat={}{0:N2} l}" FontSize="17"/>
+                    <DataGridTextColumn Header="Local" Binding="{Binding Local}" FontSize="17"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

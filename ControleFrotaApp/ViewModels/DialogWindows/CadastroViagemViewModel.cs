@@ -137,7 +137,8 @@ namespace ControleFrota.ViewModels.DialogWindows
 
             foreach (Motorista motorista in await _motoristaDataService.GetAll())
             {
-                Motoristas.Add(motorista);
+                if (motorista.Ativo)
+                    Motoristas.Add(motorista);
             }
 
             foreach (Veículo veículo in await _veículoDataService.GetAll())

@@ -26,6 +26,14 @@ namespace ControleFrota.Services.DataServices
                 .ToListAsync();
         }
 
+        public async Task<List<Motorista>> GetAllAtivosAsNoTracking()
+        {
+            return await _context.Motoristas.AsNoTracking()
+                .Include(x => x.Setor)
+                .Where(x=>x.Ativo == true)
+                .ToListAsync();
+        }
+
         public async Task<List<Motorista>> GetAll()
         {
             return await _context.Motoristas

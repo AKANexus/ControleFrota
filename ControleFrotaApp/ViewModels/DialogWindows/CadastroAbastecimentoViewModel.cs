@@ -127,7 +127,15 @@ namespace ControleFrota.ViewModels.DialogWindows
         public ICommand SalvaAbastecimento { get; set; }
         public ICommand CloseCurrentWindow { get; set; }
 
-        public FormasPagamento FormaPagamento { get; set; }
+        public FormasPagamento FormaPagamento
+        {
+            get => AbastecimentoSelecionado?.FormasPagamento ?? FormasPagamento.Dinheiro;
+            set
+            {
+                AbastecimentoSelecionado.FormasPagamento = value;
+                OnPropertyChanged(nameof(FormaPagamento));
+            }
+        }
 
         public CadastroAbastecimentoViewModel(IServiceProvider serviceProvider)
         {
@@ -155,6 +163,7 @@ namespace ControleFrota.ViewModels.DialogWindows
             //}
             foreach (Motorista motorista in await _motoristaDataService.GetAll())
             {
+                if (motorista.Ativo)
                 Motoristas.Add(motorista);
             }
 

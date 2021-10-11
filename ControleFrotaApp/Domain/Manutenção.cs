@@ -10,13 +10,10 @@ namespace ControleFrota.Domain
 {
     public class Manutenção : EntityBase
     {
-        //[Description("Peça Reparada")]
-        //public string Peça { get; set; }
-        [Description("Reparo")]
-        public ÁreaManutenção ÁreaManutenção { get; set; }
+        public ÁreaManutenção ÁreaManutenção { get; set; } = ÁreaManutenção.Outros;
         [Description("Tipo de reparo")]
         public TipoManutenção TipoManutenção { get; set; }
-        //[Description("Tipo do Reparo")]
+        [Description("Repar/Preven")]
         public TipoReparo TipoReparo { get; set; }
         [Description("Quilometragem")]
         public decimal KM { get; set; }
@@ -33,6 +30,11 @@ namespace ControleFrota.Domain
 
         [Description("Observações")] 
         public string Observações { get; set; }
+
+        public string PeçaOutros { get; set; }
+
+        [Description("Peça Reparada")]
+        public string PeçaReparadaString => ÁreaManutenção == ÁreaManutenção.Outros ? PeçaOutros : ÁreaManutenção.GetEnumDescription();
 
         public string ReportÁreaManutenção => ÁreaManutenção.GetEnumDescription();
         public string ReportTipoReparo => TipoReparo.GetEnumDescription();

@@ -18,6 +18,7 @@ using ControleFrota.Views.DialogWindows;
 using FastReport;
 using FastReport.Export.Image;
 using FastReport.Export.PdfSimple;
+using FastReport.Utils;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace ControleFrota.ViewModels.DialogWindows
@@ -103,7 +104,6 @@ namespace ControleFrota.ViewModels.DialogWindows
                 //report.Load("ReportFrameworkM.frx");
                 //report.Report.Dictionary.RegisterBusinessObject(nike, "Manutenções", 3, true);
                 //report.Save("ReportFrameworkM.frx");
-
                 report.Load("ReportFramework.frx");
                 report.RegisterData(z, "Veiculo");
                 report.Prepare();

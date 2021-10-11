@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Report ScriptLanguage="CSharp" ReportInfo.Created="09/02/2021 15:21:14" ReportInfo.Modified="09/03/2021 15:01:02" ReportInfo.CreatorVersion="2021.3.28.0">
+<Report ScriptLanguage="CSharp" ReportInfo.Created="09/02/2021 15:21:14" ReportInfo.Modified="10/11/2021 16:20:12" ReportInfo.CreatorVersion="2021.3.28.0">
   <Dictionary>
     <BusinessObjectDataSource Name="Veiculo" ReferenceName="Veiculo" DataType="null" Enabled="true">
       <Column Name="Veículo" DataType="null">
@@ -152,12 +152,14 @@
     </DataBand>
     <DataBand Name="AbastecimentosData" Top="381.21" Width="718.2" Height="18.9" DataSource="Abastecimentos1">
       <TableObject Name="Table8" Left="47.25" Width="623.7" Height="18.9" Border.Lines="Bottom">
-        <TableColumn Name="Column35" Width="124.74"/>
-        <TableColumn Name="Column36" Width="124.74"/>
-        <TableColumn Name="Column37" Width="124.74"/>
-        <TableColumn Name="Column38" Width="124.74"/>
-        <TableColumn Name="Column39" Width="124.74"/>
+        <TableColumn Name="Column50" Width="103.95"/>
+        <TableColumn Name="Column35" Width="103.95"/>
+        <TableColumn Name="Column36" Width="103.95"/>
+        <TableColumn Name="Column37" Width="103.95"/>
+        <TableColumn Name="Column38" Width="103.95"/>
+        <TableColumn Name="Column39" Width="103.95"/>
         <TableRow Name="Row21">
+          <TableCell Name="Cell115" Text="[Veiculo.Abastecimentos.DataHora]" VertAlign="Center" Font="Lato, 10pt"/>
           <TableCell Name="Cell100" Text="[Veiculo.Abastecimentos.Motorista]" VertAlign="Center" Font="Lato, 10pt"/>
           <TableCell Name="Cell101" Text="[Veiculo.Abastecimentos.KM]" VertAlign="Center" Font="Lato, 10pt"/>
           <TableCell Name="Cell102" Text="[Veiculo.Abastecimentos.ValorPorLitro]" VertAlign="Center" Font="Lato, 10pt"/>
@@ -168,14 +170,16 @@
       <DataHeaderBand Name="AbastecimentosDataHeader" Top="307.28" Width="718.2" Height="69.93">
         <TextObject Name="Text4" Left="47.25" Top="18.9" Width="623.7" Height="18.9" Fill.Color="LightGray" Text="Abastecimentos" HorzAlign="Center" Font="Lato Black, 10pt"/>
         <TableObject Name="Table6" Left="47.25" Top="37.8" Width="623.7" Height="20.79" Fill.Color="LightGray">
-          <TableColumn Name="Column25" Width="124.74"/>
-          <TableColumn Name="Column26" Width="124.74"/>
-          <TableColumn Name="Column27" Width="124.74"/>
-          <TableColumn Name="Column28" Width="124.74"/>
-          <TableColumn Name="Column29" Width="124.74"/>
+          <TableColumn Name="Column51" Width="103.95"/>
+          <TableColumn Name="Column25" Width="103.95"/>
+          <TableColumn Name="Column26" Width="103.95"/>
+          <TableColumn Name="Column27" Width="103.95"/>
+          <TableColumn Name="Column28" Width="103.95"/>
+          <TableColumn Name="Column29" Width="103.95"/>
           <TableRow Name="Row15" Height="20.79">
+            <TableCell Name="Cell116" Text="Data/Hora" Font="Lato Black, 10pt"/>
             <TableCell Name="Cell70" Text="Motorista" Font="Lato Black, 10pt"/>
-            <TableCell Name="Cell71" Text="Quilometragem" Font="Lato Black, 10pt"/>
+            <TableCell Name="Cell71" Text="KM" Font="Lato Black, 10pt"/>
             <TableCell Name="Cell72" Text="Preço por Litro" Font="Lato Black, 10pt"/>
             <TableCell Name="Cell73" Text="Litragem" Font="Lato Black, 10pt"/>
             <TableCell Name="Cell74" Text="Valor Total" Font="Lato Black, 10pt"/>
